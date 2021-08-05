@@ -17,7 +17,7 @@ pow1(int x,int y){
 */
 pow2(int x , int y){
     int j;
-    for(j=1;j>=1;--y)  //填空 
+    for(j=1;y>=1;--y)  //填空 
         j = j * x;
         return(j);
 }
