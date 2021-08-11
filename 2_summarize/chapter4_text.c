@@ -12,6 +12,7 @@
 (0x9AF0 & 0xF000) >>12 --->0x0009
 */
 void weiyiText(){
+    
     unsigned short a ,b;
     scanf("%4x",&a); //十六进制数给a
     b = (a & 0x000F) << 12; //取a最低一位，左移12位给b
@@ -63,7 +64,7 @@ void qiugen(){
 编一程序计算到现在为止已经过了多少天，现在时间是多少。
 
 */
-void time calculation(){
+void time_calculation(){
     unsigned long t,r;
     int d, h, m, s;
     pritf("second =");

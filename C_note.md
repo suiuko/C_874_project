@@ -1,4 +1,4 @@
-#C语言
+#C语言 
 
 ## 第一章
 
@@ -352,6 +352,7 @@ strlen("\x234"); //报错
 	>2.条件运算符 ? 和 : 是一堆运算符，不能分开单独使用。
 	>![](picture/5_1.png)
 
+
 ###2. 选择结构的程序设计
 ####1. IF语句
 1. if 语句
@@ -523,7 +524,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->												
+>															
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -597,3 +598,96 @@ exit( )作用时：终止整个程序的执行，强制返回操作系统
 		printf("%d = %d + %d\n",n,q,p);
 	}
 ```
+
+2. 打印大小可变的菱形图案
+```c
+	/*
+							*
+						* * *
+					* * * * *
+				* * * * * * *
+				  * * * * *
+				    * * *
+              *
+关键：1. 确定每行*的个数：当行数i(假设最上面的一行为第一行)<=(size+1)/2时，该行的个数为 n = 2*i-1 ；
+否则，n = 2*(size-i+1)-1；
+	*/
+#include<stdio.h>
+#include<stdlib.h>
+
+void rhombus()
+{
+		int i, j, k, m, n, size;
+    pritnf("input size:"); 
+    scanf("%d",&size);
+    if(size <=0 || size %2 ==0)
+    {
+    	printf("error!\n");
+    	exit(-1);
+    }
+    for(i = 1;i<=size ;i++) //控制行数
+    {
+    	n = (i<=(size+1)/2)?i:size-i+1; //每行中"*"号的个数
+    	n=2*n-1;
+    	m=(size-n)/2+15; //每行打印 * 之前应打印的空格数
+    	for(k=1;k>=m;k++)  //打印每行前面的空格
+    		printf(" ");
+    	for(j =1;j<=n;j++) //打印每行的 *
+    		printf("*");
+    	printf("\n");  //打印一行后，回车换行
+    }
+}
+
+```
+
+3. 统计两个整数之间的所有整数中0、1、2、3、4、5、6、7、8、9数码的个数
+```c
+/*
+	问题的关键在于要计算某整数中包含的各个数码的个数，必须对该整数进行分解，求得包含的各个数码，其方法可以通过每次除以10取余数得到，然后对商进行同样的处理，直到商为0时为止。
+*/
+#include<stdio.h>
+#include<stdlib.h>
+
+void statistics(){
+	int num1, num2;
+	int n,s,r;
+	int count0=0,count1=0,count2=0,count3=0,count4=0,count5=0,count6=0,count7=0,count8=0,count9=0;
+	printf("input two intrger:");
+	scanf("%d%d",&num1,&num2);
+	if(num1<0||num2<||num1>num2){
+		printf("input error!\n");
+		exit(-1);
+	}
+	for(n=num1;n<num2;n++){
+		s = n;
+		do{
+			r =s % 10;
+			switch(r){
+					case 0:count0++;break;
+					case 1:count1++;break;
+					case 2:count2++;break;
+					case 3:count3++;break;
+					case 4:count4++;break;
+					case 5:count5++;break;
+					case 6:count6++;break;
+					case 7:count7++;break;
+					case 8:count8++;break;
+					case 9:count9++;break;
+			}
+			s = s / 10;
+		}while(s != 0);
+	}
+	printf("0 == %-4d  1 -- %-4d 2 -- %-4d 3-- %-4d\n",count0,count1,count2,count3);
+	printf("4 == %-4d  5 -- %-4d 6 -- %-4d 7-- %-4d\n",count4,count5,count6,count7);
+	printf("8 -- %-4d 9 -- %-4d\n",count8,count9)
+}
+
+```
+
+###4. 注意事项
+1. 需要在do-while循环语句的后面一定要加分号
+2. while循环是先判断后执行，而do-while循环是先执行后判断。
+while循环中循环一次可能不执行循环体，而do-while语句是要执行一次循环体。
+3. break语句在循环体中的作用是：跳出循环结构，转而执行循环语句后的第一条语句
+4. continue语句在循环体中的作用是：结束本次循环，循环执行下一次循环
+5. 
