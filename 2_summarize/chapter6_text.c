@@ -128,3 +128,46 @@ void question(){
         printf("Can't found!\n");
     }
 }
+
+
+/*
+========7.=======
+利用 pi/2 ~ 2/1*2/3*4/3*4/5*6/5*6/7....前100项之和计算pi的值
+采用累乘积算法，累乘项为：term = n*n/((n-1)*(n+1));
+n = 2,4,6...100 步长为2
+*/
+void pi_term(){
+    float term,result = 1;
+    for(n=2;n<=100;n+=2){
+        term = (float)(n*n)/((n-1)*(n+1));
+        result *=term;
+    }
+    printf("result = %f\n",2*result);
+}
+
+
+/*
+========8.=========
+利用泰勒级数 sinx= x - x^3/3! + x^5/5! - x^7/7!...计算Sin的值
+同时，最后一项的绝对值小于10^-5，并统计出此时累计了多少项
+
+思路：sum = sum +term，sum的初始值为x，利用前项求后项的方法计算累加项
+得：term = term *x*x/((n+1)*(n+2));
+term的初始值为X,n初值为1，n=n+2;
+*/
+void term2(){
+    int n =1, count = 0;
+    float x;
+    double sum, term;
+    pritnf("input x:");
+    scanf("%f",x);
+    sum = x;
+    term = x;
+    do{
+        term = -term * x * x/ ((n+1)*(n+2));
+        sum += term; //累加
+        n +=2;
+        count++;
+    }while(fabs(term)>=1e-5);
+    printf("sin(x) = %f,count = %d\n",sum,count);
+}

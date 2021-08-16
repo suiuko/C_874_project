@@ -548,7 +548,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																					
+>																																							
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -707,6 +707,27 @@ void statistics(){
 }
 
 ```
+4. （重要）利用下面的公式求PI 的近似值，要求累加到最后一项小于10的-6次幂为止。公式：PI /4 ~1-1/3+1/5-1/7....
+
+```c
+	#include<stdio.h>
+	#include<math.h>
+//累加项可以找规律 t = s / n; 其中s可以用s = -s实现; n按照1，3，5变化，n = n+2
+void main(){
+  int s =1;
+  float n =1.0, t =1, pi=0;
+  while(fabs(t)>=1e-6){
+    pi +=t;
+    n+=2;
+    s=-s;
+    t = s/n;
+  }
+  pi *=4;
+  printf("pi = %.6f\n",pi);
+}
+
+```
+
 
 ###4. 注意事项
 1. 需要在do-while循环语句的后面一定要加分号
