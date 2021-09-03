@@ -1,4 +1,6 @@
 #include<stdio.h>
+#include<string.h>
+
 /*
 =========1.========
 输入10个整数,将这10个整数按升序排列输出,并且奇数在前,偶数在后
@@ -167,7 +169,112 @@ void yanghui(){
         a[i][0]=1;
         a[i][i]=1;
         for(j=1;j<i;j++){
-            
+            a[i][j] = a[i-1][j-1] + a[i-1][j];
         }
     }
+
+    for(i = 0;i<N;i++)  //显示结果
+    {
+        for(j=0;j<N-i-1;j++)
+            printf(" ");
+        for(j = 0;j<=i;j++)
+            printf("%2d ",a[i][j]);
+        printf("\n");
+    }    
+}
+
+
+/*
+=========6.=========
+编写一程序实现将用户输入的一字符串以反向形式输出, 
+<思想> 通过gets库函数将键盘输入的一字符串存放到一个字符数组中,
+然后利用for循环将数组中的字符串从高位到低位逐个输出
+*/
+#define N 60
+void reverse(){
+    char str[N];
+    int i;
+    printf("INput a string:");
+    gets(str);
+    printf("After reverse:");
+    for(i=strlen(str)-1; i>=0;i--)
+        printf("%c",str[i]);
+    printf("\n");
+}
+
+/*
+===========7.============
+将字符数组S2中的全部字符复制到字符数组S1中,不用strcpy函数,
+复制时,'\0'也要复制过去. '\0'后面的字符不复制.
+
+<思想>:使用 while(1)循环将S2 中的字符从左到右逐一复制到S1中,
+如果此时复制的字符是'\0',则循环结束,输出字符串S1
+*/
+#define N 60
+void stradd(){
+    char s1[N], s2[N] = "abcdefg\0hijk";
+    unsigned int i;
+    i=0;
+    while(1)
+    {
+        s1[i] = s2[i];
+        if(s2[i] == '\0')
+            break;
+        i++;
+    }
+    printf("After string copy: %s\n",s1);
+}
+
+
+/*
+=========8.========
+不用strcat函数编程实现字符串连接函数strcat的功能,将字符串srcStr连接到字符串dstStr的尾部
+
+<思想>:先找到dststr的结尾符'\0'的位置,然后通过for循环将字符串srcStr中的字符逐一复制到dstStr的后面
+直到字符串srcStr的结尾符'\0'为止,最后在dsrStr的后面加上结尾符'\0'
+*/
+
+void stradd2(){
+    char dsrStr[20] = "12345", srcStr[20] = "67890";
+    unsigned int i, j;
+    for(i=0;dstStr[i]!='\0';i++) //找到dstStr穿中'\0'所在的位置 i
+        for(j=0;srcStr[j]!='\0';j++)
+            dstStr[i+j] = srcStr[j];
+        dstStr[i+j] = '\0';
+        printf("After strcat: dstStr = %s\n",dstStr);
+}
+
+
+/*
+=======9.=======
+有一个已拍好序的整形数组,要求从键盘输入一个整数按原来的排序规律将它插入数组中
+并输出结果, 比如: 原来的数据为1 3 5 7,需插入4 ,插入后为1 3 4 5 7
+
+<思想:>假设插入前数组元素的个数为num,首先要找到在整形数组中要插入的位置,
+其具体的方法: 通过循环将插入的整数N与数组中的元素a[i]从右往左进行比较,
+如果此时数组元素a[i]>n,则插入的位置在元素a[i]之前的某一位置,
+将a[i]往右移一个位置,循环继续.
+如果a[i]<=n, 则插入的位置刚好就在a[i]之后,即a[i+1]的位置,循环结束
+*/
+
+void shengxuadd(){
+    int a[10]={1,3,5,7,9}, sum = 5, i, n;
+    printf("before insert: "); //显示插入之前数组元素的值
+    for(i=0;i<sum;i++)
+        printf("%d",a[i]);
+    printf("\n");
+
+    printf("input a number: ");
+    scanf("%d",&n);
+    for(i = num-1;i>=0;i--)  //从右到左将与N进行比较
+        if(a[i]>n) //数组元素比N大
+            a[i+1] = a[i]; //将该数组元素往右移一个位置
+        else
+            break;  //否则跳出循环,要插入的位置就是在第i个元素之后
+    a[i+1] = n;
+
+    printf("After insert: "); // 显示插入后的值
+    for(i=0;i<num+1;i++)
+        printf("%d",a[i]);
+    printf("\n");
 }
