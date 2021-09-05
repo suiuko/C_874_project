@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																						
+>																																																																																																														
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -1810,11 +1810,311 @@ void main()
 	p=str;   //p指向字符串的首地址
 	q=p+strlen(p)-1 //q指向字符串的末地址
 	while(p<q)
-	{					//叫魂啊P和Q个字指向的字符
+	{					//交换P和Q个字指向的字符
 		ch = *p;   //将P指向的字符保存在CH中,
 		*p++ = *q; // 将Q指向的字符赋值给P指向的字符单元, P再增1
 		*q-- = ch; //将CH的值 赋给Q指向的字符单元,Q再减1
 	}
+	printf("%s\n",str);
 }
 ```
 <img src="picture/9_13.png" style="zoom:50%;" />
+
+### 6 指针与动态内存分配
+1. 静态内存分配
+定义变量或数组以后,系统会给内存单元,这种就是静态内存分配; 这些内存就是在程序运行前就分配好了,不可改变
+
+2. 动态内存分配
+动态分配的内存需要有一个指针变量记录内存的起始地址
+`void *malloc (unsigned int size)`
+注意:
+>size 这个参数的含义是分配的内存的大小
+
+例子:
+```c
+//根据学生人数来建立数组的问题
+int n, *pscore;
+scanf("%d",&n);
+pscore = (int *)malooc(n * sizeof(int));
+
+if(pscore == NULL) //分配内存失败
+{
+	printf("insufficient memory available!");
+	exit(0);
+}
+```
+<img src="picture/9_14.png" style="zoom:50%;" />
+注意:
+>malloc前面必须要加上一个指针类型转换符, 因为malloc的返回值是空类型的指针,一般应与右边的指针变量类型一致
+>malloc所待的一个参数是指需分配的内存单元字节数,一般写成`分配数量 * sizeof(内存单元类型符)`
+>malloc 可能返回NULL,表示分配内存失败, 如果有空指针会造成系统崩溃
+
+3. 动态内存释放
+`void free(void *block);`
+block为分配的动态内存的首地址.
+
+### 7 多级指针
+1. 二级指针的定义与引用
+`[存储类型] 数据类型符 **变量名;`
+如:
+```c
+int a 3;
+int *p1;
+int **p2;
+p1=&a;
+p2=&p1;
+**p2 = 5;
+//A的值从3变成了5
+```
+<img src="picture/9_15.png" style="zoom:50%;" />
+
+2. 二级指针的应用
+```c
+//利用二级指针来处理字符串
+#include<stdio.h>
+#define NULL 0
+void main()
+{
+	char **p;
+	char *name[] = {"hello","good","world","bye"," "};
+	p = name +1;   //现在指向name[1], good
+	printf("%x:%s ", *p,*p);
+	p+=2; //name[3], bye
+	while(**p!=NULL)
+		printf("%s\n",*p++);
+}
+```
+<img src="picture/9_16.png" style="zoom:50%;" />
+
+注意:
+> 二级指针与指针数组的关系: int **p 与 int *q[10]
+> 指针数组名是二级指针常量
+> p = q; p+i是q[i]的地址
+> 指针数组作形参时, int *q[ ]与 int **q 完全等价; 
+> 系统只给p 分配能保存一个指针值的内存区; 而给q分配10块内存区,每块可保存一个指针值. 
+
+### 8 指针作为函数的参数
+想通过一个函数来改变调用函数中的变量的值.
+<img src="picture/9_17.png" style="zoom:50%;" />
+方法一: 因为 B和A分别对应不同的内存单元, 调用的函数的时,只是吧A对应的内存单元的值改变为5,并没有改变B对应的内存单元的值.
+<img src="picture/9_18.png" style="zoom:50%;" />
+方法二: 是把变量B的地址(&b)传送给指针型参数P,这样指针P就指向了对应的内存单元赋值,所以B的值就发生了改变.
+<img src="picture/9_19.png" style="zoom:50%;" />
+从上面的程序我们知道,定义函数时,形参前面有一个 * 号,就表明形参时指针型参数,如果有两个 * 号,就表明形参是指针的指针(二级指针).
+
+```c
+//求某矩阵中行元素之和的最大值
+
+int GetSumRow(int *p, int num);
+int FetMaxRow(int **p, int row, int col);
+
+void main()
+{
+	int row, col;
+	int i, j, **p, maxrow;
+	
+	printf("intput row = ");
+	scanf("%d",&row);
+	printf("input col=");
+	scanf("%d",&col);
+	
+	//根据键入的矩阵的行数和列数来动态建立一个二维数组p
+	p=(int **)malloc(row * sizeof(int *));
+	for(i=0;i<row;i++)
+		for(j=0;j<col;j++)
+			scanf("%d",p[i]+j);
+	//调用函数来计算矩阵中所有行元素之和的最大值.
+	maxrow=GetMaxRow(p,row,col);
+	printf("------------------------\n");
+	printf("maxrow = %d\n",maxrow);
+	
+	//释放动态分配的内存空间
+	for(i=0;i<row;i++)
+		free(p[i]);
+	free(p);
+}
+
+//计算矩阵中所有行元素之和的最大值
+int GetMaxRow(int **p,int row, int col)
+{
+	int i, max, t;
+	max = GetSumRow(p[0],col);
+	for(i=1;i<row;i++)
+	{
+		t = GetSumRow(p[i],col);
+		if(t>max)
+			max=t;
+	}
+	return(max);
+}
+
+//计算矩阵中某行元素之和
+int GetSumRow(int *p;int num)
+{
+	int i, sum =0;
+	for(i=0;i<num;i++)
+		sum+=p[i];
+	return(sum);
+}
+
+/*
+运行结果
+input row =3
+input col = 4
+intput the number:
+3 -4 6 8
+4 6 -2 7
+0 9 8 6
+maxrow =23
+*/
+```
+
+对于指针参数来说,如果程序想通过函数为指针变量分配内存,则形参必须是一个指针的指针(二级指针)
+```c
+void getmen(int **p, int num)
+{
+	*p=(int *)malloc(num *sizeof(int));
+	return;
+}
+
+void main()
+{
+	int *pint, k;
+	getmen(&pint,10); //执行后,pint的值会变化
+	for(k=0;k<10;k++)
+		pint[k]=k;  //正确
+		....
+}
+```
+
+### 9 指针作为函数的返回值 ---- 指针函数
+定义:`函数类型 *函数名([形参1,形参2,....])`
+如果一个函数返回一个指针, 不能反悔auto型局部变量的指针,但可以反悔static型的变量的地址.
+例子:
+```c
+int *getdata(int num)
+{
+	static int a[100];
+	int k;
+	if(num>100) return (NULL);
+	for(k=0;k<num;k++)
+		scnaf("%d",&a[k]);
+	return(a);
+}
+//因为auto生存期短,所以需要用static型,其生存期等同于全局变量的生存期.
+```
+总结 : 编写一指针函数常量采用的方法有两种:
+>1. 在函数中使用动态内存分配(malloc), 以其首地址返回
+>2. 就是在函数中使用静态(static)变量或全局变量, 以其存储单元的首地址返回.
+
+### 10 指向函数的指针----函数指针
+1. 函数指针的概念
+一个函数在编译时,被分配了一个入口地址,用函数名来表示,这个地址就称为该函数的指针. 可以用一个指针变量指向一个函数,然后通过该指针变量调用此函数.
+<img src="picture/9_20.png" style="zoom:50%;" />
+
+2. 函数指针变量
+(1)定义格式
+`函数类型 (*指针变量)([形参类型1,形参类型2......])`
+注意:
+>1. 指针变量是专门存放函数入口地址,可指向返回值类型相同的不同函数;
+
+(2)赋值
+函数名代表该函数的入口地址,因此,可用函数名给指向函数的指针变量赋值.
+`函数指针 =[&]函数名;`
+其中,函数名后不能带括号和参数,函数名前的 & 符号是可选的
+例如:
+```c
+int max(int a,int b)
+{
+	return (a>b?a:b)
+}
+int (*p)(int ,int);  //定义函数指针P
+p=max; //将函数所对应的内存单元首地址(函数名MAX)赋给函数指针P
+```
+
+(3)调用格式
+`函数指针变量([实参1,实参2,.....]); 或 (*函数指针变量)([实参1,实参2.....])`
+上面定义的函数指针P经赋值后,可以这样调用函数MAX:
+`p(2,3); 或 (*p)(2,3);` 等价于`max(2,3)`
+
+3. 函数指针的应用
+```c
+//用函数指针变量作参数,求最大值、最小值和两数之和
+int max(int,int);
+int min(int,int);
+int add(int,int);
+void process(int, int, int (*fun)(int,int));
+
+void main()
+{
+	int a,b;
+	scanf("%d%d",&a,&b);
+	process(a,b,max);
+	process(a,b,min);
+	process(a,b,add);
+}
+
+void process(int x, int y, int(*fun)(int,int))
+{
+	int result;
+	result =(*fun)(x,y);
+	printf("%d\n",result);
+}
+int max(int x,int y)
+{
+	printf("max = ");
+	return (x>y?x:y);
+}
+
+int min(int x,int y)
+{
+	printf("min = ");
+	return(x<y?x:y);
+}
+
+int add(int x,int y)
+{
+	printf("sum =");
+	return(x+y);
+}
+
+```
+
+### 11 带参数的main函数
+在OS状态下,为执行某个程序而键入的一行字符称为命令行
+命令行的形式:`命令名 参数1 参数2 参数3......参数N`
+
+带参数的main函数为:
+```c
+void main(int argc, char *argv[])
+{
+	......
+}
+```
+<img src="picture/9_21.png" style="zoom:50%;" />
+
+例如: 显示命令行参数
+```c
+void main()
+{
+	while(argc-->0)
+	printf("%s\n",*argv++);
+}
+//输入命令行: c:\> test hello world
+/*
+运行结果为:
+test
+hello 
+world
+*/
+
+```
+
+### 12 小结
+1. 常见的雨指针相关的变量定义
+<img src="picture/9_22.png" style="zoom:50%;" />
+
+<img src="picture/9_23.png" style="zoom:50%;" />
+
+2. 两个指针所指向的字符串是否相等,应该调用strcmp函数.
+3. 函数返回值的类型由在定义该函数时所指定的函数
