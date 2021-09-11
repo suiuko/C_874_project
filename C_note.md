@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																							
+>																																																																																																																									
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -2347,7 +2347,165 @@ struct [结构体类型名]
 {
 	....
 }变量名 ={成员1的值,成员2的值....};
-``c
+
+// 例如: 
+struct Date
+{
+	int year, month, day;
+}birthday={1096,12,10};
+```c
+
+2. 结构体变量在程序中赋值
+如果在定义结构体变量时并未对其赋初始值, 那么在程序中要对它赋值的话, 就只要一个一个地对其成员逐一赋值. 或者用已赋值的同类型的结构体变量对它赋值
+```c
+//例如:
+struct Student_info stu; // 只定义了结构体变量stu, 并未对其赋值
+//一下通过语句对stu的各个成员逐一赋值
+strcpy(stu.no,"20020306");
+strcpy(stu.name,"ZhangMing");
+stu.sex = 'M';
+stu.age = 18;
+stu.classno =1;
+stu.grade=90;
+
+//如果再定义一个结构体变量stu1, 那么也可以将上面赋值后的stu赋值给stu1
+struct Student_Info stu1;
+stu1 = stu;
+//执行后的结果将是吧stu的各个成员的值赋值给stu1对应的成员,相当于执行下列语句:
+strcpy(stu1.no,stu.no);
+strcpy(stu1.name,stu.name);
+stu1.sex = stu.sex;
+stu1.age = stu.age;
+stu1.classno = stu.classno;
+stu1.grade = stu.grade;
+
+//也可以用memcpy函数来替代, 
+memcpy(&stu1,&stu,sizeof(struct Student_Info));
+```
+注意:
+> 对结构体变量不可整体赋值. stu1 ={ "20020306","ZhangMing",'M',18,1,90}这是错误的语句
+
+```c
+//计算学生5门课的平均成绩,最低分最高分
+#include<stdio.h>
+struct score
+{
+	float grade[5];
+	float avergrade, maxgrade, mingrade;
+};
+
+void main()
+{
+	int i;
+	struct score m;
+	printf("input the grade of five course:\n");
+	for(i=0;i<5;i++)
+		scanf("%f",m.grade[i])
+	
+	m.avegrade = 0;
+	m.maxgrade = m.grade[0];
+	m.mingrade = m.grade[0];
+	for(i=0;i<5;i++) //求平均分、最高分、最低分
+	{
+		m.avegrade += m.grade[i];
+		m.maxgrade = (m.grade[i] > m.maxgrade)?m.grade[i]:m.maxgrade;
+		m.mingrade = (m.grade[i] < m.mingrade)?m.grade[i]:m.mingrade;
+	}
+	m.avegraed /=5;
+	printf("avegrade = %5.lf  maxgrade = %5.1lf   mingrade = %5.1f\n",m.avefrade, m.amxgrade, m.mingrade);
+}
+```
+<img src="picture/11_1.png" style="zoom:50%;" />
+
+#### 4. 简化结构体类型名
+可以使用`typedef`来为结构体类型起别名
+格式: `typedef 类型名 类型名的别名;`
+
+其中:
+>类型名必须是已经定义的数据类型名或C语言提供的基本类型名
+>类型名的别名必须是合法的标识符, 通常用大写字符来表示
+>typedef 语句要以分号结尾
+
+#### 5. 结构体数组
+结构体数组的每一个元素都是具有相同结构体类型的下标结构变量. 在实际应用中,经常用结构体数组来表示具有相同数据结构的一个群体.
+从某种意义上来讲, 结构体数组就相当于一张二维表. 一个表的框架对应的就是某种结构体类型,标中的每一列对应该结构体的成员, 表中每一行信息对应该结构体数组元素各成员的具体值, 表中的行数对应结构体数组的大小.
+
+1. 结构体数组的定义
+```c
+struct Student_Info
+{	
+	char no[9],name[20],sex;
+	unsigned int age, classno; 
+	float grade;
+}stu[10];
+
+//或者
+struct Student_Info stu[10];
+
+//结构体数组stu的每个元素所占内存大小为: sizeof(struct Student_Info)
+```
+<img src="picture/11_2.png" style="zoom:50%;" />
+
+2. 结构体数组的初始化
+```c
+struct 结构体类型名
+{
+	....
+};
+
+struct 结构体类型名 结构体数组[size] = {{初值表1},{初值表2},....};
+```
+或者:
+```c
+struct [结构体类型名]
+{
+	...
+}结构体数组[size] = {{初值表1},{初值表2}....};
+```
+3. 结构体数组的引用
+`结构体数组名[下标].成员名;`
+```c
+struct Student_Info stu[3];
+strcpy(stu[0].name,"Wangfei"); //对数组元素stu[0]中的成员name赋值
+stu[1].grade++; //对数组元素stu[1]中的成员grade值
+printf("%s",stu[0].name); //显示数组元素stu[0]中的成员name的值
+```
+
+4. 结构体数组的应用
+统计候选人选票
+```c
+#include<stdio.h>
+#include<string.h>
+struct person
+{
+	char name[20]; //候选人姓名
+	int count; //得票数
+}leader[3]={"LI",0,"zhang",0,"wang",0};
+
+void main()
+{
+	int i, j;
+	char leader_name[20];
+	while(1)//统计候选人得票数
+	{
+		scanf("%s",leader_name); 
+		if(strcmp(leader_name,"0")==0); //输入为“0”结束
+			break;
+		for(j=0;j<3;j++)
+			if(strcmp(leader_name,leader[j].name)==0); //合法
+				leader[j].count++;
+	}
+	
+	for(i=0;i<3;i++)
+		printf("%5s : %d\n",keader[i].name,leader[i].count);
+}
+```
+
+
+
+
+
+
 
 
 
