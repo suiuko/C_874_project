@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																									
+>																																																																																																																																
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -2133,7 +2133,8 @@ world
 ### 1 定义
 #### 1.简单定义
 `#define 标识符 单词串`
-如果需要终止宏的作用域,可以使用`#undef 标识符`命令.
+<u>如果需要终止宏的作用域,可以使用`#undef 标识符`命令.</u>
+
 1. 宏定义可以嵌套定义,但是不能递归定义
 2. 程序中字符串常量即双引号中的字符, 不作为宏替换操作.
 ```c
@@ -2499,15 +2500,213 @@ void main()
 	for(i=0;i<3;i++)
 		printf("%5s : %d\n",keader[i].name,leader[i].count);
 }
+//定义一个结构体类型person, 其中包含两个成员,候选人姓名name和得票数count,以此结构体类型定义了候选人数组leader,并对它赋初值.
 ```
 
+### 2 线性链表
+1. 线性链表概述和结构
+当一组数据元素形成了“前后”关系时, 称为线性表.
+线性表再内存有两种存放形式:
+> 1. 顺序表 : 以数组的形式存放,数组元素在内存中是连续存放的
+> 2. 线性链表: 数据元素在内存中不需要连续存放,而是通过指针将各个数据元素连接起来,像一条链子一样将数据单元前后元素链接起来.
+> 对于线性链表来说,它的存放形式不需要提供连续的内存块 , 当插入或删除一个数据元素时,不需要移动其他数据元素,因而其实用性更广.
 
+线性链表逻辑结构图:
+<img src="picture/11_3.png" style="zoom:50%;" />
+线性链表的数据单元包含两个部分 : 指针域和数据域
+链表的头节点的数据域不存放有效数据,它的指针域存放实际数据链表的第一个数据单元的地址.
+尾节点的指针域置为NULL,作为链表结束的标志
+最开始的实际数据链表建立之初, head = tail 表示实际数据链表为空, 即链表中没有任何有效数据.
 
+链表中定义聂店的结构体类型一般格式:
+```c
+struct 节点结构体类型名
+{
+	数据成员定义;
+	struct 节点结构体类型名 *指针变量名;
+}
+```
 
+2. 线性链表的基本操作
+  基本操作: 创建、插入、删除、输出和销毁
+  (1) 链表的创建操作
+  链表创建是指从无到有建立起一个链表, 往空链表中依次插入若干个节点,并保持节点之间的前驱和后继的关系.
 
+  基本思想:首先创建—个头节点,让头指针head和尾指针tail都指向该节点,并设置该节点的指针域为NULL(链尾标志);然后为实际数据创建—个节点,用指针pnew指向它,并将实际数据放在该节点的数据域,其指针域置为NULL ;最后将该节点插入到tail所指向节点的后面,同时使tail指向pnew所指向的节点。其具体操作见下面的函数Create_ LinkList。
 
+```c
+//链表创建操作函数函数Create_LinkList
+NODE *Create_ LinkList ( )
+{
+	NODE *head, *tail, *pnew;
+		int score;
+	head = (NODE *)malloc (sizeof (NODE) ) ;//创建头节点
+	if (head == NULL)	//创建失败,则返回
+		{
+		printf ("no enough memory! \n") ;
+		return (NULL) ;
+		}
+		head->next = NULL;//头节点的指针域置NULL
+		tail = head;//开始时尾指针指向头节点
+		printf ("input the score of students: \n") ;
+		while (1) //创建学生成绩线性链表
+		{
+			scanf("号d", &score) ;//输入成绩 
+			if (score < 0)//成绩为负,循环退出
+				break;
+			pnew = (NODE *)malloc (sizeof (NODE)); //创建一新节点
+			if (pnew == NULL)//创建新节点失败,则返回
+			{
+				printf ("no enough memory! \n") ;
+				return (NULL) ;
+			}
+			pnew->score = score;//新节点数据域放输入的成绩
+			pnew->next = NULL;//新节点指针域置NULL
+			tail->next = pnew; //新节点插入到链表尾
+			tail = pnew; //尾指针指向当前的尾节点
+		}
+		return (head); //返回创建的链表的头指针
+	}
+```
+<img src="picture/11_4.png" style="zoom:50%;" />
 
+(2)链表的插入操作
+插入操作是在第i个节点Ni与第i+1节点Ni+1之间插入一个新的节点N ,使线性表
+的长度增1,且Ni与Ni+1的逻辑关系发生如下变化:插入前,Ni是Ni+1的前驱,Ni+1
+是Ni的后继;插入后,新插入的节点N成为Ni的后继、Ni+1的前驱。
 
+基本思想:通过单链表的头指针head ,首先找到链表的第一个节点 ;然后顺着节点
+的指针域找到第i个节点,最后将pnew指向的新节点插入到第i个节点之后。插入时首先将新节点的指针域指向第i个节点的后继节点,然后再将第i个节点的指针域指向新节点。注意顺序不可颠倒。当i=0时,表示头节点。
+
+```c
+void Insert_ LinkList (NODE *head, NODE *pnew, int i)
+{
+	NODE *p;
+	int j;
+	p = head;
+	for(j = 0;j< i &&p!= NULL; j++) // 将P指向要插入的第i个节点
+		p = p->next;
+	if (p == NULL) //表明链表中第i个节点不存在
+	{
+		printf ("the 号d node not foundt! \n"，i) ;
+		return;
+	}
+	pnew- > next = P-> next ;	//将插入节点的指针域指向第i个节点的后继节点
+	p -> next = pnew;//将第i个节点的指针域指向插入节点
+}
+```
+<img src="picture/11_5.png" style="zoom:50%;" />
+
+(3) 链表的删除操作
+删除操作是删除链表中的第i个节点Ni ,使线性表的长度减1。删除前,节点Ni-1
+是Ni的前驱,Ni+1是Ni的后继 ; 删除后,节点Ni+1成为Ni+1的后继。
+
+基本思想 : 通过单链表的头指针head ,首先找到链表中指向第i个节点的前驱节点
+的指针p和指向第i个节点的指针q ;然后删除第i个节点。删除时只需执行p ->next = q->next即可,当然不要忘了释放节点i的内存单元。注意当i=0时,表示头节点,是不
+可删除的。
+
+```c
+void Delete_ LinkList (NODE *head,int i)
+{
+	NODE *p, *q;
+	int j;
+	if(i==0)//删除的是头指针，则返回
+		return;
+	P = head;
+	for (j =1; j <i && p->next != NULL; j++)
+		P = p->next; //将p指向要删除的第i个节点的前驱节点
+	if (p->next == NULL) / /表明链表中第i个节点不存在
+	{
+		printf ("the 8d node not foundt! \n"，i) ;
+		return;
+	}
+	
+	q = p->next; // q指向待删除的节点i
+	p->next = q->next;//删除节点I,也可写成p->next = p->next->next;
+	free(q) ;//释放节点I的内存单元
+}
+```
+<img src="picture/11_6.png" style="zoom:50%;" />
+
+(4)链表的输出操作
+输出操作是指,将链表中节点的数据域的值显示出来。如果在输出过程中,对数据
+进行相应的比较,则可实现对链表的检索操作。
+基本思想:通过单链表的头指针head ,使指针p指向实际数据链表的第一个节点,
+输出其数据值, 接着p又指向下一个节点,输出其数据值,如此进行下去,直到尾节点
+的数据项输出完为止,即p为NULL为止。
+```c
+void Display_LinkList(NODE *head)
+{
+	NODE *p;
+	for(p = head->next; p!=NULL; p=p->next)
+		printf("%d",p->score);
+	printf("\n");
+}
+```
+(5)链表的销毁操作
+销毁操作是将创建的链表从内存中释放掉, 达到销毁的目的.
+
+基本思想:每次删除头节点的后继节点 , 最后删除头节点。注意 , 不要以为只要删
+除了头节点就可以删除整个链表，要知道链表是一个节点一个节点建立起来的, 所以销毁它也必须一个一个节点的删除才行。
+
+```c
+void Free_LinkList(NODE *head)
+{
+	NODE *p, *q;
+	p=head;
+	while(p->next !=NULL)
+	{
+		q=p->next;
+		p->next = q->next;
+		free(q);
+	}
+	free(head);
+}
+```
+
+3. 线性链表应用举例
+建立一个学生成绩的线性链表,然后对其进行插入、删除、显示, 最后销毁该链表.
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Grade_Info
+{
+	int score;
+	struct Gread_Info *next;
+}
+typedef struct Grade_Info NODE;
+
+NODE *Create_LinkList();
+void Insert_LinkList(NODE *head, NODE *pnew, int i);
+void Delete_LinkList(NODE *head, int i);
+void Display_LinkList(NODE *head);
+void Free_LinkList(NODE *head);
+
+void main()
+{
+	NODE *head, *pnew;
+	head = Create_ LinkList();//创建链表
+	if(head == NULL)//创建失败
+		return; 
+	printf ("after create: ");
+	Display_LinkList(head);//输出链表中的值
+	pnew = (NODE *) malloc (sizeof (NODE)); //新建一插入的节点
+	if (pnew == NULL)//创建失败,则返回
+	{
+		printf ("no enough memory! \n") ;
+		return;
+	}
+	pnew->score = 88;
+	Insert_ LinkList (head, pnew， 3); //将新节 点插入节点3的后面
+	printf ("after insert: ") ;
+	Display_ LinkList (head) ;//输出链表中的值
+	Delete_ LinkList (head,3);//删除链表中节点3
+	printf ("after delete: ");
+	Display_ LinkList(head);//输出链表中的值
+	Free_LinkList(head);//销毁链表
+}
+```
 
 
 
