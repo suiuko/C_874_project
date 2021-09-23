@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																																				
+>																																																																																																																																								
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -2613,7 +2613,7 @@ void Insert_ LinkList (NODE *head, NODE *pnew, int i)
 删除操作是删除链表中的第i个节点Ni ,使线性表的长度减1。删除前,节点Ni-1
 是Ni的前驱,Ni+1是Ni的后继 ; 删除后,节点Ni+1成为Ni+1的后继。
 
-基本思想 : 通过单链表的头指针head ,首先找到链表中指向第i个节点的前驱节点
+**基本思想** : 通过单链表的头指针head ,首先找到链表中指向第i个节点的前驱节点
 的指针p和指向第i个节点的指针q ;然后删除第i个节点。删除时只需执行p ->next = q->next即可,当然不要忘了释放节点i的内存单元。注意当i=0时,表示头节点,是不
 可删除的。
 
@@ -2643,9 +2643,10 @@ void Delete_ LinkList (NODE *head,int i)
 (4)链表的输出操作
 输出操作是指,将链表中节点的数据域的值显示出来。如果在输出过程中,对数据
 进行相应的比较,则可实现对链表的检索操作。
-基本思想:通过单链表的头指针head ,使指针p指向实际数据链表的第一个节点,
+**基本思想**:通过单链表的头指针head ,使指针p指向实际数据链表的第一个节点,
 输出其数据值, 接着p又指向下一个节点,输出其数据值,如此进行下去,直到尾节点
 的数据项输出完为止,即p为NULL为止。
+
 ```c
 void Display_LinkList(NODE *head)
 {
@@ -2720,9 +2721,145 @@ void main()
 }
 ```
 
+### 4 联合体
+#### 4.1 联合体类型的定义
+联合体类型的定义格式
+```c
+union [联合体类型名]
+{
+	数据类型名1 成员名1;
+	数据类型名2 成员名2;
+	....
+	数据类型名n 成员n;
+};
+```
+
+```c
+union UData
+{
+	short i;
+	char ch;
+	float f;
+};
+//联合体UData包含三个成员,他们使用同一地址的内存.
+//联合体的大小是成员中占内存最大的成员的大小.
+//UData的大小由最大的成员确定, float f 的大小为4, 所以联合体的大小也为4
+```
+<img src="picture/11_7.png" style="zoom:50%;" />
+像结构体类型定义一样, 联合体类型定义时是不分配内存单元的,只有定义联合体类型变量才分配内存单元.
+
+结构体:
+```c
+struct SData
+{
+	short i;
+	char ch;
+	float f;
+}
+```
+<img src="picture/11_8.png" style="zoom:50%;" />
+
+#### 4.2 联合体变量的定义和引用
+1. 联合体变量的定义
+<img src="picture/11_9.png" style="zoom:50%;" />
+
+2. 联合体变量的引用
+对联合体成员的引用格式与对结构体成员的引用格式相同,如果通过联合体变量来引用成员,则要使用”.”, 如果是通过联合体指针来引用成员,则要使用”->”。例如:`union UData data, *p,d[10]`
+
+#### 4.3 联合体变量的赋值
+1. 联合体变量的赋初值
+定义联合体变量时可以对变量赋初值, 但只能对变量的第-一个成员赋初值,不可像结构体变量那样对所有的成员赋初值。
+```c
+union UData data = {10} ;//10赋给成员i
+union UData data = {'A'} ;//' A'赋给成员i,即i的值为65 ( ' A'的ASCII码)
+union UData data = {10， 'A'， 12.5}; //错误, {}中只能有一个值
+union UData data = 10;//错误,初值必须用{ }括起来
+```
+
+2. 联合体变量在程序中赋值
+1) 定义了联合体变量以后, 如果要对其赋值, 则只能通过对其成员赋值, 不可对其整体赋值.
+
+```c
+union UData data, *p,d[10];
+data = [10];//错误
+data = 10;//错误
+data.i =10;//正确,将10赋给data的成员i
+p = &data; // p指向Ddata
+p->f =12.5; //正确,将12.5赋给data的成员f
+d[0].ch='A' //正确,将'A'赋给d[0]的成员ch
+```
+2) 像相同结构体类型的变量之间可以彼此赋值一样, 具有相同联合体类型的变量之间也可以相互赋值.
+```c
+union UData data1 = {10}, data2;
+data2 = data1;  //正确
+```
+
+几点说明:
+1)由于联合体变量的各成员共享同一地址的内存单元,所以在对其成员赋值的某一时刻, 存放的和起作用的将是最后一次存入的成员值.
+```c
+union UData data;
+data.i=10;
+data.ch='a';
+data.f=12.5;
+```
+2)对联合体变量的某个成员赋值时, 也该变量其他成员的值, 因为他们共享一个内存地址.
+3)由于联合体变量所有成员共享同一内存空间,因此联合体变量与其各成员的地址相同。
 
 
+### 5 位域
+如果要访问结构体或联合体中的成员所对应内存单元的若干位,就需要用位域
 
+对位域成员的引用方法与结构体或联合体成员引用方法- -样,用”."或”->”来引用这些成员。
+```c
+#include <stdio.h>
+struct MyStruct
+{
+	unsigned char a : 1 ;
+	unsigned char b : 5;
+	unsigned short c : 10;
+};
+union MyUnion
+{
+	unsigned short x;
+	struct MyStruct y ;
+];
+void main ( )
+{
+	union MyUnion m = { (unsigned short) 0XFFF1] };
+	printf("m.y.a = %uln", m.y.a) ;
+	printf("m.y.b = %uln", m.y.b) ;
+	printf("m.y.c = %uln", m.y.c) ;
+	m.y.b=0;
+	printf ("%Xn", m.x) ;
+```
+<img src="picture/11_10.png" style="zoom:50%;" />
 
+在VC下, C的数据类型是short, 与 a 、b 的数据类型 char不一致, 所以C不可存取者16位的第7位到第15位的数据,而是起默认值0
+<img src="picture/11_11.png" style="zoom:50%;" />
 
+### 6 枚举类型变量的定义和引用
+枚举就是吧这种类型数据可取的值一一列举出来,一个枚举型变量取值仅限于列出值的范围.
+枚举数据类型定义:
+```c
+enum 枚举类型名
+{
+	枚举元素表
+};
 
+//例子: 定义表示日期的枚举类型 weekday
+enum weekday{sun, mon, tue, wed, thu, fir, sat};
+```
+遇到枚举元素列表时, 编译程序就把其中第一个标识符赋0值, 第二、第三...个标识符依次赋1,2....
+因此枚举值赋给枚举变量时,该变量实际得到一个整数值.
+```c
+enum weekday{sun, mon, tue, wed, thu, fir, sat};
+today = sun;
+printf("today = %d",today);
+//输出的结果将是L today = 0;
+```
+同时也可以在枚举类型定义时指定枚举元素的值.
+```c
+enum weekday(sun =7;mon=1,tue,wed,thu,fri,sat);
+//这时, sun =7, mon =1, tue 以后的元素的值 从mon =1, tue =2, wed =3 依次类推
+```
+枚举元素是常量,在程序中不可对它赋值
