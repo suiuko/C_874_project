@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																																											
+>																																																																																																																																																
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -2935,6 +2935,111 @@ if(fp == NULL)
 
 //如果以写的方式打开C盘bak目录下的二进制文件wang.bat,
 //调用fopen函数的语句需要改: fp = fopen("C:\\bak\\wang.dat","wb");
-```c
-
 ```
+在程序开始运行时, 系统自动打开如下三个标准文件,并分别定义了文件指针.
+标准输入文件------- stdin :指向终端输入(一般为键盘)如果程序中指定要从stdin所指的文件输入数据, 就是从终端键盘上输入数据。
+标准输出文件------- stdout : 指向终端输出(一般为显示器)
+标准错误文件------- stderr : 指向终端标准错误输出(一般为显示器)
+
+2. 关闭文件
+调用`fclose`函数
+`int *fclose(FILE *filepointer);`
+说明:
+> filepointer 是文件指针, 通常这个参数就是fopen 函数的返回值;
+> 功能 :  关闭文件指针所指向的文件.
+> 返回值 : 如果正常关闭了文件 , 则函数返回值为0, 否则,返回非0
+
+```c
+FILE *fp;
+fp = fopen("wang.txt","r+");
+if(fp == NULL)
+{
+	printf("the file: wang.txt not found!");
+	exit(-1);
+}
+...
+fclose(fp); //关闭该文件
+```
+
+#### 5.2 文件的读写
+函数主要包括:
+<img src="picture/12_5.png" style="zoom:50%;" />
+
+1. 字符读写函数 `fgetc` 和 `fputc`
+(1) fgetc 函数原型
+`int fgetc(FILE *filepointer);`
+功能: 从**文件指针filepointer中, 读入一个字节(字符)**, 同时将读写位置指针向前移动1个字节(即指向下一个字符).
+返回值: 如果读取正常, 返回读到的字节值; 如果读到的文件尾或出错, 则返回EOF
+
+(2) fputc 函数
+`int fputc(int c, FILE *filepointer);`
+功能: 将**字符数据C输出到文件指针filepointer 所指向的文件中去**, 同时将读写位置指针向前移动一个字节(即 指向下一个写入位置)
+返回值: 成功, 返回值就是输出的字符数据C, 否则,返回EOF
+
+```c
+//输入字符并存储到指定文件中
+for( ; (ch = getchar())!='@'; )
+	fputc(ch,fp1);//输入字符并存储到文件中
+fclose(fp1); //关闭文件
+
+//顺序输出文件的内容
+fp2 = fopen(argv[1] , "rt");
+for( ; (ch = fgetc(fp2))!=EOF;)
+	putchar(ch); //顺序读入并显示
+fclose(fp2); //关闭打开的文件
+
+//复制原文件到目标文件中
+FILE *input, *output; //input: 原文件指针, output:目标文件指针
+for( ; (!feof(input)) ;)
+	fputc(fgetc(input),ouput);
+
+fclose(input);//关闭原文件;
+fclose(ouput);//关闭目标文件
+```
+
+判断文件是否结束的库函数`feof`
+`int feof (FILE *filepointer);`
+功能:在执行读文件操作时,如果遇到文件尾,则函数返回逻辑真(1);否则,则返回逻辑假(0).
+ **!feof(input)表示源文件(用于输入)为结束,循环继续**
+
+`fgetc`和 `fputc`函数多次提到文件读写位置指针,有什么用? 与文件指针指针有什么不同?
+> 在文件内部有一个位置指针, 用来指向文件的当前读写字节. 
+> 文件打开时, 该指针总是指向文件的第一个字节. 使用fgetc函数后, 该位置指针将向后移动一个字节. 因此可连续使用fgetc函数,读取多个字符.
+> 但应注意文件指针和文件内部的位置指针不是一回事, 文件指针是指向整个文件的, 需要在程序中定义说明,只要不重新赋值, 文件指针的值是不变的.
+> 文件内部的位置指针用于表示文件内部的当前读写位置. 每读写一次,该指针均向后移动. 不需要定义说明.
+
+2. 字符串读写函数`fgets` 和` fputs`
+  字符串读写函数`fgets` 和`fputs` 是以字符串的形式对文件进行读写的函数, 每次可以从文件读出(指定长度)或向文件写入一个字符串.
+
+(1)fgets函数
+`char *fgets(char *s, int n, FILE *filepointer);`
+功能: 从文件指针 filepointer 所指向的文件中, **读取长度最大为n-1的字符串,并在字符串的末尾加上结束符号'\0',然后将字符串存放到S中.**
+同时将读写位置指针向前移动实际读取的字符串长度(≤n-1 )个字节。<u>当从文件中读取第n- 1个字符后或读取数据过程中遇到换行符‘\n’后,函数返回。因此, s中存放的字符串的长度不一定正好是n- 1。</u>
+返回值: 如果操作成功,返回 字符串指针, 失败返回NULL.
+
+(2) fputs函数
+`int fputs(char *s, FILE *filepointer);`
+功能:**将存放在s中的字符串写到文件指针filepointer 所指向的文件中去，同时将读写位置指针向前移动字符串长度个字节。**注意, <u>fputs函数不会将字符串结尾符'\0'写入文件,</u><u>也不会自动向文件写入换行符,</u>如果需要写入一行文本,s字符串中必须包含^n’。
+返回值:如果操作成功,函数返回值就是最后写入文件的字符值;否则,返回EOF。
+
+3. 数据块读写函数`fread`和 `fwrite`
+(1) `fread`函数
+`unsigned fread(void *ptr, unsigned size, unsigned n, FILE *filepointer);`
+功能: 从filepointer 所指向的文件中读取N个数据项, 每个数据项的大小是 size个字节, 这些数据将被存储到ptr所指向的内存中, 同时, 将读写位置指针向前移动 n * size个字节,
+返回值: 成功,返回值就是读取的数据项的个数(不是字节个数), 出错或者遇到文件尾,返回0
+
+(2) `fwrite` 函数
+`unsigned fwrite(void *ptr, unsigned size, unsigned n, FILE *filepointer);`
+功能: 将ptr所指向的内存中存放的N个大小为SIZE个字节的数据项写入到filepointer所指向的文件中, 实际要写入数据的字节数是 n * size. 同时, 将读写位置指针向前移动 n * size 个字节.
+返回值: 成功,返回值就是实际写入的数据项的个数, 出错,返回0
+
+`fread`和 `fwrite` 一般用于二进制文件的输入和输出.
+
+
+4. 格式化读写函数`fscanf` 和 `fprinf`
+这两者的功能和输出函数`scanf` `printf`相似, 区别在于`fscanf``fprintf`函数的操作对象是指定文件, 而`scanf`和`printf`函数的操作对象是标准输入(stdin)和输出(stdout)文件,即键盘和显示器.
+(1)`fscanf`函数
+`int fscanf(FILE *filepointer, const char *format[,address,..])`
+功能 : 从filepointer 所指向的文件中读取数据。除了多了一个文件指针的参数外,其他方面与scanf函数完全相同。
+返回值 : 如果操作成功,则函数返回值就是读取的数据项的个数;如果操作出错或遇到文件尾,则返回EOF。
+
