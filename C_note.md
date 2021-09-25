@@ -549,7 +549,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																																																
+>																																																																																																																																																	
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -3043,3 +3043,74 @@ fclose(ouput);//关闭目标文件
 功能 : 从filepointer 所指向的文件中读取数据。除了多了一个文件指针的参数外,其他方面与scanf函数完全相同。
 返回值 : 如果操作成功,则函数返回值就是读取的数据项的个数;如果操作出错或遇到文件尾,则返回EOF。
 
+(2)`fprintf`函数
+`int fprintf(FILE *filepointer, const char *format[,address,....]);`
+功能 : 将表达式输出到`filepointer`所指向的文件中,除了多了一个文件指针的参数外, 其他方面与printf函数完全相同.
+返回值 : 如果操作成功, 则函数返回值就是写入到文件中数据的字节个数, 如果操作出错,返回EOF.
+```c
+fpritnf(fp,"%d,%6.2f",i,t); //将i和t按%d, &6.2f格式输出到FP文件中
+fscanf(fp,"&d,&f",&i,&t);// 若文件中有3,4.5,则将3送入i,4.5送入t
+```
+注意 : 文件格式化输出函数`fprintf`总是以字符串的形式将数据信息存放到文件中 , 而不是以数值的形式存放到文件中, 不管打开的是文本文件还是二进制文件.
+
+#### 5.3 文件读写函数选用原则
+`fread()``fwrite()`函数可以完成文件的任意数据读/写操作.
+>读/写1个字符(或字节)数据时:选用fgetc( )和fputc( )函数。
+>读/写1个字符串时:选用fgets( )和fputs( )函数。
+>读/写1个(或多个)不含格式的数据时:选用fread( )和fwrite( )函数。
+>读/写1个(或多个)含格式的数据时:选用fscanf( )和fprintf( )函数。
+
+对使用文件类型的要求:
+>fgetc( )和fputc( )函数主要对文本文件进行读写,但也可对二进制文件进行读写。
+>fgets( )和fputs( )函数主要对文本文件进行读写,对二进制文件操作无意义。
+>fread( )和fwrite( )函数主要对二进制文件进行读写,但也可对文本文件进行读写。
+>fscanf( )和fprintf( )函数主要对文本文件进行读写,对二进制文件操作无意义。
+
+### 6 文件的定位读写
+随机读写:可以移动文件内部的位置指针到需要读写的位置,在进行读写.
+实现随机读写的关键是按要求移动位置指针, 这称为文件的定位.
+
+(1)`rewind`函数
+`void rewind(FILE *filepointer);`
+功能: 将filepointer 所指向的文件的位置指针重新置回到文件的开头.
+返回值: 无
+<img src="picture/12_6.png" style="zoom:50%;" />
+
+(2)`fseck`函数
+`int fseek(FILE *filepointer, long offset, int whence);`
+功能: 将filepointer所指向的文件的位置指针移动到特定的位置. 这个位置由`whence`和`offset`决定,即将位置指针移动到距离`whence`的`offset`字节处, `whence`的值见下表
+如果`offset`为正值, 表明新的位置在`whence`的后面, 如果`whence`是负值,表明新的位置在`whence`的前面.
+<img src="picture/12_7.png" style="zoom:50%;" />
+
+(3)`ftell`
+`long ftell(FILE *filepointer)`
+功能: 返回`filepointer`所指向的文件的当前位置指针的值(用相对文件开头的位移量表示)
+返回值: 如果操作成功,返回当前位置指针的值. 如果出错,返回-1L
+
+
+```c
+//求文件的长度
+#include<stdio.h>
+#include<stdlib.h>
+void main(int argc, char *argv[])
+{
+	FILE *fp;
+	long length;
+	if(argc != 2)  //命令行参数有误
+	{
+		printf("Useage : 执行文件名 filename\n");
+		exit(0);
+	}
+	
+	fp = fopen(argv[1],"rb");//以读的方式打开文件
+	if(fp == NULL) //打开文件失败
+	{
+		printf("file not found!\n");
+		exit(0);
+	}
+	fseek(fp, 0L,SEEK_END)// 文件位置指针指向文件尾.
+	length = ftell(fp); //取文件位置指针当前的位置, 即文件的长度
+	printf("Length of file is %ld bytes\n",length); //显示文件的长度
+	fclose(fp); //关闭文件
+}
+```
