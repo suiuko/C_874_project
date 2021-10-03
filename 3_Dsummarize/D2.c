@@ -194,4 +194,59 @@ void Exchange(DataType A[],int m,int n,int arragSize){
 
 思想:最少的时间查找X 就是折半查找
 */
-void 
+void SearchExchangeInsert(ELemType A[],ElemType x){
+    int low = 0, high= n-1, mid;
+    while(low<=high){
+        mid=(low+high)/2; 
+        if(A[mid]==x) 
+            break;
+        else if(A[mid]<x)
+            low = mid +1; 
+        else 
+            high = mid -1;
+    } //下面两个if只会执行一个
+    if(A[mid] == x&&mid!=n-1){
+        //若最后一个元素与X相等, 则不存在与其后继交换的操作
+        t =A[mid];
+        A[mid] = A[mid+1];
+        A[mid+1] =t;
+    }
+    if(low>high){
+        //查找失败,插入元素X
+        for(int i=n-1;i>high;i--) //后移元素
+            A[i+1] = x; 
+    }
+}
+
+/*
+=========10.========
+给定一个含N个整数的数组,请设计一个在时间上尽可能高效的算法,找出数组中未出现的最小正整数
+例如:{-5,3,2,3}中未出现的最小正整数为1
+
+1)要求在时间上尽可能高效，因此采用空间换时间的办法。分配一个用于标记的数组B[n],
+用来记录A中是否出现了1~n中的正整数，B[0]对应正整数1, B[n-1]对应正整数n,
+初始化B中全部为0。由于A中含有n个整数，因此可能返回的值是1~n+1，当A中n
+个数恰好为1~n时返回n+1.当数组A中出现了小于等于0或大于n的值时,会导致1~
+n中出现空余位置，返回结果必然在1~n中，因此对于A中出现了小于等于0或大于n
+的值，可以不采取任何操作。
+经过以上分析可以得出算法流程:从A[0]开始遍历A,若0<A[i]<=n.则令B[A[i]-1]=1;
+否则不做操作。对A遍历结束后，开始遍历数组B，若能查找到第一一个满足B[i]==0的下标i，
+返回i+1即为结果，此时说明A中未出现的最小正整数在1~n之间。若Bii]全部不为0，返
+回i+1 (跳出循环时i=n，i+1 等于n+1)，此时说明A中未出现的最小正整数是n+1。
+*/
+
+int findMissMin(int A[], int n)
+{
+    int i, *B;
+    B=(int *)malloc(sizeof(int)*n);// 分配空间
+    memset(B,0,sizeof(int)*n); //赋初值为0
+    for(i =0;i<n;i++)
+        if(A[i]>0&&A[i]<=n) //若A[i]的值介于1~n,则标记数组B
+            B[A[i]-1]=1;
+    for(i=0;i<n;i++)
+        if(B[i]==0)
+            break;
+    return i+1; //返回
+}
+
+
