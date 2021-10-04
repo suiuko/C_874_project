@@ -213,7 +213,8 @@ p->next = s;
 扩展:对某一结点进行前插操作
 前插操作是指在某结点的前面插入一个新结点, 后插操作的定义刚好相反. 在单链表插入算法中, 经常使用后插操作.
 前插操作可以找i-1个结点,然后进行后插操作.
-此外，可采用另一种方式将其转化为后插操作来实现，设待插入结点为*s,将*s插入到 * p的前面。我们仍然将 * s插入到 * p的后面，然后将p->data与s->data交换，这样既满足了逻辑关系，又能使得时间复杂度为0(1)。算法的代码片段如下:
+此外，可采用另一种方式将其转化为后插操作来实现，设待插入结点为 * s,将 * s插入到 * p的前面。我们仍然将 * s插入到 * p的后面，然后将p->data与s->data交换，这样既满足了逻辑关系，又能使得时间复杂度为0(1)。算法的代码片段如下:
+
 ```c
 s -> next = p->next; 
 p->next=s;
@@ -232,8 +233,8 @@ free(q); //释放结点的存储空间
 ```
 扩展:删除结点 * p。
 要删除某个给定结点 * p,通常的做法是先从链表的头结点开始顺序找到其前驱结点，然后执行删除操作，算法的时间复杂度为O(n)。
-其实，删除结点 * p的操作可用删除 * p的后继结点操作来实现，实质就是将其后继结点的值
-赋予其自身，然后删除后继结点，也能使得时间复杂度为0(1)。
+其实，删除结点 * p的操作可用删除 * p的后继结点操作来实现，实质就是将其后继结点的值赋予其自身，然后删除后继结点，也能使得时间复杂度为0(1)。
+
 ```c
 q=p->next;//令q指向*p的后继结点
 P- >data=p->next->data ;//和后继结点交换数据域
@@ -242,3 +243,294 @@ free (q) ;//释放后继结点的存储空间
 ```
 
 7. 求表长操作
+设置一个计数器变量,每次访问一个结点,计数器加1
+
+#### 3.3 双链表
+双链表有两个指针, prior 和 next  分别指向前驱结点、后继结点
+<img src="picture/D2_9.png" style="zoom:50%;" />
+
+双链表描述:
+```c
+typedef struct DNode{
+	ElemType data;  //数据域
+	struct Dnode *prior,*next; //前驱和候机指针
+}DNode, *DLinklist;
+```
+1. 双链表的插入操作
+<img src="picture/D2_10.png" style="zoom:50%;" />
+
+```c
+s->next = p->next; //将结点*s插入到结点*p之后
+p->next->prior=s;
+s->prior=p;
+p->next=s;
+```
+
+2. 双链表的删除操作
+<img src="picture/D2_11.png" style="zoom:50%;" />
+
+```c
+p->next=q->next; //步骤1
+q->next->prior=p; //步骤2
+free(q);  
+
+```
+
+#### 3.4 循环链表
+1. 循环单链表
+循环单链表和单链表的区别在于,表中最后一个结点的指针不是NULL,而改为指向头结点,从而整个链表形成一个环.
+再循环单链表中,表尾结点 * r的next域指向L, 表中没有指针域为NULL的结点,因此,循环单链表的判空条件不是头结点是否为空,**而是它是否等于头指针**
+<img src="picture/D2_12.png" style="zoom:50%;" />
+
+2. 循环双链表
+在循环双链表中,某结点 * p 为尾结点时, `p->next==L` 当循环双链表为空表时,其头结点的`prior`域和`next`域都等于L.
+<img src="picture/D2_13.png" style="zoom:50%;" />
+
+#### 3.5 静态链表
+<img src="picture/D2_14.png" style="zoom:50%;" />
+
+
+## 第三章 栈和队列
+### 1 栈
+#### 1.1 栈基本概念
+
+<img src="picture/D3_1.png" style="zoom:50%;" />
+1. 定义
+只能在一段进行操作的线性表.
+特性: 后进先出
+2. 栈的基本操作
+```c
+InitStack(&S)//初始化一个空栈S。
+StackEmpty(S)//判断一个栈是否为空，若栈s为空则返回true，否则返回false.
+Push(&S,x)//进栈，若栈s未满，则将x加入使之成为新栈顶。
+Pop(&S,&x)//出栈，若栈s非空，则弹出栈顶元素，并用x返回。
+GetTop(s,&x)//读栈项元素，若栈s非空，则用x返回栈顶元素。
+DestroyStack(&S)//销毁栈，并释放栈s占用的存储空间(“&” 表示引用调用)。
+```
+
+#### 1.2 栈的顺序存储结构
+1. 顺序栈的实现.
+采用顺序存储的栈叫顺序栈, 利用一组地址连续的存储单元存放自栈底到栈顶的数据元素, 同时附设一个指针(top)指示当前栈顶的位置.
+栈的顺序存储类型
+```c
+#define MaxSize 50 
+typedef struct{
+	ElemType data[MaxSize]; 
+	int top;
+}SqStack;
+```
+
+栈顶指针: `s. top`,初始时设置`s. top=-1`; 栈顶元素: `s. data[S. top]`
+进栈操作:栈不满时，栈顶指针先加1,再送值到栈顶元素。
+出栈操作:栈非空时，先取栈项元素值，再将栈顶指针减1.
+栈空条件:` s. top==-1`;栈满条件: `S. top==MaxSize-1`;栈长:` s.top+1`.
+
+2. 顺序栈的基本运算
+<img src="picture/D3_2.png" style="zoom:50%;" />
+
+(1) 初始化
+```c
+void InitStack(SqStack &s){
+	s.top=-1;//初始化指针
+}
+
+```
+(2)判栈空
+```c
+bool StackEmpty(SqStack S){
+	if(S.top==-1)  //stack empty
+		return true; 
+	else 
+		return false;
+}
+```
+(3)进栈
+```c
+bool Push(SqStack &S,ElemType x){
+	if(S.top == MaxSize-1)  //full stack, return error
+		return false;
+	S.data[++S.top] = x;  //指针先加1, 再入栈
+	return true;
+}
+```
+(4)出栈
+```c
+bool Pop(SqStack &S,ElemType &x){
+	if(S.top==-1) //empty stack ,error
+		return false;
+	x=S.data[top--]; //先出栈,指针再减1
+	return true;
+}
+```
+(5)读栈顶元素
+```c
+bool GetTop(SqStack S,ElemType &x){
+	if(S.top ==-1)
+		return false;
+	x = S.data[S.top];
+	return true;
+}
+
+```
+
+3. 共享栈
+
+两个站的栈顶指针都指向栈顶元素, top0=-1时,0号栈为空, top1=MaxSize时,1号栈为空; 仅当两个站定指针相邻(top1-top0=1)时,判断为栈满.
+当0号栈进栈时,top0先加1再赋值,1号栈进栈时,先减1再赋值; 出栈时刚好相反.
+
+#### 1.3 栈的链式存储结构
+链栈, 优点是便于多个栈共享存储空间和提高效率.
+通常采用单链表实现, 并规定所有操作都是在单链表的表头进行的
+<img src="picture/D3_3.png" style="zoom:50%;" />
+
+```c
+typedef struct Linknode{
+	ElemType data;
+	struct Linknode *next; 
+}*LiStack;
+
+```
+
+### 2 队列
+#### 2.1 队列的基本概念
+1. 队列定义
+只允许在表的一端进行插入,而在表的另一段进行删除.
+最早排队的也是最早离队的, 特性: 先进先出
+<img src="picture/D3_4.png" style="zoom:50%;" />
+
+2. 队列常见的基本操作
+```c
+InitQueue (&Q)//初始化队列，构造-一个空队列Q。
+QueueEmpty (Q)//判队列空，若队列Q为空返回true,否则返回false
+EnQueue(&Q,x)//入队，若队列Q未满，将x加入，使之成为新的队尾
+DeQueue (&Q, &x)//出队，若队列e非空，删除队头元素，并用x返回
+GetHead(Q, &x)//读队头元素，若队列Q非空，则将队头元素赋值给X。
+
+```
+#### 2.2 队列的顺序存储结构
+1. 队列的顺序存储
+顺序实现:分配一块连续的存储单元存放队列中的元素,并附设两个指针: 队头指针`front`指向队头元素, 队尾指针`rear`指向队尾元素的下一个位置.
+
+```c
+	#define MaxSize 50
+	typedef struct{
+		ElemType data[MaxSize]; 
+		int front, rear; //队头指针和队尾指针
+	}SqQueue;
+```
+初始状态(队空条件): `Q. front==Q. rear==0`
+进队操作:队不满时，先送值到队尾元素，再将队尾指针加1。
+出队操作:队不空时，先取队头元素值，再将队头指针加1。
+
+2. 循环队列
+当队首指针 `Q.front = MaxSize-1`后,再前进一个位置就自动到0,这可以利用除法取余(%)来实现.
+初始时:` Q. front=Q. rear=0`
+队首指针迸1`Q. front= (Q. front+1) %MaxSize`
+队尾指针进1:`Q. rear= (Q. rear+1) 8MaxSize`
+队列长度: `(Q. rear+MaxSize-Q. front) 8MaxSize`
+
+队空条件: `Q.front == Q.rear`
+为了区别是队空开始队满,有三种处理方式:
+<img src="picture/D3_5.png" style="zoom:50%;" />
+
+3. 循环队列的操作
+(1)初始化
+```c
+void InitQueue(SqQueue &Q){
+	Q.rear=Q.front=0;  //初始化队首、队尾指针
+}
+```
+(2)判队空
+```c
+bool isEmpty(SqQueue Q){
+	if(Q.rear ==Q.front)
+		return true; //队空条件
+		else return false;
+}
+```
+(3)入队
+```c
+bool EnQueue(SqQueue &Q,EeleType x){
+	if((Q.rear+1)%MaxSize==Q.front)
+		return false; //队满则报错
+	Q.data[Q.rear] = x;
+	Q.rear=(Q.rea+1)%MaxSize;//队尾指针加1取模
+	return true;
+}
+```
+
+(4)出队
+```c
+bool DeQueue(SqQueue &Q,ElemType &x){
+	if(Q.rear == Q.front)
+		return false; //队空报错
+	x=Q.data[Q.front];
+	Q.front = (Q.front+1)%MaxSize; //队头指针加1取模
+	return true;
+}
+```
+
+#### 2.3 队列的链式存储结构
+1. 队列的链式存储
+<img src="picture/D3_6.png" style="zoom:50%;" />
+```c
+typedef struct{
+	ElemType data;
+	struct LinkNode *next;
+}LinkNode;
+typedef struct{  //链式队列
+	LinkNode *front,*rear; //队列的表头和队尾指针
+}LinkQueue;
+```
+当`Q.front== NULL`且`Q.rear==NULL`时,链式队列为空.
+
+带头结点的链式队列
+<img src="picture/D3_7.png" style="zoom:50%;" />
+
+
+2. 链式队列的基本操作
+(1)初始化
+```c
+void InitQueue(LinkQueue &Q){
+	Q.front=Q.rear =(LnikNode*)malloc(sizeof(LinkNode)); //建立头结点
+	Q.front->next=NULL; //初始为空
+}
+```
+(2)判队空
+```c
+bool IsEmpty(LinkQueue Q){
+	if(Q.front==Q.rear)
+		return true;
+	else 
+		return false;
+}
+```
+(3)入队
+```c
+void EnQueue(LinkQueue &Q,ElemType x){
+	LinkNode *s=(LinkNode *)malloc(sizeof(LinkNode));
+	s->data=x;s->next=NULL; //创建新结点,插入到链尾
+	Q.rear->next=s;
+	Q.rear=s;
+}
+```
+(4)出队
+```c
+bool DeQueue(LinkQueue &Q,ElemType &x){
+	if(Q.front==Q.rear)
+		return false; //空队
+	LinkNode *p=Q.front->next;
+	x=p->data;
+	Q.front->next=p->next;
+	if(Q.rear==p)
+		Q.rear=Q.front; //若原队列只有一个结点, 删除后变空
+	free(p);
+	return true;
+}
+```
+
+#### 2.4两端队列
+<img src="picture/D3_8.png" style="zoom:50%;" />
+允许在一端进行插入和删除,但在另一段只允许插入的两端队列称为:输出受限的两端队列.
+<img src="picture/D3_9.png" style="zoom:50%;" />
+<img src="picture/D3_10.png" style="zoom:50%;" />
