@@ -298,6 +298,9 @@ free(q);
 1. 定义
 只能在一段进行操作的线性表.
 特性: 后进先出
+
+N个不同元素进栈.
+<img src="picture/D3_11.png" style="zoom:50%;" />
 2. 栈的基本操作
 ```c
 InitStack(&S)//初始化一个空栈S。
@@ -331,9 +334,8 @@ typedef struct{
 (1) 初始化
 ```c
 void InitStack(SqStack &s){
-	s.top=-1;//初始化指针
+	s.top=-1;//初始化指针5
 }
-
 ```
 (2)判栈空
 ```c
@@ -380,7 +382,7 @@ bool GetTop(SqStack S,ElemType &x){
 
 #### 1.3 栈的链式存储结构
 链栈, 优点是便于多个栈共享存储空间和提高效率.
-通常采用单链表实现, 并规定所有操作都是在单链表的表头进行的
+通常采用单链表实现, 并规定<u>所有操作都是在单链表的表头进行的</u>
 <img src="picture/D3_3.png" style="zoom:50%;" />
 
 ```c
@@ -388,7 +390,6 @@ typedef struct Linknode{
 	ElemType data;
 	struct Linknode *next; 
 }*LiStack;
-
 ```
 
 ### 2 队列
@@ -419,8 +420,8 @@ GetHead(Q, &x)//读队头元素，若队列Q非空，则将队头元素赋值给
 	}SqQueue;
 ```
 初始状态(队空条件): `Q. front==Q. rear==0`
-进队操作:队不满时，先送值到队尾元素，再将队尾指针加1。
-出队操作:队不空时，先取队头元素值，再将队头指针加1。
+进队操作:队不满时，<u>先送值到队尾元素，再将队尾指针加1</u>。
+出队操作:队不空时，<u>先取队头元素值，再将队头指针加1</u>。
 
 2. 循环队列
 当队首指针 `Q.front = MaxSize-1`后,再前进一个位置就自动到0,这可以利用除法取余(%)来实现.
@@ -534,3 +535,9 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 允许在一端进行插入和删除,但在另一段只允许插入的两端队列称为:输出受限的两端队列.
 <img src="picture/D3_9.png" style="zoom:50%;" />
 <img src="picture/D3_10.png" style="zoom:50%;" />
+
+
+
+后缀是符号进栈
+中缀是字母进栈
+栈顶元素比要进的(高或等于)就出.
