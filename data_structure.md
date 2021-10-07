@@ -538,6 +538,9 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 
 
 
+
+
+
 后缀是符号进栈
 中缀是字母进栈
 栈顶元素比要进的(高或等于)就出.
