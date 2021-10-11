@@ -573,9 +573,84 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 (2) 
 <img src="picture/D3_17.png" style="zoom:50%;" />
 
+## 第四章
+### 4.1 串的定义和实现
+#### 4.1.1 串的定义
+串是由零个或多个字符组成的有限序列
 
+#### 4.1.2 串的存储结构
+1. 定长顺序存储表示
+类似于线性表的顺序存储结构,用一组地址连续的存储单元存储串值的字符序列.
+```c
+#define MAXLEN 255
+typedef struct{
+	char ch[MAXLEN]; //每个分量
+	int length; //串的实际长度
+}
+```
+串长有两种表示方法: 
+>1. 如上述一样,用额外的变量len来存放串的长度;
+>2. 在串值后面加一个不计入串长的结束标记字符‘\0’, 此时的串长为隐含值.
 
+2. 堆分配存储表示
+堆分配存储表示依然以一组地址连续的存储单元存放串值的字符序列, 但他们的存储空间是在程序执行过程中动态分配得到的.
+```c
+typedef struct{
+	char *ch;  //按串长分配存储区, ch指向串的基地址
+	int length;   //串的长度
+}HString;
+```
+堆的自由存储区,用malloc( )  和free( )函数来完成动态存储管理.
 
+3. 块链存储表示
+类似于线性表的链式存储结构, 也可采用链表方式存储串值.
 
+<img src="picture/D3_18.png" style="zoom:50%;" />
 
+#### 4.1.3 串的基本操作
 
+● StrAss ign (&T, chars): 赋值操作。把串T赋值为chars。
+● StrCopy(&T,S): 复制操作。由串s复制得到串T。
+● StrEmpty(S):判空操作。若S为空串，则返回TRUE, 否则返回FALSE。
+● StrCompare(S, T):比较操作。若S>T,则返回值>0;若S=T，则返回值=0;若S<T,
+则返回值<0.
+● strLength(S): 求串长。返回串s的元素个数。
+● SubString (&Sub, s, pos, len):求子串。用Sub返回串s的第pos个字符起长度为
+len的子串。
+● Concat(&T,S1,S2):串联接。用T返回由S1和S2联接而成的新串。
+● Index(S,T): 定位操作。若主串s中存在与串T值相同的子串，则返回它在主串s中
+第一次出现的位置:否则函数值为0。
+● ClearString(&S):清空操作。将s清为空串。
+● DestroyString(&S): 销毁串。将串S销毁。
+
+### 4.2 串的模式匹配
+### 4.2.1 简单的模式匹配算法
+
+子串的定位操作,求的是子串在主串中的位置. 采用定长顺序存储结构
+```c
+int Index(SString S,SString T){
+	int i=1,j=1;
+	while(i<S.length && j<=T.length){
+		if(S.ch[i] == T.ch[j]){
+			++i;++j; //继续比较后续字符
+		}
+		else{
+			i = i-j+2;
+			j=1;  //指针后退重新开始匹配
+		}
+	}
+	if(j>T.length)
+		return i-T.length;
+	else return 0;
+}
+
+```
+
+#### 4.2.2 改进的模式匹配算法-- KMP
+1. 字符串的前缀、后缀和部分匹配值
+2. KMP算法原理
+主要就是计算Next数组的值
+next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则跳到子串的next[ j ]位置重新与主串当前位置进行比较。
+
+例子:
+<img src="picture/D3_19.png" style="zoom:50%;" />
