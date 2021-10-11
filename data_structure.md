@@ -714,3 +714,26 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 3. 二叉树的性质
 <img src="picture/D5_6.png" style="zoom:50%;" />
 <img src="picture/D5_7.png" style="zoom:50%;" />
+
+#### 5.2.2 二叉树的存储结构
+1. 顺序存储结构
+二叉树的顺序存储是用一组地址连续的存储单元依次自上而下、自左至右存储完全二叉树上的结点元素, 即 将完全二叉树上编号为i 的结点元素存储在一位数组下标为i-1的分量中.
+<img src="picture/D5_8.png" style="zoom:50%;" />
+
+2. 链式存储结构
+用链表结点来存储二叉树中的每个结点. 
+<img src="picture/D5_9.png" style="zoom:50%;" />
+<img src="picture/D5_10.png" style="zoom:50%;" />
+
+二叉树链式存储结构描述如下:
+```c
+typedef struct BiTNode{
+	ElemType data;  //数据域
+	struct BiTNode *lchild, *rchild;  //左右孩子指针
+}BiTNode, * BiTree;
+```
+在n个结点的二叉链表中.含有 n+1个空链域.
+
+
+### 5.3 二叉树的遍历和线索二叉树
+#### 5.3.1 二叉树的遍历
