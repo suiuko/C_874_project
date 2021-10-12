@@ -861,6 +861,21 @@ void LevelOrder(BiTree T){
 1. 线索二叉树的基本概念
 遍历二叉树是以一定的规则将二叉树中的结点排列成一个线性序列，从而得到几种遍历序列，使得该序列中的每个结点(第一个和最后一个结点除外)都有一个直接前驱和直接后继。
 在含N个结点的二叉树中, 有N+1个空指针. 
+<img src="picture/D5_14.png" style="zoom:50%;" />
+<img src="picture/D5_15.png" style="zoom:50%;" />
+存储结构
+```c
+typedef struct ThreadNode{
+	ElemType data; //数据元素
+	struct ThreadNode *lchild, *rchild; //左右孩子指针
+	int ltag,rtag; //左右线索标志
+}ThreadNode, *ThreadTree;
 
+```
 
+2. 中序线索二叉树的构造
+二叉树的线索化是将二叉链表中的空指针改为指向前驱或后继的线索. 而前驱或后继的信息只有在遍历时才能得到, 因此线索化的实质就是遍历一次二叉树.
+3. 中序线索二叉树的遍历
+
+4. 先序线索二叉树和后续线索二叉树
 
