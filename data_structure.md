@@ -737,3 +737,130 @@ typedef struct BiTNode{
 
 ### 5.3 二叉树的遍历和线索二叉树
 #### 5.3.1 二叉树的遍历
+1. 先序遍历
+过程
+>1)访问根结点
+>2)先序遍历左子树
+>3)先序遍历右子树
+
+算法;
+```c
+void PerOrder(BiTree T){
+	if(T!=NULL){
+		visit(T);  //访问根结点
+		PreOrder(T->lchild); //递归遍历左子树
+		Preorder(T->rchild); //遍历右子树
+	}
+}
+```
+
+2. 中序遍历
+过程
+>1)先序遍历左子树
+>2)访问根结点
+>3)先序遍历右子树
+
+算法;
+```c
+void PerOrder(BiTree T){
+	if(T!=NULL){
+		PreOrder(T->lchild); //递归遍历左子树
+		visit(T);  //访问根结点
+		Preorder(T->rchild); //遍历右子树
+	}
+}
+```
+
+3. 后序遍历
+过程
+>1)先序遍历左子树
+>2)先序遍历右子树
+>3)访问根结点
+
+算法;
+```c
+void PerOrder(BiTree T){
+	if(T!=NULL){
+		PreOrder(T->lchild); //递归遍历左子树
+		Preorder(T->rchild); //遍历右子树
+		visit(T);  //访问根结点
+	}
+}
+```
+
+4. 递归算法和非递归算法的转换
+<img src="picture/D5_11.png" style="zoom:50%;" />
+<img src="picture/D5_12.png" style="zoom:50%;" />
+
+```c
+//中序遍历 非递归算法
+void Inorder2(BiTree T){
+	InisStack(S);
+	BiTree p=T;
+	while(p||!IsEmpty(S)){
+		if(p){
+			Push(S,p);
+			p=p->lchild; //左孩子不空, 一直向左走
+		}
+		else{
+			Pop(S,p);visit(p); //栈顶元素出栈, 访问出栈结点
+			p=p->rchild;  // 向右子树走, p赋值为当前结点的右孩子
+		}
+	}
+}
+
+```
+
+```c
+//先序遍历 非递归算法
+void Inorder2(BiTree T){
+	InisStack(S);
+	BiTree p=T;
+	while(p||!IsEmpty(S)){
+		if(p){
+			visit(p);  //访问结点
+			Push(S,p);   //先入栈
+			p=p->lchild; //左孩子不空, 一直向左走
+		}
+		else{
+			Pop(S,p); //栈顶元素出栈
+			p=p->rchild;  // 向右子树走, p赋值为当前结点的右孩子
+		}
+	}
+}
+
+```
+
+5. 层次遍历
+<img src="picture/D5_13.png" style="zoom:50%;" />
+```c
+void LevelOrder(BiTree T){
+	InitQueue(Q); 
+	BiTree p;
+	EnQueue(Q,T);  //将根结点入队
+	while(!IsEmpty(Q)){
+		DeQueue(Q,p);   //队头结点出队
+		visit(p);  //访问出队结点
+		if(p->lchild!=NULL)
+			EnQueue(Q,p->lchild); //左子树不空, 则左子树根结点入队
+		if(p->rchild!=NULL)
+			EnQueue(Q,p->rchild); //右子树不空,则右子树根结点入队
+	}
+}
+```
+
+6. 由遍历序列构造二叉树
+1)由二叉树的先序序列和中序序列可以唯一地确定一棵二叉树
+>在先序遍历序列中,第一个结点一定是二叉树的根结点;
+>在中序遍历中,根结点必然将中序遍历分割成两个字序列, 前一个字序列是根结点左子树的中序序列, 后一字序是根结点右子树的中序序列.
+
+2)后序序列和中序序列可以唯一确定一棵二叉树
+>后续序列的最后一个结点就如同先序序列的第一个结点, 可以将中序序列分割成两个序列
+
+#### 5.3.2 线索二叉树
+1. 线索二叉树的基本概念
+遍历二叉树是以一定的规则将二叉树中的结点排列成一个线性序列，从而得到几种遍历序列，使得该序列中的每个结点(第一个和最后一个结点除外)都有一个直接前驱和直接后继。
+在含N个结点的二叉树中, 有N+1个空指针. 
+
+
+
