@@ -875,7 +875,104 @@ typedef struct ThreadNode{
 
 2. 中序线索二叉树的构造
 二叉树的线索化是将二叉链表中的空指针改为指向前驱或后继的线索. 而前驱或后继的信息只有在遍历时才能得到, 因此线索化的实质就是遍历一次二叉树.
-3. 中序线索二叉树的遍历
+指针pre指向刚刚访问过的结点,指针p指向正在访问的结点,即pre指向p的前驱. 在中序遍历的过程中,检查p的左指针是否为空, 若为空就将它指向pre, 检查pre的右指针是否为空, 若为空就将它指向p
+<img src="picture/D5_16.png" style="zoom:50%;" />
+算法:
+```c
+//通过中序遍历对二叉树线索化的递归算法如下:
+void InThread(ThreadTree &p,ThreadTree &pre){
+	if(p!=NULL){
+		InThread(p->lchild,pre); //递归,线索化左子树
+		if(p->lchild=NULL){ //左子树为空, 建立前驱线索
+			p->lchild =pre;
+			p->ltag=1;
+		}
+		if(pre!=NULL &&pre->rchild==NULL){
+			pre->rchild=p; //建立前驱结点的后继线索
+			pre->rtag=1;
+		}
+		pre=p;  //标记当前结点成为刚刚访问过的结点
+		InThread(p->rchild,pre); //递归, 线索化右子树 
+	}  //if(p!=NULL)
+}
 
+//通过中序遍历建立中序线索二叉树的主过程算法
+void CreateInThread(ThreadTree T){
+	ThreadTree pre = NULL;
+	if(T!=NULL){    //非空二叉树,线索化
+		InThread(T,pre); //线索化二叉树
+		pre->rchild = NULL;  //处理遍历的最后结点
+		pre->rtag = 1;
+	}
+}
+```
+<img src="picture/D5_17.png" style="zoom:50%;" />
+3. 中序线索二叉树的遍历
+中序线索二叉树的结点隐含了线索二叉树的前驱和后继的信息, 在对其进行遍历时, 只要先找到序列中的第一个结点,然后依次找结点的后继, 直至其后继为空.
+在中序线索二叉树中找结点后继的规律是: 若其有标志为1, 则右链为线索,指示其后继,否则遍历右子树中第一个访问的结点(右子树中最左下的结点)为其后继.
+1)求中序线索二叉树中中序序列下的第一个结点
+```c
+ThreadNode *Firstnode(ThreadNode *p){
+	while(p->ltag==0)
+		p=p->lchild; //最左下结点(不一定是叶结点)
+		return p;
+}
+
+```
+
+2)求中序线索二叉树中结点p在中序序列下的后继
+
+```c
+ThreadNode *Nextnode(ThreadNode *p){
+	if(p->ltag==0)
+		return Firstnode(p->rchild);
+	else 
+		return p->rchild;  //rtag ==1 直接返回后继线索
+}
+
+```
+
+3)利用上面的算法,可以写出不含头结点的中序线索二叉树的中序遍历的算法:
+```c
+void Inorder(ThreadNOde *T){
+	for(ThreadNode *p=Firstnode(T);p!=NULL;p=Nextnode(p))
+		visit(p);
+}
+```
 4. 先序线索二叉树和后续线索二叉树
 
+<img src="picture/D5_18.png" style="zoom:50%;" />
+
+### 5.4 树、森林
+#### 5.4.1 树的存储结构
+1. 双亲表示法
+<img src="picture/D5_19.png" style="zoom:50%;" />
+
+```c
+#define MAX_TREE_SIZE 100 //树中最多结点数
+typedef struct{
+	ElemType data; 
+	int parent; //双亲位置域
+}PTNode;
+typedef struct{
+	PTNode nodes[MAX_TREE_SIZE]; //双亲表示
+	int n;
+}PTree;
+```
+注意:区别树的顺序存储结构与二叉树的顺序存储结构。在树的顺序存储结构中，数组下标
+代表结点的编号，下标中所存的内容指示了结点之间的关系。而在二叉树的顺序存储结构中，数组下标既代表了结点的编号，又指示了二叉树中各结点之间的关系。当然，二叉树属于树，因此二叉树都可以用树的存储结构来存储，但树却不都能用二叉树的存储结构来存储。
+
+2. 孩子兄弟表示法
+又称二叉树表示法, 孩子兄弟表示法使每个结点包含三个部分内容: 结点值、指向结点第一个孩子结点的指针, 及指向结点下一个兄弟结点的指针.
+```c
+typedef struct CSNode{
+	ElemType data; //数据域
+	struct CSNode *firstchild,*nextsibling; //第一个孩子和右兄弟指针
+}CSNode,*CSTree;
+```
+<img src="picture/D5_20.png" style="zoom:50%;" />
+
+#### 5.4.2 树、森林与二叉树的转换
+树转换为二叉树的规则:每个结点左指针指向它的第一个孩子， 右指针指向它在树中的相邻
+右兄弟,这个规则又称“左孩子右兄弟”。由于根结点没有兄弟，所以对应的二叉树没有右子树.
+<img src="picture/D5_21.png" style="zoom:50%;" />
