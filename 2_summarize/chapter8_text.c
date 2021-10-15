@@ -83,3 +83,94 @@ int IsPrimeNumber(int number)
             return (0);
     return (1);
 }
+
+
+/*
+================2.=============== 
+设计一个函数,MaxCommonFactor()计算两个正整数的最大公约数
+
+算法思想: 对A和B两个数, 当A>B时, 如果A中含有与B相同的公约数,则A中去掉B后剩余的部分A-B
+也应该含有与B相同的公约数,对A-B和B计算公约数就像单于对A和B计算公约数,反复使用,直到A和B相等为止
+这时A或B就是他们的最大公约数
+*/
+#include <stdio.h>
+int MaxCommonFactor (int a, int b) ;
+void main ( )
+{
+    int a, b, c;
+    printf(" Input two integer number: ") ;
+    scanf("%d%d", &a, &b);
+    c = MaxCommonFactor(a, b);
+    if (c != -1)
+        printf ("The biggest common factor of %d and %d is %dn", a, b, c) ;
+    else
+        printf ("The biggest common factor of %d and %d isn't existln", a, b) ;
+}
+//函数功能: 计算两个正整数的最大公约数
+//函数入口参数: 两个整型数
+//函数返回值: 最大公约数, -1表示没有最大公约数
+int MaxCommonFactor(int a,int b){
+    if(a<=0 || b<=0)
+        return(-1);
+    while(a!=b)
+    {
+        if(a>b)
+            a=a-b;
+        else  
+            if(b>a)
+                b=b-a;
+    }
+    return(a);
+}
+
+
+/*
+=================3.=================
+定义函数Getdata()用于接受键盘输入的一组整形数据,并放入一数组中,另外定义一个函数sort()
+用于对输入的这一组数据按照降序排列.
+
+设计思想: GetData函数时用于从键盘接受一组属性数据,因此该函数要带两个行参,一个数组,
+一个是数组中元素的个数,sort函数时对数组元素进行降序排列,
+*/
+#include<stdio.h>
+#define N 10
+void GetData(int a[],int n);
+void Sort(int a[],int n)
+
+void main()
+{
+    int i,a[N];
+    GetData(a,N);
+    Sort(a,N);
+    printf("After sort:");
+    for(i=0;i<N;i++)
+        printf("%d",a[i]);
+    printf("\n");
+}
+
+//通过键盘输入N个整数到数组a中
+void GetData (int a[ ] , int n)
+{
+    int i;
+    printf(" Input number :");
+    for(i=0;i<n;i++)
+        scanf("%d", &a[i] );
+}
+//对数组a中的n个元素进行降序排列(排列算法:选择排序)
+void Sort (int a[ ] , int n)
+{
+    int i,j,k,t;
+    for(i=0;i<n-1;i++)
+    {
+        k=i;
+        for(j=i+1;j<n;j++)
+            if (a[j] > a[k])
+                k =j;
+        if (k !=i)
+        {
+            t=a[i];
+            a[i] = a[k] ;
+            a[k] = t;
+        }
+
+}
