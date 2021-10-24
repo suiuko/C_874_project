@@ -2,13 +2,13 @@
 
 ## 第一章
 
-### 1. 十进制转换二进制
+### 1.1 十进制转换二进制
 （1）整数转换
 除，反着写
 （2）小数部分转换
 小数点后 乘，正着写
 
-### 二、八、十六进制转换
+#### 1.1.1 二、八、十六进制转换
 八进制基数 是2的三次幂
 十六进制 2的四次幂
 
@@ -21,21 +21,22 @@
 3. 二 ---> 十六
 	4位  <u>1001</u>
 
-### 2.  机器数表示形式
+### 1.2  机器数表示形式
 1.原码
 符号位： 正0		负数1
 正负数的原码都相同，符号位变化
 
 2.反码
 （正） 与原码相同
-（负）求反
-10101 -->(反)110101
+（负）求反(符号位不动)
+101010 -->(反)110101
+
 
 3.补码
 （正）与原码相同
-（负）按位求反，末位加1
+（负）按位求反，末位加1 [符号位不动]
 
-### 3. 二进制位运算
+### 1.3 二进制位运算
 1. 与运算（&）
 	有0则0，两同(1)才同(1)
 2. 或运算（｜）
@@ -44,6 +45,7 @@
 	求反
 4. 异或运算（^）
 	同0异1
+	<img src="https://github.com/poshoi/C_874_project/blob/main/picture/1_1.png?raw=true" style="zoom:50%;" />
 
 题1：将二进制数10110010的高4位求反，低4位不变的操作是
 	答：与(F0)16 按位异或
@@ -52,10 +54,10 @@
 
 
 ## 第二章程序设计基础
-### 1.编制C步骤
+### 2.1编制C步骤
 编辑 -->编译-->链接
 
-### 2.琐碎知识点
+### 2.2琐碎知识点
 1. C语言是由多个函数构成
 
 2. a --> 97
@@ -67,7 +69,7 @@
 
 
 ## 第三章基本数据类型、运算符与表达式
-### 1. C语言数据类型
+### 3.1 C语言数据类型
 1. 基本类型
 	占字节：
 		-1.int     	 2 / 4
@@ -80,20 +82,19 @@
 ### 2. 常量、变量和标识符
 1. 标识符
 	- 1. 命名规则：
-		>由字母、数字、下划线组成
+		>由<b>字母、数字、下划线</b>组成
 		>第一个字母必须是字母或下划线
 		>关键字不能做变量名
 
 2. 常量
 	- 用#define定义
 	- 注意：
-	
 	 			1. 定义时，行尾不能有分号
 	 			2.define是预处理命令，不是C语言语句
 3. 变量
 	必须先定义，后使用
 
-### 3. 简单数据类型与表示范围
+### 3.3 简单数据类型与表示范围
 1. 整型数据
 	- 1. 整型常量
 		八进制--> 0开头
@@ -111,8 +112,7 @@
   	a E n , a为十进制数， n为十进制整数
   - 2. 实行变量分类和定义
       >1. 单精度： float -->%f
-      float 小数点后要有六位。
-      最多能表示八位数字，如果没到八位，最后追加的数字是随机的
+      float 小数点后要有六位。最多能表示八位数字，如果没到八位，最后追加的数字是随机的
 
       >2. 双精度：double -->%lf
       
@@ -131,6 +131,7 @@ char ch = '\x23w'; //错，x后只能有1～2位
 strlen("\123456"); // 4位数: \123 4 5 6
 strlen("\x234"); //报错
 ```
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/3_1.png?raw=true" style="zoom:50%;" />
 
 - 2. 字符串常量
 	> 1. 字符常量只能是单个字符，字符串常量可以含一个或多个字符
@@ -454,8 +455,8 @@ default: 语句组;
 
 
 ## 第六章 循环结构
-### 1  循环结构的程序设计
-#### 1. while 语句
+### 6.1  循环结构的程序设计
+#### 6.1.1 while 语句
 
 ```c
   while (表达式) //表达式中可以是任意类型的表达式
@@ -487,7 +488,7 @@ default: 语句组;
 
 ```
 
-#### 2. do- while语句
+#### 6.1.2 do- while语句
 1. 一般形式
 ```c
 do
@@ -504,7 +505,7 @@ while(表达式); //循环条件
 
 
 
-#### 3. for 语句
+#### 6.1.3 for 语句
 1. 一般形式
 ```c
 for(表达式1;表达式2;表达式3)  //循环条件
@@ -549,7 +550,7 @@ goto语句也称为无条件转移语句。
 >		for(...)
 >	{
 >		while(...)
->																																																																																																																																																																													
+>																																																																																																																																																																																		
 > 	{
 > 	  ..
 > 	   if(..) goto stop;
@@ -748,8 +749,8 @@ while循环中循环一次可能不执行循环体，而do-while语句是要执�
 
 
 ## 第七章 数组
-### 1 一维数组
-#### 1. 一维数组的定义和引用
+### 7.1 一维数组
+#### 7.1.1 一维数组的定义和引用
 1. 定义
 `存储类型符  数据类型符  数组变量名[整型常量表达式]`
 说明：
@@ -762,7 +763,7 @@ while循环中循环一次可能不执行循环体，而do-while语句是要执�
 引用数据单元的格式为：`数组变量名[下标]`
 下标的最小值是0，最大值则是数组大小减1。
 
-#### 2. 一维数组的赋值
+#### 7.1.2 一维数组的赋值
 1. 一维数组的初始化赋值
 格式：`数据类型符 数组变量名[常量表达式] = {表达式1，表达式2，....，表达式n};`
 ```c
@@ -894,8 +895,8 @@ void updatepop(){
 }
 ```
 
-### 2  二维数组
-#### 1. 二维数组的定义和引用
+### 7.2  二维数组
+#### 7.2.1 二维数组的定义和引用
 `存储类型符 数据类型符 数组变量名[整型常量表达式1][整型常量表达式2]`
 应用格式：`数组变量名 [下标1] [下标2]`
 规定相同，都是从0开始到该维长度减1
@@ -904,7 +905,7 @@ void updatepop(){
 >对于数据单元在内存的地址可通过下面的公式计算：
 >**有效地址=数组的起始地址+（下标1 * 第一堆大小 + 下标2）*sizeof(元素类型)**
 
-#### 2. 二维数组的赋值
+#### 7.2.2 二维数组的赋值
 1. 二维数组的初始化赋值
 （1）分行初始化
 `存储类型符 数据类型 数组变量名[行常量表达式][列常量表达式] = {{第0行初值表},{第1行初值表}...{最后1行初值表}};`
@@ -924,8 +925,8 @@ void updatepop(){
 	例子：`memset(a,0,6*sizeof(int)); //可以把数组中的个元素清0`
 	`int b[2][3];memcpy(b,a,6*sizeof(int)); //将数组a个元素的值赋值到数组b的个元素中` 
 
-### 3  字符串和数组
-#### 1. 字符串本质
+### 7.3  字符串和数组
+#### 7.3.1 字符串本质
 字符串是一种字符型数组，并且这个数组的最后一个单元的是'\0'，也就是说，字符串是一种以'\0'结尾的字符数组
 ```C
 char str[]="china"; //数组大小为6
@@ -935,7 +936,7 @@ char str[]={'c','h','i','n','a','\0'};
 注意：
 >在用字符串数组来存放某个字符串常量时，如果要指定字符数组的大小，那么其大小至少要比字符串的长度大1（多了一个单元用于存'\0'）
 
-#### 2. 字符及字符串操作的常用函数
+#### 7.3.2 字符及字符串操作的常用函数
 1. 字符串的输入
 （1）gets函数
 `gets(字符数组变量名);`
@@ -1013,13 +1014,13 @@ N为负数，则字符串做对齐，如果字符串的长度大于N个字符，
 `strcat(字符数组1,字符串2);`
 功能：将字符串2连接到字符数组1的后面（包括'\0'），其中，字符串2没有变，而字符数组1中的字符将增加了
 
-#### 3. 字符串数组
+#### 7.3.3 字符串数组
 当构成数组的数据时字符串时，这个数组就称为字符串数组。字符串数组实际上是字符型的二维数组，这个二维数组的每一行都是存放字符串的字符数组。
 还可以按照如下的方式进行初始化：
 `存储类型符 char 字符串数组名[行数m][列数n] = {字符串1,字符串2,...,字符串m};`
 其中，每个字符串的长度应小于n-1（因为字符串的结尾符'\0'占用一个单元）
 
-### 4  本章小结、注意事项
+### 7.4  本章小结、注意事项
 1. 不能用变量来等一数组大小
 >int n =10;
 >int a[n]; //错误：不能用变量来指定数组的大小
@@ -1303,7 +1304,7 @@ auto可以省略, 自动变量只能在函数内或复合语句中定义 --->属
 ### 8.6 函数的嵌套和递归调用
 1. 运用函数的嵌套调用
   示意图
-  ![](picture/8.6.png)
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/8.6.png?raw=true" style="zoom:50%;" />
 
 ```c
 //计算三个数中最大数与最小数的差
@@ -1344,8 +1345,7 @@ int min(int x, int y, int z)
 2. 运用函数的递归调用
   直接递归调用和间接递归调用
 
-<img src="picture/8.6_2.png" style="zoom:50%;" />
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/8.6_2.png?raw=true" style="zoom:50%;" />
 说明:
 >递归函数主要用于解决具有递归性质的问题
 >每调用函数一次,在内存堆栈区需分配空间,用于存放函数变量、返回值等信息.
@@ -1406,12 +1406,11 @@ void main()
 	}
 ```
 
-<img src="picture/8.6_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/8.6_3.png?raw=true" style="zoom:50%;" />
 
 [递归调用及堆栈变化示意图(factn1)]
 
-<img src="picture/8.6_4递归.png" style="zoom:50%;" />
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/8.6_4递归.png?raw=true" style="zoom:50%;" />
 [递归调用示意图( fact( ) )]
 
 编写递归函数有两个要点:
@@ -1445,12 +1444,13 @@ void main()
   指针实际上就是内存地址. 
   (2)指针变量就是专门用于存储其他变量地址的变量
   一个指针变量的值就是某个内存单元的地址(或指针)
-  <img src="picture/9_1.png" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_1.png?raw=true" style="zoom:50%;" />
   
-  “指针”是指地址,是常量.
-  “指针变量”是指取值为地址的变量.
-  定义指针的目的是为了通过指针去访问内存单元
-  
+
+“指针”是指地址,是常量.
+“指针变量”是指取值为地址的变量.
+定义指针的目的是为了通过指针去访问内存单元
+
 ### 9.2 指针变量的定义和引用
 
 1. 变量值的存取方法
@@ -1534,9 +1534,9 @@ void main()
 */
 ```
 执行前:
-<img src="picture/9_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_2.png?raw=true" style="zoom:50%;" />
 执行后:
-<img src="picture/9_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_3.png?raw=true" style="zoom:50%;" />
 
 ```c
 /*输入两个数,并使其从大到小输出*/
@@ -1603,13 +1603,13 @@ p1<p2 表示P1处于低地址位置
 `int a[10], *p=a;(或*p=&a[0];)`
 或者:`int a[10], *p; p=a;(或p=&a[0];)`
 a[k]的地址与a的运算关系:
-<img src="picture/9_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_4.png?raw=true" style="zoom:50%;" />
 注意:
 >p+i和 a+i 都是数组元素a[i]的地址
 >* (p+i) 和  * (a+i)就是数组元素a[i]
 >指向数组的指针变量,也可将其看作是数组名,因而可按下标法来使用. 例如: p[i] 等价于*(p+i),也等价于a[i]
 
-<img src="picture/9_5.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_5.png?raw=true" style="zoom:50%;" />
 注意:
 ><u> **P+1 指向数组的下一个元素,而不是简单的使指针变量的值+1.**</u> 
 >其变化为; p+1*size  (size为一个元素占用的字节数)
@@ -1664,7 +1664,7 @@ void main(){
 
 //运行结果: a[0][0] =1  a[0][1] =2 a[0][2] =3 a[1][0] =4 a[1][1] =5 a[1][2] =6
 ```
-<img src="picture/9_6.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_6.png?raw=true" style="zoom:50%;" />
 
 注意:假设有一个M行N列的二维数组a:
 >a[i] 为第 i+1行的首地址, 是一个地址常量. a[0]是整个二维数组元素所占内存单元的首地址
@@ -1701,7 +1701,7 @@ void main(){
 // 4 5 6
 ```
 指向二维数组的指针与二维数组元素的关系
-<img src="picture/9_7.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_7.png?raw=true" style="zoom:50%;" />
 
 注意:
 >1. 对指向二维数组的变量进行赋值一般为: 
@@ -1718,13 +1718,13 @@ void main(){
 
 #### 9.4.3元素为指针的数组----指针数组
 一般格式: `数据类型符 *变量名[常量表达式];`
-<img src="picture/9_8.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_8.png?raw=true" style="zoom:50%;" />
 
 指针数组与数组指针定义的结合顺序
-<img src="picture/9_9.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_9.png?raw=true" style="zoom:50%;" />
 
 指针数组与二维数组指针的区别
-<img src="picture/9_10.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_10.png?raw=true" style="zoom:50%;" />
 
 ```c
 //利用指针数组对键盘输入的5个整数进行从小到大排序
@@ -1749,7 +1749,7 @@ void main()
 //输入 3,8,7,6,4
 //输出 3,4,6,7,8
 ```
-<img src="picture/9_11.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_11.png?raw=true" style="zoom:50%;" />
 
 ### 9.5 指针与字符串
 字符串的本质其实是以'\0'结尾的字符型数组.字符串在内存中的起始地址(第一个字符的地址)称为字符串的指针
@@ -1768,7 +1768,7 @@ char *字符指针变量名;
 //例如: char *pstr;
 pstr = "I love china"
 ````
-<img src="picture/9_12.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_12.png?raw=true" style="zoom:50%;" />
 
 2. 引用字符串
 (1)逐个字符引用
@@ -1839,7 +1839,7 @@ void main()
 	printf("%s\n",str);
 }
 ```
-<img src="picture/9_13.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_13.png?raw=true" style="zoom:50%;" />
 
 ### 9.6 指针与动态内存分配
 1. 静态内存分配
@@ -1864,7 +1864,7 @@ if(pscore == NULL) //分配内存失败
 	exit(0);
 }
 ```
-<img src="picture/9_14.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_14.png?raw=true" style="zoom:50%;" />
 注意:
 >malloc前面必须要加上一个指针类型转换符, 因为malloc的返回值是空类型的指针,一般应与右边的指针变量类型一致
 >malloc所待的一个参数是指需分配的内存单元字节数,一般写成`分配数量 * sizeof(内存单元类型符)`
@@ -1887,7 +1887,7 @@ p2=&p1;
 **p2 = 5;
 //A的值从3变成了5
 ```
-<img src="picture/9_15.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_15.png?raw=true" style="zoom:50%;" />
 
 2. 二级指针的应用
 ```c
@@ -1905,7 +1905,7 @@ void main()
 		printf("%s\n",*p++);
 }
 ```
-<img src="picture/9_16.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_16.png?raw=true" style="zoom:50%;" />
 
 注意:
 > 二级指针与指针数组的关系: int **p 与 int *q[10]
@@ -1916,11 +1916,11 @@ void main()
 
 ### 9.8 指针作为函数的参数
 想通过一个函数来改变调用函数中的变量的值.
-<img src="picture/9_17.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_17.png?raw=true" style="zoom:50%;" />
 方法一: 因为 B和A分别对应不同的内存单元, 调用的函数的时,只是吧A对应的内存单元的值改变为5,并没有改变B对应的内存单元的值.
-<img src="picture/9_18.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_18.png?raw=true" style="zoom:50%;" />
 方法二: 是把变量B的地址(&b)传送给指针型参数P,这样指针P就指向了对应的内存单元赋值,所以B的值就发生了改变.
-<img src="picture/9_19.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_19.png?raw=true" style="zoom:50%;" />
 从上面的程序我们知道,定义函数时,形参前面有一个 * 号,就表明形参时指针型参数,如果有两个 * 号,就表明形参是指针的指针(二级指针).
 
 ```c
@@ -2030,10 +2030,10 @@ int *getdata(int num)
 >1. 在函数中使用动态内存分配(malloc), 以其首地址返回
 >2. 就是在函数中使用静态(static)变量或全局变量, 以其存储单元的首地址返回.
 
-### 10 指向函数的指针----函数指针
+### 9.10 指向函数的指针----函数指针
 1. 函数指针的概念
 一个函数在编译时,被分配了一个入口地址,用函数名来表示,这个地址就称为该函数的指针. 可以用一个指针变量指向一个函数,然后通过该指针变量调用此函数.
-<img src="picture/9_20.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_20.png?raw=true" style="zoom:50%;" />
 
 2. 函数指针变量
 (1)定义格式
@@ -2103,7 +2103,7 @@ int add(int x,int y)
 
 ```
 
-### 11 带参数的main函数
+### 9.11 带参数的main函数
 在OS状态下,为执行某个程序而键入的一行字符称为命令行
 命令行的形式:`命令名 参数1 参数2 参数3......参数N`
 
@@ -2114,7 +2114,7 @@ void main(int argc, char *argv[])
 	......
 }
 ```
-<img src="picture/9_21.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_21.png?raw=true" style="zoom:50%;" />
 
 例如: 显示命令行参数
 ```c
@@ -2133,11 +2133,11 @@ world
 
 ```
 
-### 12 小结
+### 9.12 小结
 1. 常见的于指针相关的变量定义
-<img src="picture/9_22.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_22.png?raw=true" style="zoom:50%;" />
 
-<img src="picture/9_23.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_23.png?raw=true" style="zoom:50%;" />
 
 2. 两个指针所指向的字符串是否相等,应该调用strcmp函数.
 3. 函数返回值的类型由在定义该函数时所指定的函数
@@ -2206,7 +2206,7 @@ int getnum(){
 	return (a);
 }
 ```
-<img src="picture/10_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/10_1.png?raw=true" style="zoom:50%;" />
 
 文件包含两种格式的区别如下所示:
 >使用尖括号 < > ;直接到系统指定的“文件包含目录”去查找被包含的文件.
@@ -2229,7 +2229,7 @@ int getnum(){
 ```
 
 下面使用ACTIVE_COUNTRY定义货币名称:
-<img src="picture/10_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/10_2.png?raw=true" style="zoom:50%;" />
 
 `#if 和 #elif`常常与defined命令配合使用, defined命令的格式为:
 `defined(宏名)  或    defined 宏名`
@@ -2247,7 +2247,7 @@ int getnum(){
 >在`#ifdef`和`#else`之间可以加多个`#elif`命令
 >`#ifdef 宏名` 的含义是判断是否适应了宏, 他等价于`#if defined(宏名)`
 
-<img src="picture/10_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/10_3.png?raw=true" style="zoom:50%;" />
 
 3. `#ifndef ~ #endif`
 ```c
@@ -2273,7 +2273,7 @@ int NUM =10;
 
 条件编译是将满足编译条件的程序代码进行编译生成目标代码, 不满足编译条件的程序代码将不进行编译; 而分支语句则是不管满足条件的代码, 还是不满足题哦啊见的代码,都要编译生成目标代码(包含分支语句本身), 所以如果用条件语句来代替条件编译命令, 程序的目标代码会变长
 如:
-<img src="picture/10_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/10_4.png?raw=true" style="zoom:50%;" />
 
 条件编译命令可以放在所有函数的外部, 也可以放在某函数的内部; 但分支语句只能放在某函数内部;
 
@@ -2466,7 +2466,7 @@ void main()
 	printf("avegrade = %5.lf  maxgrade = %5.1lf   mingrade = %5.1f\n",m.avefrade, m.amxgrade, m.mingrade);
 }
 ```
-<img src="picture/11_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_1.png?raw=true" style="zoom:50%;" />
 
 #### 11.1.4 简化结构体类型名
 可以使用`typedef`来为结构体类型起别名
@@ -2495,7 +2495,7 @@ struct Student_Info stu[10];
 
 //结构体数组stu的每个元素所占内存大小为: sizeof(struct Student_Info)
 ```
-<img src="picture/11_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_2.png?raw=true" style="zoom:50%;" />
 
 2. 结构体数组的初始化
 ```c
@@ -2562,7 +2562,7 @@ void main()
 > 对于线性链表来说,它的存放形式不需要提供连续的内存块 , 当插入或删除一个数据元素时,不需要移动其他数据元素,因而其实用性更广.
 
 线性链表逻辑结构图:
-<img src="picture/11_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_3.png?raw=true" style="zoom:50%;" />
 线性链表的数据单元包含两个部分 : 指针域和数据域
 链表的头节点的数据域不存放有效数据,它的指针域存放实际数据链表的第一个数据单元的地址.
 尾节点的指针域置为NULL,作为链表结束的标志
@@ -2622,8 +2622,8 @@ NODE *Create_ LinkList ( )
 		return (head); //返回创建的链表的头指针
 	}
 ```
-<img src="picture/11_4.png" style="zoom:50%;" />
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_4.png?raw=true" style="zoom:50%;" />
 (2)链表的插入操作
 插入操作是在第i个节点Ni与第i+1节点Ni+1之间插入一个新的节点N ,使线性表
 的长度增1,且Ni与Ni+1的逻辑关系发生如下变化:插入前,Ni是Ni+1的前驱,Ni+1
@@ -2649,8 +2649,8 @@ void Insert_ LinkList (NODE *head, NODE *pnew, int i)
 	p -> next = pnew;//将第i个节点的指针域指向插入节点
 }
 ```
-<img src="picture/11_5.png" style="zoom:50%;" />
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_5.png?raw=true" style="zoom:50%;" />
 (3) 链表的删除操作
 删除操作是删除链表中的第i个节点Ni ,使线性表的长度减1。删除前,节点Ni-1
 是Ni的前驱,Ni+1是Ni的后继 ; 删除后,节点Ni+1成为Ni+1的后继。
@@ -2680,7 +2680,8 @@ void Delete_ LinkList (NODE *head,int i)
 	free(q) ;//释放节点I的内存单元
 }
 ```
-<img src="picture/11_6.png" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_6.png?raw=true" style="zoom:50%;" />
 
 (4)链表的输出操作
 输出操作是指,将链表中节点的数据域的值显示出来。如果在输出过程中,对数据
@@ -2787,7 +2788,8 @@ union UData
 //联合体的大小是成员中占内存最大的成员的大小.
 //UData的大小由最大的成员确定, float f 的大小为4, 所以联合体的大小也为4
 ```
-<img src="picture/11_7.png" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_7.png?raw=true" style="zoom:50%;" />
 像结构体类型定义一样, 联合体类型定义时是不分配内存单元的,只有定义联合体类型变量才分配内存单元.
 
 结构体:
@@ -2799,11 +2801,12 @@ struct SData
 	float f;
 }
 ```
-<img src="picture/11_8.png" style="zoom:50%;" />
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_8.png?raw=true" style="zoom:50%;" />
 #### 11.3.2 联合体变量的定义和引用
 1. 联合体变量的定义
-<img src="picture/11_9.png" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_9.png?raw=true" style="zoom:50%;" />
 
 2. 联合体变量的引用
 对联合体成员的引用格式与对结构体成员的引用格式相同,如果通过联合体变量来引用成员,则要使用”.”, 如果是通过联合体指针来引用成员,则要使用”->”。例如:`union UData data, *p,d[10]`
@@ -2874,10 +2877,12 @@ void main ( )
 	m.y.b=0;
 	printf ("%Xn", m.x) ;
 ```
-<img src="picture/11_10.png" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_10.png?raw=true" style="zoom:50%;" />
 
 在VC下, C的数据类型是short, 与 a 、b 的数据类型 char不一致, 所以C不可存取者16位的第7位到第15位的数据,而是起默认值0
-<img src="picture/11_11.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/11_11.png?raw=true" style="zoom:50%;" />
+
 
 ### 11.5 枚举类型变量的定义和引用
 枚举就是吧这种类型数据可取的值一一列举出来,一个枚举型变量取值仅限于列出值的范围.
@@ -2972,7 +2977,8 @@ struct Date d; //错误, Date没有定义
 ➢**文本文件**:即ASCII文件,ASCII码文件的每1个字节存储1个字符,因而便于对字符进行逐个处理。但一般占用存储空间较多,而且要花费转换时间(二进制与ASCII码之间的转换)。一般情况下 ,后缀是.txt、 .c、 .cpp、.h、 .hpp、.ini等的文件大多是文本文件。像C语言源程序就是文本文件。文本文件可以按记
 事本的方式打开。
 ➢**二进制文件**:二进制文件是把内存中的数据,原样输出到磁盘文件中。可以节省存储空间和转换时间,但1个字节并不对应1个字符,不能直接输出字符形式。一般情况下,后缀是.exe、.dIl、 .lib、 .dat、 .doc、 .tif、 .gif、 .bmp 的文件大多是二进制文件。像C语言的执行文件就是二进制文件。二进制文件一般是不可以记事本方式打开的,即使打开,看起来也都是一些“乱码”。下图给出了十进制数据 32767在文本文件及二进制文件中的存放形式。
-<img src="picture/12_1.png" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_1.png?raw=true" style="zoom:50%;" />
 
 ### 12.3 文件操作概述
 1. 读文件与写文件
@@ -2986,7 +2992,7 @@ C语言本身没有提供输入输出的功能, 必须调用标准库函数进�
 3. 缓冲文件系统
 将系统自动地在内存区为每个正在使用的文件开辟一个缓冲区.
 从内存向磁盘输出数据时,必须首先输出到缓冲区中.
-<img src="picture/12_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_2.png?raw=true" style="zoom:50%;" />
 
 ### 12.4文件指针
 1. 文件结构体 FILE
@@ -3005,8 +3011,9 @@ C语言打开文件要调用fopen函数
 `FILE *fopen(char *filename, char *mode);`
 filename是一个字符串, 表示要打开的文件名,文件名前面可以带路径.  注意要写双引号
 mode也是一个字符串, 表示打开文件的方式.
-<img src="picture/12_3.png" style="zoom:50%;" />
-<img src="picture/12_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_3.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_4.png?raw=true" style="zoom:50%;" />
+
 
 功能----按指定方式打开文件.
 返回值 ---- 如果文件打开成功,则返回该文件结构体的指针,如果打开失败,则返回NULL.
@@ -3162,14 +3169,13 @@ fscanf(fp,"&d,&f",&i,&t);// 若文件中有3,4.5,则将3送入i,4.5送入t
 `void rewind(FILE *filepointer);`
 功能: 将filepointer 所指向的文件的位置指针重新置回到文件的开头.
 返回值: 无
-<img src="picture/12_6.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_6.png?raw=true" style="zoom:50%;" />
 
 (2)`fseck`函数
 `int fseek(FILE *filepointer, long offset, int whence);`
 功能: 将filepointer所指向的文件的位置指针移动到特定的位置. 这个位置由`whence`和`offset`决定,即将位置指针移动到距离`whence`的`offset`字节处, `whence`的值见下表
 如果`offset`为正值, 表明新的位置在`whence`的后面, 如果`whence`是负值,表明新的位置在`whence`的前面.
-<img src="picture/12_7.png" style="zoom:50%;" />
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_7.png?raw=true" style="zoom:50%;" />
 (3)`ftell`
 `long ftell(FILE *filepointer)`
 功能: 返回`filepointer`所指向的文件的当前位置指针的值(用相对文件开头的位移量表示)
