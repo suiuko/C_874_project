@@ -279,7 +279,9 @@ strlen("\x234"); //报错
 >	 输出的f用了float但是用了%d，则不会正常输出2.000000
 >	 后面的b会被影响输出
 
-### 2. 格式化输入scanf
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_1.png?raw=true" style="zoom:50%;" />
+
+### 4.2 格式化输入scanf
 >scanf("格式控制字符串",变量地址);
 >&只能作用于变量，不能作用于表达式，因为表达式不对应具体的内存单元，没有地址，只有值
 
@@ -290,36 +292,41 @@ strlen("\x234"); //报错
 	>scanf("%2d%*2d%3d",&num1,&num2);  // 输入123456789
 	>printf("num1=%d,num2=%d\n",num1,num2); //读取12赋值给num1；读取34舍掉；读取567赋值给num2. 输出结果：num1=12 , num2=567
 
-### 3. 字符数据的非格式化输入和输出
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_2.png?raw=true" style="zoom:50%;" />
+
+### 4.3 字符数据的非格式化输入和输出
 1. 字符数据的非格式化输入
 	- 1. getchar
-			该函数没有参数，有一个int型返回值。
+			返回值是用户输入的第一个字符
+			该函数没有参数，<b>有一个int型返回值</b>。
 			调用该函数的时候，程序就等待用户按键
 	- 2. getc
 			int getc (FILE \*stream);
 			从流文件stream中读取一个字符信息，当流文件时stdin时，和getchar完全相同
 	- 3. getche
 		int getche(void);
-		和getchar相同，唯一差别是：getche直接从键盘获取键值，不等待用户按回车键，只要用户按，则getche直接返回用户按键的ASCII码，同事用户输入的字符回显在屏幕上。
+		和getchar相同，唯一差别是：getche直接从键盘获取键值，不等待用户按回车键，只要用户按，则getche直接返回用户按键的ASCII码，同时用户输入的字符回显在屏幕上。
 	- 4. getch
 		和getche功能相同，唯一差别为：getche回显输入的字符，但是getch不回显输入的字符。
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_3.png?raw=true" style="zoom:50%;" />
+
 2. 字符数据的非格式化输出
-	- 1. putchar
-		现实输出的字符
-	- 2. putc
+	- 1. putchar(int c)
+		在显示器上输出的字符c
+	- 2. putc(int c, FILE * stream)
 		将字符输出到流文件stream，如果流文件为stdout，功能与putchar相同
-	- 3. puts
+	- 3. puts(char * string)
 		将字符串string的所有字符输出到屏幕上，<u>输出时将自动回车换行</u>
 
 3. 清除键盘缓冲区
 	fflush
 
-### 4. 碎小知识点
+### 4.4 碎小知识点
 1. 格式转换符中，除了X、E、G以外，其他均为小写字符。
 2. 算法的描述方法：自然语言描述、伪代码、流程图、N-S图
 
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_4.png?raw=true" style="zoom:50%;" />
 
 
 ## 第五章选择结构程序设计
