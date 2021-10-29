@@ -950,6 +950,8 @@ void updatepop(){
 >对于数据单元在内存的地址可通过下面的公式计算：
 >**有效地址=数组的起始地址+（下标1 * 第一堆大小 + 下标2）*sizeof(元素类型)**
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/6_1.png?raw=true" style="zoom:50%;" />
+
 #### 7.2.2 二维数组的赋值
 1. 二维数组的初始化赋值
 （1）分行初始化
