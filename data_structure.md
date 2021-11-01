@@ -4,7 +4,7 @@
 顺序存储、链式存储、索引存储和散列存储
 
 ### 1.2 时间复杂度
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D1_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D1_1.png?raw=true" style="zoom:50%;" />
 1. 关键的代码运算为 i = i * 2
 设执行次数为t, 则, 2^t = n. ---> 其时间复杂度为log2n
 
@@ -51,7 +51,7 @@ DestroyList(&L):销毁操作。销毁线性表，并释放线性表L所占用的
 线性表的顺序存储--->顺序表.
 是用一组地址连续的存储单元一次存储线性表中的数据元素,从而他们使两个元素在物理位置上相邻.
 特点: 表中的元素的逻辑顺序与其物理顺序相同.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_1.png?raw=true" style="zoom:50%;" />
 
 注意: 线性表中的元素的位序从1开始的,而数组中元素的下标是从0开始的
 
@@ -102,7 +102,7 @@ bool ListDelete(SqList &L, int i, Elemtype &e) {
 	//最坏情况O(N)
 	//平均(n-1)/2
 ```
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_2.png?raw=true" style="zoom:50%;" />
 
 (3)按值查找(顺序查找)
 在顺序表L中查找第一一个 元素值等于e的元素，并返回其位序。
@@ -125,7 +125,7 @@ int LocateElem (SqList L, ElemType e){
 ### 2.3 线性表的链式表示
 ####  2.3.1 单链表的定义
 线性表的链式存储又称单链表.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_3.png?raw=true" style="zoom:50%;" />
 ```c
 typedef struct LNode{
 	ElemType data; //数据域
@@ -142,13 +142,13 @@ typedef struct LNode{
 #### 2.3.2 单链表上基本操作的实现
 1. 采用头插法建立单链表
 该方法时从一个空表开始, 生成新结点, 并将读取到的数据存放到新结点的数据域中,然后将新结点插入到当前链表的表头,即头节点之后.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_5.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_6.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_5.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_6.png?raw=true" style="zoom:50%;" />
 注意: 采用头插法建立单链表,读入数据的顺序与生成的链表中的元素的顺序是相反的, 每个结点插入的时间为0(1), 设单链表长为N, 则总时间复杂度为0(N)
 
 2. 采用尾插法建立单链表
 尾插法将新结点插入到当前链表的表尾,为此必须添加一个尾指针r, 使其始终指向当前链表的尾结点.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_7.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_7.png?raw=true" style="zoom:50%;" />
 
 算法: 
 ```c
@@ -203,7 +203,7 @@ LNode *LocateElem (LinkList L, ElemType e) {
 5. 插入结点操作
 插入结点操作将值为X的新结点插入到单链表的第i个位置上, 先添加插入位置的合法性,然后找到待插入位置的前驱结点,即第i-1个结点,再在其后插入新结点.
 首先调用按序号查找算法GetElem(L,i-1),查找第i-1个结点,假设返回的第i-1个结点为 * p,然后令新结点 * s的指针域指向 * p的后继结点, 再令结点 * p 的指针域指向新插入的结点 * s
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_8.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_8.png?raw=true" style="zoom:50%;" />
 实现插入结点核心代码:
 ```c
 p=GetElem(L,i-1); //查找插入位置的前驱结点
@@ -247,7 +247,7 @@ free (q) ;//释放后继结点的存储空间
 
 #### 2.3.3 双链表
 双链表有两个指针, prior 和 next  分别指向前驱结点、后继结点
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_9.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_9.png?raw=true" style="zoom:50%;" />
 
 双链表描述:
 ```c
@@ -257,7 +257,7 @@ typedef struct DNode{
 }DNode, *DLinklist;
 ```
 1. 双链表的插入操作
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_10.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_10.png?raw=true" style="zoom:50%;" />
 
 ```c
 s->next = p->next; //将结点*s插入到结点*p之后
@@ -267,7 +267,7 @@ p->next=s;
 ```
 
 2. 双链表的删除操作
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_11.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_11.png?raw=true" style="zoom:50%;" />
 
 ```c
 p->next=q->next; //步骤1
@@ -280,27 +280,27 @@ free(q);
 1. 循环单链表
 循环单链表和单链表的区别在于,表中最后一个结点的指针不是NULL,而改为指向头结点,从而整个链表形成一个环.
 再循环单链表中,表尾结点 * r的next域指向L, 表中没有指针域为NULL的结点,因此,循环单链表的判空条件不是头结点是否为空,**而是它是否等于头指针**
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_12.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_12.png?raw=true" style="zoom:50%;" />
 
 2. 循环双链表
 在循环双链表中,某结点 * p 为尾结点时, `p->next==L` 当循环双链表为空表时,其头结点的`prior`域和`next`域都等于L.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_13.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_13.png?raw=true" style="zoom:50%;" />
 
 #### 3.5 静态链表
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_14.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_14.png?raw=true" style="zoom:50%;" />
 
 
 ## 第三章 栈和队列
 ### 3.1 栈
 #### 3.1.1 栈基本概念
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_1.png?raw=true" style="zoom:50%;" />
 1. 定义
 只能在一段进行操作的线性表.
 特性: 后进先出
 
 N个不同元素进栈.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_11.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_11.png?raw=true" style="zoom:50%;" />
 2. 栈的基本操作
 ```c
 InitStack(&S)//初始化一个空栈S。
@@ -329,7 +329,7 @@ typedef struct{
 栈空条件:` s. top==-1`;栈满条件: `S. top==MaxSize-1`;栈长:` s.top+1`.
 
 2. 顺序栈的基本运算
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_2.png?raw=true" style="zoom:50%;" />
 
 (1) 初始化
 ```c
@@ -383,7 +383,7 @@ bool GetTop(SqStack S,ElemType &x){
 #### 3.1.3 栈的链式存储结构
 链栈, 优点是便于多个栈共享存储空间和提高效率.
 通常采用单链表实现, 并规定<u>所有操作都是在单链表的表头进行的</u>
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_3.png?raw=true" style="zoom:50%;" />
 
 ```c
 typedef struct Linknode{
@@ -397,7 +397,7 @@ typedef struct Linknode{
 1. 队列定义
 只允许在表的一端进行插入,而在表的另一段进行删除.
 最早排队的也是最早离队的, 特性: 先进先出
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_4.png?raw=true" style="zoom:50%;" />
 
 2. 队列常见的基本操作
 ```c
@@ -432,7 +432,7 @@ GetHead(Q, &x)//读队头元素，若队列Q非空，则将队头元素赋值给
 
 队空条件: `Q.front == Q.rear`
 为了区别是队空开始队满,有三种处理方式:
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_5.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_5.png?raw=true" style="zoom:50%;" />
 
 3. 循环队列的操作
 (1)初始化
@@ -473,7 +473,7 @@ bool DeQueue(SqQueue &Q,ElemType &x){
 
 #### 3.2.3 队列的链式存储结构
 1. 队列的链式存储
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_6.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_6.png?raw=true" style="zoom:50%;" />
 ```c
 typedef struct{
 	ElemType data;
@@ -486,7 +486,7 @@ typedef struct{  //链式队列
 当`Q.front== NULL`且`Q.rear==NULL`时,链式队列为空.
 
 带头结点的链式队列
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_7.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_7.png?raw=true" style="zoom:50%;" />
 
 
 2. 链式队列的基本操作
@@ -531,10 +531,10 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 ```
 
 #### 3.2.4两端队列
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_8.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_8.png?raw=true" style="zoom:50%;" />
 允许在一端进行插入和删除,但在另一段只允许插入的两端队列称为:输出受限的两端队列.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_9.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_10.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_9.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_10.png?raw=true" style="zoom:50%;" />
 
 
 ### 3.3 栈和队列的应用
@@ -548,15 +548,15 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 >栈顶元素比要进的(高或等于)就出.
 
 2. 中缀、后缀表达式
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_12.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_12.png?raw=true" style="zoom:50%;" />
 中缀表达式:1+B * (C-D)-E/F
 后缀表达式:ABCD- * +EF/-
 
 3. 通过后缀表示计算表达式值的过程为:
 顺序扫描表达式的每一项， 然后根据它的类型做如下相应操作:若该项是操作数，则将其压入栈中:若该项是操作符 < op > ,
 则连续从栈中退出两个操作数Y和x,形成运算指令X < op > Y,并将计算结果重新压入栈中。当表达式的所有项都扫描并处理完后，栈顶存放的就是最后的计算结果。
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_13.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_14.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_13.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_14.png?raw=true" style="zoom:50%;" />
 
 4. 中缀转后缀方法
 从左向右开始扫描中缀表达式, 遇到数字时,加入后缀表达式
@@ -567,11 +567,11 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 
 (1)  a+b - a * ( (c+d) /e-f) +g
 首先需要根据操作符 < op > 的优先级来进行栈的变化. 我们用icp 来表示当前扫描到的运算符ch 的优先级,该运算符进站后的优先级为isp,则运算符的优先级如下表表示[isp]是栈内优先数,icp是栈外优先数
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_15.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_16.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_15.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_16.png?raw=true" style="zoom:50%;" />
 
 (2) 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_17.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_17.png?raw=true" style="zoom:50%;" />
 
 ## 第四章
 ### 4.1 串的定义和实现
@@ -605,7 +605,7 @@ typedef struct{
 3. 块链存储表示
 类似于线性表的链式存储结构, 也可采用链表方式存储串值.
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_1.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_1.png?raw=true" style="zoom:50%;" />
 
 #### 4.1.3 串的基本操作
 
@@ -653,8 +653,8 @@ int Index(SString S,SString T){
 next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则跳到子串的next[ j ]位置重新与主串当前位置进行比较。
 
 例子:
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_2.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_2.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_3.png?raw=true" style="zoom:50%;" />
 
 
 ## 第五章 树
@@ -674,7 +674,7 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 路径长度是路径上所经过的边的个数.
 
 #### 5.1.3 树的性质
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_2.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_2.png?raw=true" style="zoom:50%;" />
 
 
 ## 5.2 二叉树的概念
@@ -682,7 +682,7 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 
 1. 二叉树的定义
 二叉树是N个结点的有限集合.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_3.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_3.png?raw=true" style="zoom:50%;" />
 
 二叉树与度为2的有序树的区别:
 >1. 度为2的树至少有3个结点, 而二叉树可以为空.
@@ -693,11 +693,11 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 高度为h, 有2^h-1个结点的二叉树, 即树中的每层都含有最多的结点
 满二叉树的叶子结点都集中在二叉树的最下一层,并且除叶子结点之外的每个结点度数都为2.
 **双亲 为 [i/2] ,  左孩子 2i , 右孩子 2i+1**
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_4.png?raw=true" style="zoom:50%;" />
 
 (2)完全二叉树
 高为h、有n个结点的二叉树, 当且仅当其每个结点都与高度为h的满二叉树中编号为1~n的结点一一对应.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_5.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_5.png?raw=true" style="zoom:50%;" />
 
 >1. 若有度为1的结点，则只可能有一个，且该结点只有左孩子而无右孩子
 >2. 按层序编号后，一旦出现某结点(编号为i)为叶子结点或只有左孩子，则编号大于i
@@ -714,18 +714,18 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 树上任一结点的左子树和右子树的深度之差不超过1.
 
 3. 二叉树的性质
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_6.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_7.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_6.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_7.png?raw=true" style="zoom:50%;" />
 
 #### 5.2.2 二叉树的存储结构
 1. 顺序存储结构
 二叉树的顺序存储是用一组地址连续的存储单元依次自上而下、自左至右存储完全二叉树上的结点元素, 即 将完全二叉树上编号为i 的结点元素存储在一位数组下标为i-1的分量中.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_8.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_8.png?raw=true" style="zoom:50%;" />
 
 2. 链式存储结构
 用链表结点来存储二叉树中的每个结点. 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_9.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_10.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_9.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_10.png?raw=true" style="zoom:50%;" />
 
 二叉树链式存储结构描述如下:
 ```c
@@ -791,8 +791,8 @@ void PerOrder(BiTree T){
 ```
 
 4. 递归算法和非递归算法的转换
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_11.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_12.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_11.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_12.png?raw=true" style="zoom:50%;" />
 
 ```c
 //中序遍历 非递归算法
@@ -834,7 +834,7 @@ void Inorder2(BiTree T){
 ```
 
 5. 层次遍历
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_13.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_13.png?raw=true" style="zoom:50%;" />
 ```c
 void LevelOrder(BiTree T){
 	InitQueue(Q); 
@@ -863,8 +863,8 @@ void LevelOrder(BiTree T){
 1. 线索二叉树的基本概念
 遍历二叉树是以一定的规则将二叉树中的结点排列成一个线性序列，从而得到几种遍历序列，使得该序列中的每个结点(第一个和最后一个结点除外)都有一个直接前驱和直接后继。
 在含N个结点的二叉树中, 有N+1个空指针. 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_14.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_15.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_14.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_15.png?raw=true" style="zoom:50%;" />
 存储结构
 ```c
 typedef struct ThreadNode{
@@ -878,7 +878,7 @@ typedef struct ThreadNode{
 2. 中序线索二叉树的构造
 二叉树的线索化是将二叉链表中的空指针改为指向前驱或后继的线索. 而前驱或后继的信息只有在遍历时才能得到, 因此线索化的实质就是遍历一次二叉树.
 指针pre指向刚刚访问过的结点,指针p指向正在访问的结点,即pre指向p的前驱. 在中序遍历的过程中,检查p的左指针是否为空, 若为空就将它指向pre, 检查pre的右指针是否为空, 若为空就将它指向p
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_16.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_16.png?raw=true" style="zoom:50%;" />
 算法:
 ```c
 //通过中序遍历对二叉树线索化的递归算法如下:
@@ -908,7 +908,7 @@ void CreateInThread(ThreadTree T){
 	}
 }
 ```
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_17.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_17.png?raw=true" style="zoom:50%;" />
 3. 中序线索二叉树的遍历
 中序线索二叉树的结点隐含了线索二叉树的前驱和后继的信息, 在对其进行遍历时, 只要先找到序列中的第一个结点,然后依次找结点的后继, 直至其后继为空.
 在中序线索二叉树中找结点后继的规律是: 若其有标志为1, 则右链为线索,指示其后继,否则遍历右子树中第一个访问的结点(右子树中最左下的结点)为其后继.
@@ -943,7 +943,7 @@ void Inorder(ThreadNOde *T){
 ```
 4. 先序线索二叉树和后续线索二叉树
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_18.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_18.png?raw=true" style="zoom:50%;" />
 
 ### 5.4 树、森林
 #### 5.4.1 树的存储结构
@@ -972,13 +972,13 @@ typedef struct CSNode{
 	struct CSNode *firstchild,*nextsibling; //第一个孩子和右兄弟指针
 }CSNode,*CSTree;
 ```
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_20.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_20.png?raw=true" style="zoom:50%;" />
 
 #### 5.4.2 树、森林与二叉树的转换
 树转换为二叉树的规则:每个结点左指针指向它的第一个孩子， 右指针指向它在树中的相邻
 右兄弟,这个规则又称“左孩子右兄弟”。由于根结点没有兄弟，所以对应的二叉树没有右子树.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_21.png" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_22.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_21.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_22.png?raw=true" style="zoom:50%;" />
 
 #### 5.4.3 树和森林的便利
 先根遍历 ---- 二叉树的先序遍历
@@ -1027,6 +1027,101 @@ typedef struct CSNode{
 
 设有两个图G=(V, E)和G'=(V',E'),若V是V的子集，且E'是E的子集，则称G'是G的
 子图。若有满足V(G')= V(G)的子图G',则称其为G的生成子图。图6.1中G3为G的子图。
+
+6. 连通、连通围和连通分量
+在无向图中，若从顶点v到顶点w有路径存在，则称v和w是连通的。若图G中任意两个顶点都是连通的，则称图G为连通图，否则称为非连通图。无向图中的极大连通子图称为连通分
+量.
+非连通情况下边最多的情况, 由N-1个顶点构成一个完全图, 此时再任意加入一条边则变成连通图.
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_1.png?raw=true" style="zoom:50%;" />
+
+7. 强连通图、强连通分量
+在有向图中，如果有一对顶点 v和w，从v到w和从w到v之间都有路径，则称这两个顶点
+是强连通的。若图中任何一对顶点都是强连通的，则称此图为强连通图。有向图中的极大强连通子图称为有向图的强连通分量，
+注意:在无向图中讨论连通性，在有向图中讨论强连通性。
+有向图强连通情况下边最少的情况; 至少需要N条边,构成一个环路.
+
+8. 生成树、生成森林
+连通图的生成树是包含图中全部项点的一个极小连通子图。若图中顶点数为n,则它的生成
+树含有n-1条边。包含图中全部顶点的极小连通子图，只有生成树满足这个极小条件,对生成树而言，若砍去它的一条边， 则会变成非连通图，若加上一条边则会形成一个回路。在非连通图中，连通分量的生成树构成了非连通图的生成森林。
+注意: 区分极大连通子图和极小连通子图,极大连通子图是无向图的连通分量, 极大即要求该连通子图包含其所有的边; 极小连通子图是既要保持图连通又要使得边数最小的子图.  
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_2.png?raw=true" style="zoom:50%;" />
+
+9. 顶点的度、入度和出度
+在无向图中，顶点v的度是指依附于顶点v的边的条数，记为TD(v).
+无向图的全部顶点的度的和等于边数的两倍, 因为每条边和两个顶点相关联.
+有向图的全部顶点的入度之和与出度之和相等,并且等于边数, 因为每条有向边都有一个起点和终点.
+
+10. 边的权和网
+在一个图中，每条边都可以标上具有某种含义的数值，该数值称为该边的权值。这种边上带
+有权值的图称为带权图，也称网。
+
+11. 稠密图、稀疏图
+边数很少的图称为稀疏图，反之称为稠密图。稀疏和稠密本身是模糊的概念，稀疏图和稠密
+图常常是相对而言的。一般当图G满足|E|< |V|log|V|时，可以将G视为稀疏图。
+
+12. 路径、路径长度和回路
+顶点vp到顶点vq之间的一条路径是指顶点序列vp , vi1 , vi2 , ..,vlm ,Vq，
+当然关联的边也可理解为路径的构成要素。路径上边的数目称为路径长度。第一个顶点和最后一个顶点相同的路径称为回路或环。若一个图有n个顶点，并且有大于n-1条边，则此图一定有环。
+
+13. 简单路径、筒单回路
+在路径序列中，顶点不重复出现的路径称为简单路径。除第一个顶点和最后一个顶点外，其
+余顶点不重复出现的回路称为简单回路。
+
+14. 距离
+从顶点u出发到顶点v的最短路径若存在，则此路径的长度称为从u到v的距离。若从u到
+v根本不存在路径，则记该距离为无穷(∞)。
+
+15. 有向树
+一个顶点的入度为0、其余顶点的入度均为1的有向图，称为有向树。
+
+### 6.2图的存储及基本操作
+#### 6.2.1 领接矩阵法
+
+用一个一位数组存储图中顶点的信息,用一个二维数组存储图中边的信息(即各顶点之间的邻接关系),存储顶点之间邻接关系的二维数组称为邻接矩阵.
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_3.png?raw=true" style="zoom:50%;" />
+
+```c
+//定义
+#define MaxVertexNum 100   //顶点数目的最大值
+typedef char VertexType;   //顶点的数据类型
+typedefe int EdgeType;    //带权图中边上权值的数据类型
+typedef struct{
+	VertexType Vex[MaxVertexNum];  //顶点表
+	EdgeType Edge[MaxVertexNum][MaxVertexNum];  //临界矩阵 ,边表
+	int vexnum,arcnum;   //图的当前顶点数和 弧数
+}MGraph;
+```
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_4.png?raw=true" style="zoom:50%;" />
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_5.png?raw=true" style="zoom:50%;" />
+
+#### 6.2.2 领接表法
+
+当一个图为稀疏图时，使用邻接矩阵法显然要浪费大量的存储空间，而图的邻接表法结合了顺序存储和链式存储方法，大大减少了这种不必要的浪费。
+所谓邻接表，是指对图G中的每个顶点vi建立一个 单链表，第i个单链表中的结点表示依附于顶点vi的边(对于有向图则是以顶点vi为尾的弧)，这个单链表就称为顶点vi的边表(对于有向图则称为出边表)。边表的头指针和顶点的数据信息采用顺序存储(称为顶点表),所以在邻接表中存在两种结点:顶点表结点和边表结点
+
+顶点表结点由顶点域(data)和指向第一条邻接边的指针(firstarc) 构成，边表(邻接表)结点由邻接点域(adjvex) 和指向下一条邻接边的指针域(nextarc) 构成。
+
+无向图邻接表
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_6.png?raw=true" style="zoom:50%;" />
+
+有向图邻接表
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_7.png?raw=true" style="zoom:50%;" />
+
+特点: 
+> 1. 若G为无向图，则所需的存储空间为O(|V|+ 2|E|);若G为有向图,则所需的存储空间为O(|V|+|E|)
+
+#### 6.2.3 十字链表
+十字链表是有向图的一种链式存储结构. 对应于有向图中每条弧有一个结点,对应于每个顶点也有一个结点
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_8.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_9.png?raw=true" style="zoom:50%;" />
+
+
+
+
 
 
 
