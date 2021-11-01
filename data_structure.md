@@ -1119,22 +1119,259 @@ typedef struct{
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_8.png?raw=true" style="zoom:50%;" />
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_9.png?raw=true" style="zoom:50%;" />
 
+#### 6.2.4 邻接多重表
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_10.png?raw=true" style="zoom:50%;" />
+
+
+#### 6.2.5 图的基本操作
+
+```c
+Adjacent (G,x,y): 判断图G是否存在边<x, y>或(x, y)。
+
+Neighbors (G,x):列出图G中与结点x邻接的边。
+
+InsertVertex (G,x): 在图G中插入顶点x。
+
+DeleteVertex(G,x): 从图G中删除顶点x。
+
+AddEdge (G,X, y):若无向边(x, y)或有向边<x, y>不存在，则向图G中添加该边。
+
+RemoveEdge (G, x,y): 若无向边(x, y)或有向边<x, y>存在，则从图G中删除该边。
+
+FirstNeighbor(G,x):求图G中顶点x的第一个邻接点，若有则返回顶点号。若x没有邻接点或图中不存在x，则返回-1
+
+NextNeighbor(G,x,y):假设图G中顶点y是顶点x的一一个邻接点，返回除y外顶点x的下一个邻接点的顶点号，若y是x的最后一一个邻接点，则返回-1。
+
+Get_edge_value(G, x,y): 获取图G中边(x, y)或<x, y>对应的权值。家园
+
+set_edge_value(G,x,y,v):设置图G中边(x, y)或<x, y>对应的权值为v。
+
+```
+
+### 6.3 图的遍历
+#### 6.3.1 广度优先搜索
+广度优先搜索类似于二叉树的层序遍历算法. 基本思想是先访问起始顶点V, 接着由V出发,依次访问V的各个为访问过的邻接顶点W1,W2...然后依次访问W1,W2,....的所有未被访问的邻接顶点;再从这些访问过的顶点出发, 访问他们所有未被访问过的邻接顶点, 直至图中所有顶点都被访问过为止.若此时图中尚有顶点未被访问,则另选图中一个未曾被访问的顶点作为始点,重复上述过程.直到图中所有顶点都被访问到为止.
+换句话说，广度优先搜索遍历图的过程是以v为起始点，由近至远依次访问和v有路径相通且路径长度为1, 2, .的顶点。广度优先搜索是一种分层的查找过程，每向前走一步可能访问一批顶点，不像深度优先搜索那样有往回退的情况，因此它不是一一个递归的算法。为了实现逐层的访问，算法必须借助一个辅助队列，以记忆正在访问的顶点的下一层顶点。
+
+代码: 
+```c
+bool visited[MAX_VERTEX_NUM]; //访问标记数组
+void BFSTraverse(Graph G){    //对图 G进行广度优先遍历
+for (i=0; i<G.vexnum; ++i)
+	visited[i]=FALSE; //访间标记数组初始化
+InitQueue(Q);		//初始化辅助队列Q 
+for(i=0;i<G,vexnum;++i)   //从0号顶点开始遍历
+	if(!visited[i])   //对每个连通分且调用一次BFS
+	BFS(G,i);    //vi未访问过，从vi开始BFS 
+}
+void BFS (Graph G,int v){   //从顶点v出发，广度优先遍历图G
+	visit(v);  //访问初始顶点v
+	visited[v]=TRUE;  //对v做已访问标记
+	Enqueue(Q,v);   //顶点v入队列Q
+	while(isEmpty(Q)){
+		DeQueue(Q,v);   //顶点V出队列
+   for(w=FirstNeighbor(G,v);w>=0;w=NextNeighbor(G,v,w))   //检测V所有邻接点
+   if(!visited[w]){   //W为V的尚未访问邻接顶点
+   visit(w);    //访问顶点W
+   visited[w] = TRUE;    // 对W做已访问标记
+   EnQueue(Q,w)     //顶点W入队列   
+  	}  //if
+	} //while
+}
+```
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_11.png?raw=true" style="zoom:50%;" />
+
+1. 性能分析
+需要一个辅助队列Q, N个顶点均入队一次,在最坏的情况下,空间复杂度为O(|V|)
+
+采用邻接表存储方式时，每个顶点均需搜索一次(或入队一次)，故时间复杂度0(|V|)，在搜索任顶点的邻接点时，每条边至少访问一次，故时间复杂度为0(|E|), 算法总的时间复杂度为0(|V|+ |E|)。采用邻接矩阵存储方式时，查找每个顶点的邻接点所需的时间为o(|V|),故算法总的时间复杂度为0(|V|^2)。
+
+2. BFS算法求解单源最短路径问题
+
+若图G=(V,E)为非带权图,定义从顶点u到顶点v的最短路径d(u,v)为从u到v的任何路径
+中最少的边数;若从u到v没有通路，则d(u,v)=∞。
+使用BPS,我们可以求解一一个满足 上述定义的非带权图的单源最短路径问题，这是由广度优先搜索总是按照距离由近到远来遍历图中每个顶点的性质决定的。
+算法:
+
+```c
+void BFS_MIN_Distance(Graph G,int u){
+//d[i]表示从U到i节点的最短路径
+for (i=0;i<G.vexnum;++i)
+	d[i] = ∞;
+visited[i] = TRUE, d[u]=0;
+EnQueue(Q,u);
+while(!isEmpty(Q)){  
+	DeQueue(Q,u);  //队头元素入队
+	for(w=FirstNeighhor(G,u);w>=0;w=NextNeighbor(G,u,w))
+		if(!visited[w]){   //w为u的尚未访问的邻接结点
+			visited[w]=TRUE;   //设已访问标记
+			d[w]=d[u]+1;   //路径长度加1
+			EnQueue(Q,w);   //顶点W入队
+		}//if
+	}//while
+}
+
+```
+
+
+3. 广度优先生成树
+给定图的邻接矩阵存储表示是唯一的,所以其广度优先生成树也是唯一的,但由于邻接表存储表示不唯一,所以广度优先生成树也不是唯一的.
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_12.png?raw=true" style="zoom:50%;" />
+
+#### 6.3.2 深度优先搜索
+深度优先搜索类似于树的先序遍历
+
+它的基本思想如下:首先访问图中某一起始顶点V,.然后由v出发，访问与v邻接且未被访
+问的任一顶点w1,再访问与w1邻接且未被访问的任一顶点.....重复上述过程。当不能再继续向下访问时，依次退回到最近被访问的顶点，若它还有邻接顶点未被访问过，则从该点开始继续上述搜索过程，直至图中所有顶点均被访问过为止。
+
+算法: 
+
+```c
+bool visited[MAX_VERTEX_NUM]; //访问标记数组
+void DFSTraverse(Graph G){   //对图G进行深度优先遍历
+	for(v=0;v<G.vexnum; ++v)
+		visited[v]=FALSE;  //初始化已经访问标记数据
+	for(v=0;v<G.vexnum;++v)  //从V=0开始遍历
+		if(!visited[v])
+			DFS(G,v); 
+}
+
+void DFS(Graph G,int v){   //从顶点V出发,深度优先遍历图G
+	visit(v);   //访问顶点V
+	visited[v]=TRUE;   //设已经访问标记
+	for(w=FistNeighbor(G,v);w>=0;w=NextNeighbor(G,v,w))
+		if(!visited[w]){  //W为V的尚未访问的邻接顶点
+		DFS(G,w);
+		}//if
+}
+
+```
+1. 性能分析
+是个递归算法,空间复杂度为0(|V|)
+遍历图的过程实质上是对每个顶点查找其邻接点的过程，其耗费的时间取决于所用的存储结构。以邻接矩阵表示时,查找每个顶点的邻接点所需的时间为0(|V|), 故总的时间复杂度为0(|V^2|)。以邻接表表示时，查找所有顶点的邻接点所需的时间为0(|E|),访问顶点所需的时间为0(|V|), 此时，总的时间复杂度为O(|V| + |E|)。
+
+2. 深度优先的生成树和生成森林
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_13.png?raw=true" style="zoom:50%;" />
+
+#### 6.3.3 图的遍历与图的连通性
+图的遍历算法可以用来判断图的连通性
+
+
+### 6.4 图的应用
+#### 6.4.1 最小生成树
+一个连通图的生成树包含图的所有顶点，并且只含尽可能少的边。对于生成树来说，若砍去它的一条边，则会使生成树变成非连通图;若给它增加一条边，则会形成图中的一条回路。
+1. 性质
+1) 最小生成树不是唯一的. 当图G中的各边权值户部巷等你时,G的最小生成树是唯一的;若无相连通图G的边数比顶点数少1, 即G本身是一棵树时, 则G的最小生成树就是他本身.
+2) 最小生成树的边的权值之和总是唯一的， 虽然最小生成树不唯一，但其对应的边的权值之和总是唯一的，而且是最小的。
+3) 最小生成树的边数为顶点数减1.
+
+2. Prim算法
+
+Prim普里姆算法类似于寻找图的最短路径的Dijkstra算法
+初始时,从图中任取一顶点加入树T,此时树中只含有一个顶点, 之后选择一个与当前T中顶点集合距离最近的顶点, 并将该顶点和对应的边加入T, 每次操作后T中的顶点数和边数都增1. 得到T就是最小生成树, T中必然有N-1条边
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_14.png?raw=true" style="zoom:50%;" />
+
+
+3. Kruskal算法
+是一种按权值的递增次序选择合适的边来构建最小生成树的方法.
+Kruskal算法构造最小生成树的过程. 初始时为只有n个顶点而尤边的非连通图T= {V, {}}, 每个顶点自成一个连通分量，然后按照边的权值由小到大的顺序，不断选取当前未被选取过且权值最小的边，若该边依附的顶点落在T中不同的连通分量上，则将此边加入T.否则舍弃此边而选择下一条权值最小的边。以此类推，直至T中所有顶点都在一个连通分量上。
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_15.png?raw=true" style="zoom:50%;" />
+
+#### 6.4.2 最短路径
+
+1. Dijkstra算法求单元最短路径问题
+设置一个集合S记录已求得的最短路径的顶点,初始时把源点V0放入S, 集合S每并入一个新顶点Vi , 都要修改源点V0到集合V-S中顶点当前的最短路径长度值
+
+设置两个辅助数组
+dist[ ]:记录从源点Vo到其他各顶点当前的最短路径长度，它的初态为:若从vo到vi;有弧，则dist[i]为弧上的权值:否则置dist[i]为∞。
+path[ ]: path[i]表示从源点到顶点i之间的最短路径的前驱结点。在算法结束时可根据其值追溯得到源点vo到顶点vi的最短路径。
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_16.png?raw=true" style="zoom:50%;" />
 
 
 
+#### 6.4.3 有向无环图表述表达式
+
+#### 6.4.4 拓扑排序
+AOV网:若用DAG图表示一个工程,其顶点表示活动, 用有向边<vi,vj>表示vi必须先于活动vj进行的这样的一种关系.
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_17.png?raw=true" style="zoom:50%;" />
+
+```c
+bool Topotogica1sort(Graph G){
+	Tnitstack(s);	 //初始化栈，存储入度为0的顶点
+	for(int i=0;i<G.vexnum ;i++)
+		if(indegreee[i]==0)
+		Push(S,i);   //将所有入度为0 的顶点进栈
+	int count=0;   //计数，记录当前已经输出的顶点数
+	while (!IsEmpty(S)){  	//栈不空，则存在入度为0的顶点
+	Pop(S.i);//栈顶元察出栈
+	print[count++]=i 	//输出顶点i
+	for(p=G.vertices[i].firstarc;p;p=p->nextarc){ //将所有i指向的顶点的入度减1,并且将入度减为0的项点压入栈S
+		v=p->adjvex;
+		if(!(--indegree[v]))
+		Push(S,v); //入度为0，则入栈
+		}
+} //while
+if(count<G.vexnum)
+	return false; //排序失败，有向图中有回路
+else
+	return true;//拓扑排序成功
+}
+```
+
+由于输出每个顶点的同时还要删除以它为起点的边，故拓扑排序的时间复杂度为o(|V| + |E|)。
+对一个AOV网，如果采用下列步骤进行排序，则称之为逆拓扑排序:
+①从AOV网中选择一个没有后继(出度为0)的顶点并输出。
+②从网中删除该顶点和所有以它为终点的有向边。
+③重复①和②直到当前的AOV网为空。
+用拓扑排序算法处理AOV网时，应注意以下问题:
+①入度为零的顶点，即没有前驱活动的或前驱活动都已经完成的顶点，工程可以从这个顶点所代表的活动开始或继续。
+②若一个顶点有多个直接后继，则拓扑排序的结果通常不唯一;但若各个顶点已经排在一个线性有序的序列中，每个顶点有唯一的前驱后继关系，则拓扑排序的结果是唯一的。
+③由于AOV网中各顶点的地位平等，每个顶点编号是人为的，因此可以按拓扑排序的结果重新编号，生成AOV网的新的邻接存储矩阵，这种邻接矩阵可以是三角矩阵;但对于一
+般的图来说，若其邻接矩阵是三角矩阵，则存在拓扑序列;反之则不一定成立。
 
 
+#### 6.4.5 关键路径
+在带权有向图中,以顶点表示事件,以有向边表示活动,以边上的权值表示完成该活动的开销. 称之为用边表示活动的网络,简称AOE网.
+AOV网无权值. AOE网有权值
+性质: 
+①只有在某顶点所代表的事件发生后，从该顶点出发的各有向边所代表的活动才能开始;
+②只有在进入某顶点的各有向边所代表的活动都已结束时,该顶点所代表的事件才能发生。
 
+1. 事件vk的最早发生时间ve(k)
+它是指从源点v1到顶点Vk的最长路径长度。事件Vk的最早发生时间决定了所有从Vk开始的活动能够开工的最早时间。可用下面的递推公式来计算:
+ve(源点)=0
+ve(k) = Max{ve(j) + Weight(Vj, vk}, Vk为vj的任意后继，Weight (vj, vk)表示<Vj, vk>上的权值
 
+计算ve()值时，按从前往后的顺序进行，可以在拓扑排序的基础上计算:
+①初始时，令ve[1..n] = 0.
+②输出一个入度为0的顶点vj时，计算它所有直接后继顶点vk的最早发生时间，若ve[j] +
+Weight(vj,vk)> ve[k],则ve[k]= ve[j] + Weight(vj, vk)。以此类推，直至输出全部顶点。
 
+2. 事件以的最迟发生时间vl(k)
+它是指在不推迟整个工程完成的前提下，即保证它的后继事件vj,在其最迟发生时间vl(j)能够发生时，该事件最迟必须发生的时间。可用下面的递推公式来计算:
+vl(汇点) = ve(汇点)
+vl(k) = Min{vl(j) - Weight(vk, vj)}, ve为vj 的任意前驱
+注意:在计算vl(k)时，按从后往前的顺序进行，可以在逆拓扑排序的基础上计算。
+计算vl(0)值时，按从后往前的顺序进行，在上述拓扑排序中，增设一个栈以记录拓扑序列，拓扑排序结束后从栈顶至栈底便为逆拓扑有序序列。过程如下:
+①初始时，令vl[1..n] = ve[n].
+②栈顶顶点vj出栈，计算其所有直接前驱顶点vk的最迟发生时间，若vl[j] - Weight(vk,vj) <vl[k],则vI[k] = vl[f]] - Weight(vk, vj)。以此类推，直至输出全部栈中顶点。
 
+3. 活动aj的最早开始时间e(i)
+它是指该活动弧的起点所表示的事件的最早发生时间。若边<vk, vj>表示活动ai,则有e(i) = ve(k)。
 
+4. 活动a的最迟开始时间l(i)
+它是指该活动弧的终点所表示事件的最迟发生时间与该活动所需时间之差。若边<vk, vj>表示活动ai,则有l(i)= v(j) - Weight(vk,vj)
 
+5. 一个活动ai的最迟开始时间l(i)和其最早开始时间e(i)的差额d(i)=l(i)-e(i)
+它是指该活动完成的时间余量，即在不增加完成整个工程所需总时间的情况下，活动ai可以拖延的时间,若一个活动的时间余量为零,则说明该活动必须要如期完成,否则会拖延整个工程进度.所以称l(i)- e(i)= 0即l(i) = e(i)的活动ai 是关键活动。
 
-
-
-
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_18.png?raw=true" style="zoom:50%;" />
 
 
 
