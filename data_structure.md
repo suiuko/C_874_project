@@ -1373,6 +1373,40 @@ vl(k) = Min{vl(j) - Weight(vk, vj)}, ve为vj 的任意前驱
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_18.png?raw=true" style="zoom:50%;" />
 
+## 第七章 查找
+### 7.1 查找的基本概念
+
+### 7.2 顺序查找和折半查找
+#### 7.2.1 顺序查找
+
+1. 一般线性表的顺序查找
+引入哨兵,会让循环不必判断数组越界
+
+2. 有序表的顺序查找
+
+#### 7.2.2 折半查找
+
+折半查找的基本思想:
+首先将给定值key与表中中间位置的元素比较,若相等,则查找成功，返回该元素的存储位置;若不等，则所需查找的元素只能在中间元素以外的前半部分或后半部分(例如，在查找表升序排列时，若给定值key大于中间元素,则所查找的元素只可能在后半部分)。然后在缩小的范围内继续进行同样的查找，如此重复，直到找到为止，或确定表中没有所需要查找的元素，则查找不成功，返回查找失败的信息。算法如下:
+```c
+int Binary_Search(SeqList L,ElemType key){
+	int low=0,high=L.TablenLen-1,mid;
+	while(low<=high){
+		mid=(low+high)/2;   //取中间位置
+		if(L.elem[mid]==key)
+			return mid;   //查找成功则返回所在位置
+		else if(L.elem[mid]>key)
+			high=mid-1;  //从前半部分继续查找
+		else
+			low=mid+1;  //从后半部分继续查找
+	}
+	return -1;   //查找失败,返回-1
+}
+
+```
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_18.png?raw=true" style="zoom:50%;" />
 
 
 
+ 
