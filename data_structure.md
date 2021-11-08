@@ -5,6 +5,7 @@
 
 ### 1.2 时间复杂度
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D1_1.png?raw=true" style="zoom:50%;" />
+
 1. 关键的代码运算为 i = i * 2
 设执行次数为t, 则, 2^t = n. ---> 其时间复杂度为log2n
 
@@ -21,7 +22,7 @@
 ## 2 线性表
 ### 2.1 线性表的定义和基本操作
 ### 2.1.1  线性表的定义
-线性表是具有相同数据类型的n (n≥0)个数据元素的<u>有限序列</u>，其中n为表长，当n= 0时线性表是一个空表。若用L命名线性表，则其一般表示为
+ 线性表是具有相同数据类型的n (n≥0)个数据元素的<u>有限序列</u>，其中n为表长，当n= 0时线性表是一个空表。若用L命名线性表，则其一般表示为
 L= (a1, a2, .. ai+1,...., an)
 
 特点:
@@ -157,7 +158,7 @@ LinkList List_TailInsert(LinkList &L){
 	L=(LinkList)malloc(sizeof(LNode));
 	LNode *s,*r=L; //r为表尾指针
 	scanf("%d",&x); //输入结点的值
-	while(x!=9999){
+	while(scanf("%d",&x)!=EOF){  //循环输入
 		s=(LNode *)malloc(sizeof(LNode));
 		s->data = x;
 		r->next=s;
@@ -286,9 +287,15 @@ free(q);
 在循环双链表中,某结点 * p 为尾结点时, `p->next==L` 当循环双链表为空表时,其头结点的`prior`域和`next`域都等于L.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_13.png?raw=true" style="zoom:50%;" />
 
-#### 3.5 静态链表
+#### 2.3.5 静态链表
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_14.png?raw=true" style="zoom:50%;" />
 
+### 2.4 一些选择题总结
+
+1. 一个线性表有四种运算: 删除第一个元素、删除最后一个元素、在第一个元素之间插入新元素、在最后一个元素之后插入新元素,则最好使用: 只有头结点指针没有为结点指针的循环双链表.
+2. 一个链表经常使用在末尾插入结点和删除结点,则使用带头结点的双循环链表
+3. 一个链表经常操作时在最后一个元素之后插入一个元素和删除第一个元素,则使用不带头结点且有尾指针的单循环链表.
+4. 静态链表中指针表示的是 下一个元素在数组中的位置.
 
 ## 第三章 栈和队列
 ### 3.1 栈

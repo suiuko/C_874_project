@@ -20,7 +20,7 @@ bool Del_Min(sqList &L, ELemType &value)
             vlaue = L.data[i];
             pos = i;
         }
-    L.data[pos] L.data[L.length-1]; // the empty space is filled by the last element.
+    L.data[pos] = L.data[L.length-1]; // the empty space is filled by the last element.
     L.length--;
     return true;  //value 是最小值.
 }
