@@ -250,3 +250,115 @@ int findMissMin(int A[], int n)
 }
 
 
+//单链表
+
+/*
+1. 设计一个递归算法,删除不带头结点的单链表L中所有值为X的结点
+*/
+
+void Del_X_3(Linklist &L,ElemType x){
+    LNode *p; //指向待删除结点
+    if(L=NULL)  //递归出口
+        return;
+    if(L->data == x){
+        p = L; //删除*L,
+        L = L->next;
+        free(p);
+        Del_X_3(L,x); 
+    }
+    else 
+        Del_X_3(L->next,x);
+}
+
+/*
+2. 在带头结点的单链表L中，删除所有值为x的结点，并释放其空间，
+假设值为x的结点不唯一，试编写算法以实现上述操作。
+*/
+void Del_X_1(Linklist &L, ElemType x) {
+//L为带头结点的单链表，本算法删除L中所有值为x的结点
+    LNode *p = L->next, *pre=L, *q; //置p和pre的初始值
+    while (p ! =NULL) {
+        if (p->data==x) {
+        q=p;   //q指向该结点
+        p=p->next;
+        pre->next=p;//删除*q结点
+        free(q);//释放*q结点的空间
+        }
+        else {//否则，pre和p同步后移
+            pre=p;
+            p=p->next;
+        }//else
+    }//while
+}
+
+
+/*
+3. 设L为带头结点的单链表，编写算法实现从尾到头反向输出每个结点的值。
+
+思想: 
+    1) 可以使用链表逆置法
+    2) 用栈的思想来解决
+        每当访问一个结点,先递归输出它后面的结点, 再输出该结点自身,
+    
+*/
+void R_Print(LinkList L){
+    if(L->Next!=NULL){
+        R_Print(L->next);    //递归
+    }
+    if(L!=NULL)
+        print(L->data);   //输出函数
+}
+void R_Ignore_Head(LinkList L){
+    if(L!=NULL)
+        R_Print(L->next);
+}
+
+/*
+4. 带头结点的单链表L中删除一个最小值结点的高效算法
+
+算法思想:用p从头至尾扫描单链表，pre指向*p结点的前驱，用minp保存值最小的结
+点指针(初值为p), minpre指向*minp结点的前驱(初值为pre)。一边扫描，一边比较， 若
+p->data小于minp->data,则将p、pre分别赋值给minp、minpre, 如下图所示。当p扫
+描完毕时，minp指向最小值结点, minpre指向最小值结点的前驱结点，再将minp所指结点删
+除即可。
+
+*/
+
+LinkList Delete_Min(LinkList &L){
+    // L 是带头结点的单链表,
+    LNode *pre=L, *p=pre->next; //p为工作指针, pre是其前驱
+    LNode *minpre = pre, *minp=p;  //保存最小值结点其前驱
+    while(p!=NULL){
+        if(p->data < minp->data){
+            minp = p;  //找到比之前最小值结点更小的结点
+            minpre = pre;
+        }
+        pre = p;//继续扫描下一个
+        p = p->next;
+    }
+    minpre->next=minp->next; //删除最小值结点
+    free(minp);
+    return L;
+}
+
+
+
+/*
+5. 将带头结点的单链表就地逆置,就地O(1)
+
+//解法1: 将头结点摘下,然后从第一结点开始,依次插入到头结点的后面
+(头插法建立单链表),指导最后一个结点为止,这样就实现了链表的逆置.
+*/
+
+LinkList Reverse_l(LinkList L){
+    LNode *p,*r; //p为工作指针, r为p的后继,以防断链
+    p=L->next;  //从第一个元素结点开始
+    L->next = NULL; //将头结点L的NEXT域置为NULL
+    while(p!=NULL){ //依次将结点摘下
+        r = p->next;  //暂存P的后继
+        p->next = L->next;  //将P的结点插入到头结点之后
+        L->next = p;
+        p=r;
+    }
+    return L;
+}
