@@ -1389,7 +1389,19 @@ vl(k) = Min{vl(j) - Weight(vk, vj)}, ve为vj 的任意前驱
 1. 一般线性表的顺序查找
 引入哨兵,会让循环不必判断数组越界
 
-2. 有序表的顺序查找
+```c
+typedef struct{
+	Elemtype *elem;  //元素存储空间基址,建表时按实际长度分配
+	int TableLen; //表的长度
+}SSTable;
+
+int Search_Seq(SSTable ST, ElemType key){
+	ST.elem[0] = key; //哨兵
+	for(i=ST.TableLen; ST.elem[i]!key;--i); //从后往前找
+	return i;  //若表中不存在关键字为key的元素, 将查找到i 为0时, 推出for 循环
+}
+
+```
 
 #### 7.2.2 折半查找
 
@@ -1412,8 +1424,279 @@ int Binary_Search(SeqList L,ElemType key){
 
 ```
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_18.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_2.png?raw=true" style="zoom:50%;" />
+
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_1.png?raw=true" style="zoom:50%;" />
+
+折半查找平均查找
 
 
 
- 
+
+
+### 7.3 B树
+
+
+
+## 第八章 排序
+
+### 1.直接插入排序  
+
+找到哨兵 然后进行依次插入
+性质：是一个稳定排序，时间复杂度为O^2，空间o（1）
+
+```c
+void InsertSort(ElemType A[],int n){
+    int i,j;
+    for(i=2;i<n;i++)  //依次将A【2】到A【n】插入
+        if(A[i]<A[i-1]){   //如果A【i】的关键码小于起前驱，将A【i】插入，只有后一个数小于前一个数的时候，才会前移
+            A[0]=A[i];  //复制为哨兵，A【0】不存放元素
+            for(j=i-1;A[0]<A[j];--j)  //从后向前查找待插入位置
+                A[j+1]=A[j];   //向后挪位
+            A[j+1]=A[0];  //复制到插入位置
+        }
+}
+```
+### 2.折半插入
+
+是插入的升级版，在查找的过程中，进行折半查找的方法进行插入
+
+```c
+void BInsertSort(SqList &L){
+    int n;
+    for(int i=2;i<n;i++){
+        L.r[0]=L.r[i]; //将带插入的记录暂存到监视哨中
+        low=1;high=i-1;
+        while(low<=high){
+            m=(low+high)/2;
+            if(L.r[0].key<L.r[m].key)
+                high=m-1;
+                else
+                {
+                    low=m+1;
+                }
+                for(j=i-1;j>high+1;--j)
+                    L.r[j+1]=L.r[j];  //记录后移
+                    L.r[high+1]=L.r[0];  //将r[0]即原r[i]插入到正确位置
+                
+        }
+    }
+}
+
+```
+### 3.希尔排序
+
+先将整个带排序的记录序列分割称为若干子序列，分割方法是将相距某个增量的记录提取出来，组成一个子序列
+分别进行直接插入排序
+
+性质：
+1:增量序列的选择：希尔排序的执行时间依赖与增量序列
+                好的增量序列的特征：最后一次增量必须是1
+2:shell排序时间性能优于直接插入排序
+3:不稳定！！
+
+```c
+void ShellSort(ElemType A[],int n){
+    //A[0]为暂存单元，不是哨兵，j<=0时，插入位置已到
+    for(dk=n/2;dk>=1;dk=dk/2){   //步长变化
+        for(i=dk+1;i<=n;++i)
+            if(A[i]<A[i-dk]){  //需将A【i】插入有序增量子表
+                A[0]=A[i];   //暂存
+                for(j=i-dk;j>0&&A[0]<A[j];j-=dk)
+                    A[j+dk]=A[j];  //记录后移，查找插入的位置
+                A[j+dk]=A[0];  //插入
+            }
+    }
+}
+```
+
+## 二：交换类
+
+### 1：冒泡排序
+从后往前（反之也可）两两比较相邻的树枝，如果A[i-1]>A[i]则交换，知道序列比较完，这是第一趟冒泡，需要走n-1趟
+
+性质：冒泡排序是稳定的
+时间：n^2   ,  空间 1
+
+```c
+void BubbleSort(Elemtype A[],int n){
+    flag=false;   //表示本趟冒泡是否发生交换的标志
+    for(j=n-1;j>i;j--)  //一趟冒泡过程
+        if(A[j-1]>A[j]){  //如果为逆序
+            swap(A[j-1],A[j]);
+            flag=true;
+        }
+        if(flag==false)
+            return;   //本趟遍历没有发生变换说明已经有序
+}
+```
+
+### 2:快速排序
+一趟快排一定又一个元素会到达它正确的位置
+
+1:选择一个基准元素，通常是第一个元素或者最后一个元素，
+2:通过一趟排序将待排序的记录分割成独立的两个部分，其中一个部分记录的元素值均比基准元素小，另一部分的元素值比基准值大
+3:此时，基准元素在起排好顺序的正确位置
+4:然后分别对这两部分记录用同样的方法进行排序
+
+性质：是不稳定排序，时间：nlog2n  , 空间 log2n
+    如果待排序列无序， 时间： nlog2n,
+    如果已经有序，时间：n^2
+
+```c
+
+//part 1 ,Partition，划分算法，返回是上述的基准的位置，根据这个数值对数组进行划分
+
+void Partition(ElemType A[],int low,int high){  //一次划分
+    ElemType pivot=A[low];   //将当前表中第一个元素设为枢轴，对表进行划分
+    while(low<high){//循环跳出的条件
+        while(low<high&&A[high]>=pivot)
+            --high;
+            A[low]=A[high]; //将比枢轴小的元素移动到左端
+        while(low<high&&A[low]<=pivot)
+            ++low;   //将大的放到右边
+    }
+    A[low]=pivot; //枢轴元素存放到最终位置
+    return low;
+}
+
+//part 2,快排
+void QuickSort(ElemType A[],int low,int high){
+    if(low<high){       //循环跳出的条件
+        //Partition 划分操作，将大表格分多个子表
+        int pivotpos = Partition(A,low,high);
+        QuickSort(A,low,pivotpos-1);
+        QuickSort(A,pivotpos+1,high);
+    }
+}
+```
+## 三：选择排序
+### 1.简单选择排序
+   在一组数中选出最小或者最大的一个数与第一个位置的数进行交换，然后将剩下的数中再找最小的或者最大的数与第二位进行互换，一次类推。
+
+   性质：
+    （1）关键字比较次数
+    无论文件状态开始如何，在第i趟排序中选出最小的关键字记录，需做n-1次比较，总比较次数：n(n-1)
+    （2）记录的移动次数
+    初始文件为正序时，移动次数为 0
+    直接选择排序的平均时间复杂度为 n^2
+    （3）直接排序是就地排序
+    （4）不稳定
+
+```c
+void SelectSort(ElemType A[],int n){
+    int min,j;
+    for(int i=0;i<n-1;i++){
+        min=i;
+        for(j=i+1;j<n;j++){
+            if(A[j]<A[min])
+            min=j;
+            if(min!=i)
+            swap(A[i],A[min]);
+        }
+    }
+}
+```
+### 2.堆排序
+
+堆的定义：对是具有下列性质的完全二叉树--每个节点的值都大于或等于其左右孩子节点的值，称为大顶堆
+
+堆排序流程：
+    1:先把所有的带排序数字构建一个完全二叉树
+    2:将这个完全二叉树调整为大顶堆
+    3:输出根结点上的数字
+    4:将剩余的节点元素在此调整为一个大顶堆
+    5:回到第三步，直至所有的元素都被输出
+
+两个关键点：
+1:二叉树调整为堆
+2:输出根结点数字后，如何将剩余节点上的数字调整为堆
+    输出根节点数字后，原先的位置会留下一个空位，将最下层、最右侧的叶子节点移到空出来的根结点处，再按照“关键点1”的方法得到调整剩余的数字
+
+性质：
+最坏时间：nlogn ，平均接近于最坏时间
+堆排序不适宜于记录数较小的文件，
+不稳定的排序算法
+
+```c
+//part1：建立大根堆的算法
+void BulidMaxHeap(Elemtype A[],int len){
+    for(int i=len/2;i>0;i--){  //从i=[n/2] ~ 1，反复调整堆
+        HeadAdjust(A,i,len);
+    }
+    void HeadAdjust(ElemType A[],int k,int len){
+        //函数HeadAdjust将元素K为根的子树进行调整
+        A[0]=A[k];
+        for(i=2*k;i<=len;i*=2){
+            if(i<ken&&A[i]<A[i+1])
+            i++;
+            if(A[0]>=A[i])
+            break;
+            else{
+                A[k]=A[i];  //将A[i]调整到双亲节点上
+                k=i;  //修改K值，以便继续筛选
+            }
+        }
+        A[k]=A[0];  //被删选节点的值放入最终位置
+    }
+}
+
+//part 2:堆排序算法：跟树高有关
+void HeapSort(ElemType A[],int len){
+    BuildMaxHeap(A,len);  //初始化
+    for(int i=len;i>1;i--){
+        Swap(A[i],A[1]); //输出顶元素
+        HeadAdjust(A,1,i-1); //调整，把剩余的i-1个元素调整
+    }
+}
+```
+## 四：二路归并排序
+
+两两进行归并，重复直到长度为N
+
+性质：
+1:稳定排序
+2:时间： nlogn   空间 n
+
+```c
+//prat 1   Merge()功能将前后相邻的两个有序表归并为一个有序表，
+
+
+
+//part 2 MergeSortDC进行分
+
+void MergeSortDC(SeqLust R,int low,int high){
+      //用分治法堆R[low...high]进行二路归并排序
+      int mid;
+      if(low<high){
+        mid=(low+high)/2;   //分解
+        MergeSortDC(R,low,mid);
+        MergeSortDC(R,mid+1,high);
+        Merge(R,low,mid,high);  //进行组合，将两个有序区归并为一个有序区
+      }
+}
+
+```
+## 五：基数排序
+
+按照低位先排序，然后收集，在按照高位排序在收集，直至到最高位。
+需要注意的是：
+        往桶里面分配的时候，是从桶口向里面放，
+        向桶外面收集的时候，是从桶底向外面拿
+
+基数排序是稳定排序， 时间复杂度为： d(n+r)   ;d为关键字位数，n为关键字个数，r为关键字取值范围
+                空间复杂度为r ，即需要桶的个数
+
+## 六 排序总结
+### 1.关于时间复杂度
+1.初始排序越无序，快速排序的效率越高，最高为 nlog2n
+2.初始排序越有序，快速排序的效率越低，最低为n^2
+3.堆排序和归并排序时间复杂度和初始序列无关，都为nlog2n
+4.时间复杂度为nlogn且稳定的是 归并排序
+5.排序趟数与序列原始状态无关的是：堆排序、归并排序、基数排序
+6.每趟排序都能确定一个元素最终的位置的是：冒泡排序、快速排序、简单选择排序、堆排序
+7.就平衡性而言，内部排序中最好的是快速排序
+
+
+
