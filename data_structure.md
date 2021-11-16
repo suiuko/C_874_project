@@ -1429,15 +1429,74 @@ int Binary_Search(SeqList L,ElemType key){
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_1.png?raw=true" style="zoom:50%;" />
 
-折半查找平均查找
+折半查找时间复杂度为 log2n 
+平均查找长度为 log2(n+1) -1
+元素个数为N时,树高为 h=log2(N+1) (向上取整)
 
+#### 7.2.3 分块查找
+分块查找的基本思想:将查找表分为若千子块。块内的元素可以无序，但块之间是有序的, 即<u>第一个块中的最大关键字小于第二个块中的所有记录的关键字，第二个块中的最大关键字小于第三个块中的所有记录的关键字，</u>以此类推。再建立-一个索 引表，索引表中的每个元素含有各块的最大关键字和各块中的第一个元素的地址，索引表按关键字有序排列。
 
+分块查找平均查找长度为 L1 + Ls  (L1为索引表 , Ls时索引表下的查找表)
 
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_3.png?raw=true" style="zoom:50%;" />
 
 ### 7.3 B树
+#### 7.3.1 B树极其基本操作
+一棵M阶B树或为空树,或为满足如下特性的M叉树
+1) 树中每个结点至多有M棵子树, 即 至多含有 m-1个关键字
+2) 若根结点不是终端结点，则至少有两棵子树。
+3) 除根结点外的所有非叶结点至少有m/2(向上取整)棵子树，即至少含有(m/2)(向上取整)-1个关键字。
 
+如: 一棵5阶B树的实例
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_4.png?raw=true" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_5.png?raw=true" style="zoom:50%;" />
 
+1. B树的插入
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_6.png?raw=true" style="zoom:50%;" />
+
+2. B树的删除
+
+B树中的删除操作与插入操作类似，但要稍微复杂-一些， 即要使得删除后的结点中的关键字个数>=(m/2)(向上取整)- 1,因此将涉及结点的“合并”问题。
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_7.png?raw=true" style="zoom:50%;" />
+
+### 7.4 散列表
+#### 7.4.1 散列表的基本概念
+散列表建立了关键字和存储地址之间的一种直接映射关系
+
+#### 7.4.2 散列函数的构造方法
+1) 函数的定义域必须包含全部需要存储的关键字
+2) 函数计算出来的地址应该能等概率
+3) 函数尽量简单
+
+1. 直接定地址法
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_8.png?raw=true" style="zoom:50%;" />
+
+2. 除留余数法
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_9.png?raw=true" style="zoom:50%;" />
+
+#### 7.4.3 处理冲突的方法
+1. 开放定址法
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_10.png?raw=true" style="zoom:50%;" />
+
+1) 线性探测法
+线性探测法。当d=0,1,2,. * ,m-1时，称为线性探测法。这种方法的特点是:冲突发生
+时，顺序查看表中下一个单元(探测到表尾地址m-1时，下一个探测地址是表首地址0),直到找出一个空闲单元(当表未填满时一定能找到一个空闲单元)或查遍全表。
+线性探测法可能使第i个散列地址的同义词存入第i+1个散列地址，这样本应存入第i+1个散列地址的元素就争夺第i + 2个散列地址的元素的地址....从而造成大量元素在相邻的散列地址上。“聚集”(或堆积)起来，大大降低了查找效率。
+
+2) 平方探测法
+平方探测法。当d=0^2, 1^2, -1^2, 2^2, -2^2时，称为平方探测法，其中k<=m/2,散列表长度m必须是一个可以表示成4k+3的素数，又称二次探测法。
+
+2. 拉链法
+
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_11.png?raw=true" style="zoom:50%;" />
+
+显然，对于不同的关键字可能会通过散列函数映射到同一地址，为了避免非同义词发生冲突，可以把所有的同义词存储在一个线性链表中，这个线性链表由其散列地址唯一标识。假设散列地址为i的同义词链表的头指针存放在散列表的第i个单元中，因而查找、插入和删除操作主要在同义词链中进行。拉链法适用于经常进行插入和删除的情况。
+
+#### 7.4.4 散列查找及性能分析
+
+算平均查找长度
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_12.png?raw=true" style="zoom:50%;" />
 
 ## 第八章 排序
 
