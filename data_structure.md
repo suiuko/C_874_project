@@ -302,6 +302,7 @@ free(q);
 #### 3.1.1 栈基本概念
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_1.png?raw=true" style="zoom:50%;" />
+
 1. 定义
 只能在一段进行操作的线性表.
 特性: 后进先出
@@ -330,10 +331,10 @@ typedef struct{
 }SqStack;
 ```
 
-栈顶指针: `s. top`,初始时设置`s. top=-1`; 栈顶元素: `s. data[S. top]`
+栈顶指针: `s.top`,初始时设置`s.top=-1`; 栈顶元素: `s.data[S. top]`
 进栈操作:栈不满时，栈顶指针先加1,再送值到栈顶元素。
 出栈操作:栈非空时，先取栈项元素值，再将栈顶指针减1.
-栈空条件:` s. top==-1`;栈满条件: `S. top==MaxSize-1`;栈长:` s.top+1`.
+栈空条件:` s.top==-1`;栈满条件: `S.top==MaxSize-1`;栈长:`s.top+1`.
 
 2. 顺序栈的基本运算
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_2.png?raw=true" style="zoom:50%;" />
@@ -384,7 +385,7 @@ bool GetTop(SqStack S,ElemType &x){
 
 3. 共享栈
 
-两个站的栈顶指针都指向栈顶元素, top0=-1时,0号栈为空, top1=MaxSize时,1号栈为空; 仅当两个站定指针相邻(top1-top0=1)时,判断为栈满.
+两个站的栈顶指针都指向栈顶元素, <u>top0=-1时,0号栈为空</u>, <u>top1=MaxSize时,1号栈为空;</u> <u>仅当两个站定指针相邻(top1-top0=1)时,</u>判断为栈满.
 当0号栈进栈时,top0先加1再赋值,1号栈进栈时,先减1再赋值; 出栈时刚好相反.
 
 #### 3.1.3 栈的链式存储结构
@@ -438,6 +439,9 @@ GetHead(Q, &x)//读队头元素，若队列Q非空，则将队头元素赋值给
 队列长度: `(Q. rear+MaxSize-Q. front) 8MaxSize`
 
 队空条件: `Q.front == Q.rear`
+
+判断队满的方法: `(Q.rear+1)%MaxSize == Q.front`
+
 为了区别是队空开始队满,有三种处理方式:
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_5.png?raw=true" style="zoom:50%;" />
 
@@ -459,7 +463,7 @@ bool isEmpty(SqQueue Q){
 (3)入队
 ```c
 bool EnQueue(SqQueue &Q,EeleType x){
-	if((Q.rear+1)%MaxSize==Q.front)
+	if((Q.rear+1)%MaxSize==Q.front) 
 		return false; //队满则报错
 	Q.data[Q.rear] = x;
 	Q.rear=(Q.rea+1)%MaxSize;//队尾指针加1取模
