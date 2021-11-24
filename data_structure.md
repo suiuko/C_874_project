@@ -584,7 +584,7 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 (2) 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_17.png?raw=true" style="zoom:50%;" />
 
-## 第四章
+## 第四章 串
 ### 4.1 串的定义和实现
 #### 4.1.1 串的定义
 串是由零个或多个字符组成的有限序列
@@ -668,7 +668,9 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_3.png?raw=true" style="zoom:50%;" />
 
 
+
 ## 第五章 树
+
 ### 5.1 树的基本概念
 ##### 5.1.1 树的定义
 
