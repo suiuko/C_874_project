@@ -127,6 +127,7 @@ int LocateElem (SqList L, ElemType e){
 ####  2.3.1 单链表的定义
 线性表的链式存储又称单链表.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_3.png?raw=true" style="zoom:50%;" />
+
 ```c
 typedef struct LNode{
 	ElemType data; //数据域
@@ -1305,7 +1306,7 @@ path[ ]: path[i]表示从源点到顶点i之间的最短路径的前驱结点。
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_16.png?raw=true" style="zoom:50%;" />
 
-
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/dj.png?raw=true" style="zoom:50%;" />
 
 #### 6.4.3 有向无环图表述表达式
 

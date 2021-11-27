@@ -3221,7 +3221,7 @@ fscanf(fp,"&d,&f",&i,&t);// 若文件中有3,4.5,则将3送入i,4.5送入t
 返回值: 无
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/12_6.png?raw=true" style="zoom:50%;" />
 
-(2)`fseck`函数
+(2)`fseek`函数
 `int fseek(FILE *filepointer, long offset, int whence);`
 功能: 将filepointer所指向的文件的位置指针移动到特定的位置. 这个位置由`whence`和`offset`决定,即将位置指针移动到距离`whence`的`offset`字节处, `whence`的值见下表
 如果`offset`为正值, 表明新的位置在`whence`的后面, 如果`whence`是负值,表明新的位置在`whence`的前面.
