@@ -6,10 +6,10 @@
 ### 1.2 时间复杂度
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D1_1.png?raw=true" style="zoom:50%;" />
 
-1. 关键的代码运算为 i = i * 2
+1. 关键的代码运算为 `i = i * 2`
 设执行次数为t, 则, 2^t = n. ---> 其时间复杂度为log2n
 
-2. `return n*fact(n-1)`
+2. `return n * fact(n-1)`
 这是求N!的递归代码,每次调用`fact()`的参数会减1, 递归的出口为`fact(1)`一共执行了N次递归调用.
 
 3. 链表合并
