@@ -6,6 +6,8 @@
 ### 1.2 时间复杂度
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D1_1.png?raw=true" style="zoom:50%;" />
 
+![D1_1](picture/D1_1.png)
+
 1. 关键的代码运算为 `i = i * 2`
 设执行次数为t, 则, 2^t = n. ---> 其时间复杂度为log2n
 
@@ -54,6 +56,8 @@ DestroyList(&L):销毁操作。销毁线性表，并释放线性表L所占用的
 特点: 表中的元素的逻辑顺序与其物理顺序相同.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_1.png?raw=true" style="zoom:50%;" />
 
+![D2_1](picture/D2_1.png)
+
 注意: 线性表中的元素的位序从1开始的,而数组中元素的下标是从0开始的
 
 ```c
@@ -69,7 +73,8 @@ C 的初始动态分配语句为:`L.data = (ElemType *)malloc(sizeof(ElemType)*I
 
 #### 2.2.2 顺序表上的基本操作的实现
 (1)插入操作
-在顺序表L的第i (1<=i<=L.length+1)个位置插入新元素e。若i的输入不合法，则返回false,表示插入失败;否则，将第i个元素及其后的所有元素依次往后移动一个位置，腾出一个空位置插入新元素e,顺序表长度增加1,插入成功，返回true.
+在顺序表L的第i (1<=i<=L.len gth+1)个位置插入新元素e。若i的输入不合法，则返回false,表示插入失败;否则，将第i个元素及其后的所有元素依次往后移动一个位置，腾出一个空位置插入新元素e,顺序表长度增加1,插入成功，返回true.
+
 ```c
 bool ListInsert (SqList &L, int i, ElemType e) {
 	if(i<1| li>L.length+1)//判断i的范围是否有效
@@ -105,8 +110,11 @@ bool ListDelete(SqList &L, int i, Elemtype &e) {
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_2.png?raw=true" style="zoom:50%;" />
 
+![D2_2](picture/D2_2.png)
+
 (3)按值查找(顺序查找)
 在顺序表L中查找第一一个 元素值等于e的元素，并返回其位序。
+
 ```c
 int LocateElem (SqList L, ElemType e){
 	int i;
@@ -128,6 +136,8 @@ int LocateElem (SqList L, ElemType e){
 线性表的链式存储又称单链表.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_3.png?raw=true" style="zoom:50%;" />
 
+![D2_3](picture/D2_3.png)
+
 ```c
 typedef struct LNode{
 	ElemType data; //数据域
@@ -139,18 +149,28 @@ typedef struct LNode{
 由于单链表的元素离散地分布在存储空间中,所以单链表是非随机存取的存储结构, 即不能直接找到表中某个特定的结点. 查找某个特定的结点时,需要从表头开始便利,依次查找.
 
 带头节点的单链表, 头指针为NULL时表示一个空表. 头结点的指针域指向线性表的第一个元素结点
-<img src="picture/D2_4.png" style="zoom:50%;" />
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_4.png?raw=true" style="zoom:50%;" />
+
+![D2_4](picture/D2_4.png)
 
 #### 2.3.2 单链表上基本操作的实现
 1. 采用头插法建立单链表
-该方法时从一个空表开始, 生成新结点, 并将读取到的数据存放到新结点的数据域中,然后将新结点插入到当前链表的表头,即头节点之后.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_5.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_6.png?raw=true" style="zoom:50%;" />
-注意: 采用头插法建立单链表,读入数据的顺序与生成的链表中的元素的顺序是相反的, 每个结点插入的时间为0(1), 设单链表长为N, 则总时间复杂度为0(N)
+  该方法时从一个空表开始, 生成新结点, 并将读取到的数据存放到新结点的数据域中,然后将新结点插入到当前链表的表头,即头节点之后.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_5.png?raw=true" style="zoom:50%;" />
+
+  ![D2_5](picture/D2_5.png)
+
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_6.png?raw=true" style="zoom:50%;" />
+
+  ![D2_6](picture/D2_6.png)
+
+  注意: 采用头插法建立单链表,读入数据的顺序与生成的链表中的元素的顺序是相反的, 每个结点插入的时间为0(1), 设单链表长为N, 则总时间复杂度为0(N)
 
 2. 采用尾插法建立单链表
-尾插法将新结点插入到当前链表的表尾,为此必须添加一个尾指针r, 使其始终指向当前链表的尾结点.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_7.png?raw=true" style="zoom:50%;" />
+  尾插法将新结点插入到当前链表的表尾,为此必须添加一个尾指针r, 使其始终指向当前链表的尾结点.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_7.png?raw=true" style="zoom:50%;" />
+
+  ![D2_7](picture/D2_7.png)
 
 算法: 
 ```c
@@ -203,10 +223,13 @@ LNode *LocateElem (LinkList L, ElemType e) {
 ```
 
 5. 插入结点操作
-插入结点操作将值为X的新结点插入到单链表的第i个位置上, 先添加插入位置的合法性,然后找到待插入位置的前驱结点,即第i-1个结点,再在其后插入新结点.
-首先调用按序号查找算法GetElem(L,i-1),查找第i-1个结点,假设返回的第i-1个结点为 * p,然后令新结点 * s的指针域指向 * p的后继结点, 再令结点 * p 的指针域指向新插入的结点 * s
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_8.png?raw=true" style="zoom:50%;" />
-实现插入结点核心代码:
+  插入结点操作将值为X的新结点插入到单链表的第i个位置上, 先添加插入位置的合法性,然后找到待插入位置的前驱结点,即第i-1个结点,再在其后插入新结点.
+  首先调用按序号查找算法GetElem(L,i-1),查找第i-1个结点,假设返回的第i-1个结点为 * p,然后令新结点 * s的指针域指向 * p的后继结点, 再令结点 * p 的指针域指向新插入的结点 * s
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_8.png?raw=true" style="zoom:50%;" />
+
+  ![D2_8](picture/D2_8.png)
+
+  实现插入结点核心代码:
 ```c
 p=GetElem(L,i-1); //查找插入位置的前驱结点
 s->next = p->next; 
@@ -251,6 +274,8 @@ free (q) ;//释放后继结点的存储空间
 双链表有两个指针, prior 和 next  分别指向前驱结点、后继结点
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_9.png?raw=true" style="zoom:50%;" />
 
+![D2_9](picture/D2_9.png)
+
 双链表描述:
 ```c
 typedef struct DNode{
@@ -259,7 +284,9 @@ typedef struct DNode{
 }DNode, *DLinklist;
 ```
 1. 双链表的插入操作
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_10.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_10.png?raw=true" style="zoom:50%;" />
+
+  ![D2_10](picture/D2_10.png)
 
 ```c
 s->next = p->next; //将结点*s插入到结点*p之后
@@ -269,27 +296,34 @@ p->next=s;
 ```
 
 2. 双链表的删除操作
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_11.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_11.png?raw=true" style="zoom:50%;" />
+
+  ![D2_11](picture/D2_11.png)
 
 ```c
 p->next=q->next; //步骤1
 q->next->prior=p; //步骤2
 free(q);  
-
 ```
 
 #### 2.3.4 循环链表
 1. 循环单链表
-循环单链表和单链表的区别在于,表中最后一个结点的指针不是NULL,而改为指向头结点,从而整个链表形成一个环.
-再循环单链表中,表尾结点 * r的next域指向L, 表中没有指针域为NULL的结点,因此,循环单链表的判空条件不是头结点是否为空,**而是它是否等于头指针**
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_12.png?raw=true" style="zoom:50%;" />
+  循环单链表和单链表的区别在于,表中最后一个结点的指针不是NULL,而改为指向头结点,从而整个链表形成一个环.
+  再循环单链表中,表尾结点 * r的next域指向L, 表中没有指针域为NULL的结点,因此,循环单链表的判空条件不是头结点是否为空,**而是它是否等于头指针**
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_12.png?raw=true" style="zoom:50%;" />
+
+  ![D2_12](picture/D2_12.png)
 
 2. 循环双链表
-在循环双链表中,某结点 * p 为尾结点时, `p->next==L` 当循环双链表为空表时,其头结点的`prior`域和`next`域都等于L.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_13.png?raw=true" style="zoom:50%;" />
+  在循环双链表中,某结点 * p 为尾结点时, `p->next==L` 当循环双链表为空表时,其头结点的`prior`域和`next`域都等于L.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_13.png?raw=true" style="zoom:50%;" />
+
+  ![D2_13](picture/D2_13.png)
 
 #### 2.3.5 静态链表
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D2_14.png?raw=true" style="zoom:50%;" />
+
+![D2_14](picture/D2_14.png)
 
 ### 2.4 一些选择题总结
 
@@ -304,12 +338,17 @@ free(q);
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_1.png?raw=true" style="zoom:50%;" />
 
+![D3_1](picture/D3_1.png)
+
 1. 定义
 只能在一段进行操作的线性表.
 特性: 后进先出
 
 N个不同元素进栈.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_11.png?raw=true" style="zoom:50%;" />
+
+![D3_11](picture/D3_11.png)
+
 2. 栈的基本操作
 ```c
 InitStack(&S)//初始化一个空栈S。
@@ -338,7 +377,9 @@ typedef struct{
 栈空条件:` s.top==-1`;栈满条件: `S.top==MaxSize-1`;栈长:`s.top+1`.
 
 2. 顺序栈的基本运算
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_2.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_2.png?raw=true" style="zoom:50%;" />
+
+  ![D3_2](picture/D3_2.png)
 
 (1) 初始化
 ```c
@@ -394,6 +435,8 @@ bool GetTop(SqStack S,ElemType &x){
 通常采用单链表实现, 并规定<u>所有操作都是在单链表的表头进行的</u>
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_3.png?raw=true" style="zoom:50%;" />
 
+![D3_3](picture/D3_3.png)
+
 ```c
 typedef struct Linknode{
 	ElemType data;
@@ -404,9 +447,11 @@ typedef struct Linknode{
 ### 3.2 队列
 #### 3.2.1 队列的基本概念
 1. 队列定义
-只允许在表的一端进行插入,而在表的另一段进行删除.
-最早排队的也是最早离队的, 特性: 先进先出
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_4.png?raw=true" style="zoom:50%;" />
+  只允许在表的一端进行插入,而在表的另一段进行删除.
+  最早排队的也是最早离队的, 特性: 先进先出
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_4.png?raw=true" style="zoom:50%;" />
+
+  ![D3_4](picture/D3_4.png)
 
 2. 队列常见的基本操作
 ```c
@@ -445,6 +490,8 @@ GetHead(Q, &x)//读队头元素，若队列Q非空，则将队头元素赋值给
 
 为了区别是队空开始队满,有三种处理方式:
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_5.png?raw=true" style="zoom:50%;" />
+
+![D3_5](picture/D3_5.png)
 
 3. 循环队列的操作
 (1)初始化
@@ -719,7 +766,6 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 >3. 若n为奇数，则每个分支结点都有左孩子和右孩子:若n为偶数，则编号最大的分支
 结占(编号为n/2) 只有左孩子，没有右孩子，其余分支结点左、右孩子都有。
 >4. 若i ≤ Ln/2」，则结点i为分支结点，否则为叶子结点。
-
 
 (3)二叉排序树
 左子树上所有结点的关键字均小于跟结点的关键字. 右子树上所有结点的关键字均大于根结点的关键字; 左子树和右子树又各是一棵二叉排序树.

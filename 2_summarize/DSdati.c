@@ -51,3 +51,50 @@ bool Merge(Seqlist A,Seqlist B,Seqlist &c){
     C.length = k;
     return true;
 }
+
+
+//4.设L为带头结点的单链表,编写算法实现从尾到头反向输出每个节点的值
+//用栈和递归的思想来实现.
+void R_print(LinkList L){
+    if(l->next!=NULL){
+        R_print(L->next);//递归
+    }//if
+    if(L!=NULL) print(L->data); //输出函数
+} 
+    void R_Ignore_head(LInkList L){
+        if(L!=NULL) R_print(L->next);
+    }
+
+
+//5.从单链表中删除一个最小的值结点
+//用pre和p ,minp,minpre来做
+LinkList Delete_min(LinkList &L){
+    LNode *pre=L,*p=pre->next; //p为工作指针,pre为其前驱
+    LNode *minpre=pre,*minp=p; //保存最小值结点其前驱
+    while(p!=NULL){
+        if(p->data<minp->data){
+            minp=p; //找到比之前还要小的结点
+            minpre=pre;
+        }
+        pre=p; //继续扫描下一个结点
+        p=p->next;
+    }
+    minpre->next=minp->next;// 删除最小值结点
+    free(minp);
+    return L;
+}
+    
+//6.将带头结点的单链表就地逆置
+//第一种 将头结点摘下,从第一个结点开始,一次插入到头结点的后面
+LinkList Reverse_l(LinkList L){
+    LNode *p.*r; //p为工作指针,r 为p的后继防止断链
+    p=L->next; //从第一个元素开始
+    L->next=NULL; //先将头结点L的next域置为NULL
+    while(p!NULL){
+        r=p->next; //暂存一个P的后继
+        p->next=L->next;
+        L->next=p;
+        p=r;
+    }
+    retrun L;zhengzhi
+}

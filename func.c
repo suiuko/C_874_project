@@ -102,3 +102,12 @@ p, &a, &(*p)  //这些都是A的地址
 //赋值
 int a; int *p; p = &a;
 a, *p, *(&a) //这些都是A的值
+
+
+//10.数组赋值
+memcpy(void *d,void *s,unsigned n)
+//将以S为首地址的一片连续的N个字节内存单元拷贝到以D为首地址的一片连续的内存单元中.
+
+//memset 赋值
+memset(void *s,char ch,unsigned n)
+//将S为收地址的一片连续的N个字节内存单元都赋值给ch
