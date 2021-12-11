@@ -532,7 +532,9 @@ bool DeQueue(SqQueue &Q,ElemType &x){
 
 #### 3.2.3 队列的链式存储结构
 1. 队列的链式存储
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_6.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_6.png?raw=true" style="zoom:50%;" />
+
+  ![D3_6](picture/D3_6.png)
 ```c
 typedef struct{
 	ElemType data;
@@ -546,6 +548,8 @@ typedef struct{  //链式队列
 
 带头结点的链式队列
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_7.png?raw=true" style="zoom:50%;" />
+
+![D3_7](picture/D3_7.png)
 
 
 2. 链式队列的基本操作
@@ -591,8 +595,17 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 
 #### 3.2.4两端队列
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_8.png?raw=true" style="zoom:50%;" />
+
+![D3_8](picture/D3_8.png)
+
 允许在一端进行插入和删除,但在另一段只允许插入的两端队列称为:输出受限的两端队列.
+
+![D3_9](picture/D3_9.png)
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_9.png?raw=true" style="zoom:50%;" />
+
+<img src="picture/D3_10.png" alt="D3_10" style="zoom:50%;" />
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_10.png?raw=true" style="zoom:50%;" />
 
 
@@ -607,19 +620,27 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 >栈顶元素比要进的(高或等于)就出.
 
 2. 中缀、后缀表达式
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_12.png?raw=true" style="zoom:50%;" />
-中缀表达式:1+B * (C-D)-E/F
-后缀表达式:ABCD- * +EF/-
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_12.png?raw=true" style="zoom:50%;" />
+
+  <img src="picture/D3_12.png" alt="D3_12" style="zoom:50%;" />
+
+  中缀表达式:1+B * (C-D)-E/F
+  后缀表达式:ABCD- * +EF/-
 
 3. 通过后缀表示计算表达式值的过程为:
-顺序扫描表达式的每一项， 然后根据它的类型做如下相应操作:若该项是操作数，则将其压入栈中:若该项是操作符 < op > ,
-则连续从栈中退出两个操作数Y和x,形成运算指令X < op > Y,并将计算结果重新压入栈中。当表达式的所有项都扫描并处理完后，栈顶存放的就是最后的计算结果。
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_13.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_14.png?raw=true" style="zoom:50%;" />
+  顺序扫描表达式的每一项， 然后根据它的类型做如下相应操作:若该项是操作数，则将其压入栈中:若该项是操作符 < op > ,
+  则连续从栈中退出两个操作数Y和x,形成运算指令X < op > Y,并将计算结果重新压入栈中。当表达式的所有项都扫描并处理完后，栈顶存放的就是最后的计算结果。
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_13.png?raw=true" style="zoom:50%;" />
+
+  ![D3_13](picture/D3_13.png)
+
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_14.png?raw=true" style="zoom:50%;" />
+
+  ![D3_14](picture/D3_14.png)
 
 4. 中缀转后缀方法
-从左向右开始扫描中缀表达式, 遇到数字时,加入后缀表达式
-遇到运算符:
+  从左向右开始扫描中缀表达式, 遇到数字时,加入后缀表达式
+  遇到运算符:
 >若为 ( 入栈
 >若为 ) 则一次把战中的运算符加入后缀表达式,直到出现 ( , 从栈中删除 ( 
 >若为除括号外的其他运算符, 当其优先级高于除( 外的栈顶运算符时, 直接入栈, 否则从栈顶开始, 依次弹出比当前处理的运算符优先级高和优先级相等的运算符, 直到一个比它优先级低的或遇到了一个左括号为止.
@@ -627,12 +648,34 @@ bool DeQueue(LinkQueue &Q,ElemType &x){
 (1)  a+b - a * ( (c+d) /e-f) +g
 首先需要根据操作符 < op > 的优先级来进行栈的变化. 我们用icp 来表示当前扫描到的运算符ch 的优先级,该运算符进站后的优先级为isp,则运算符的优先级如下表表示[isp]是栈内优先数,icp是栈外优先数
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_15.png?raw=true" style="zoom:50%;" />
+
+![D3_15](picture/D3_15.png)
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_16.png?raw=true" style="zoom:50%;" />
+
+![D3_16](picture/D3_16.png)
 
 (2) 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D3_17.png?raw=true" style="zoom:50%;" />
 
-## 第四章 串
+![D3_17](picture/D3_17.png)
+
+### 3.3.3 递归经典例子
+
+```c
+int Fib(int n){
+	if(n==0)
+		return 0;
+	else if(n==1)
+		return 1;
+	else 
+		return Fib(n-1)+Fib(n-2); //递归表达式
+}
+//式子必须满足的两个条件:
+//1. 递归表达式(递归体) 2. 边界条件(递归出口)
+```
+
+## 第四章 串 
 ### 4.1 串的定义和实现
 #### 4.1.1 串的定义
 串是由零个或多个字符组成的有限序列
@@ -665,6 +708,8 @@ typedef struct{
 类似于线性表的链式存储结构, 也可采用链表方式存储串值.
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_1.png?raw=true" style="zoom:50%;" />
+
+![D4_1](picture/D4_1.png)
 
 #### 4.1.3 串的基本操作
 
@@ -707,13 +752,29 @@ int Index(SString S,SString T){
 
 #### 4.2.2 改进的模式匹配算法-- KMP
 1. 字符串的前缀、后缀和部分匹配值
+   前缀:除最后一个字符之外,字符串的所有头部子串
+
+   后缀:除第一个字符外,字符串的所有尾部子串
+   部分匹配值为字符串的前缀和后缀的最长相等前后缀长度 
+
 2. KMP算法原理
-主要就是计算Next数组的值
-next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则跳到子串的next[ j ]位置重新与主串当前位置进行比较。
+  主要就是计算Next数组的值
+  next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则跳到子串的next[ j ]位置重新与主串当前位置进行比较。
+
+  也可以说,第j位字符前j-1位字符串中重合的字符数+1(当前J前半部的最左边和最右边相等的最大字符数)
 
 例子:
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_2.png?raw=true" style="zoom:50%;" />
+
+![D4_2](picture/D4_2.png)
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D4_3.png?raw=true" style="zoom:50%;" />
+
+![D4_3](picture/D4_3.png)
+
+Nextval : 当j=1时,nextval[1]=0 ;
+当j>1时, 若pj不等于pnext[j] : nextval[j]=next[j]
+若pj=pnext[j] : nextval[j]=nextval[next[j]]
 
 
 
@@ -725,6 +786,8 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 #### 5.1.2 基本术语
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_1.png" style="zoom:50%;" />
+![D5_1](picture/D5_1.png)
+
 1) 度大于0的结点成为分支结点(又称非终端结点);度为0(没有子女结点)的结点称为叶子结点(又称终端结点). 在分支结点中, 每个结点的分枝数就是该结点的度.
 2) 结点的深度、高度、层次
 层度:从树根开始定义, 跟结点为第一层, 子结点为第二层.
@@ -737,28 +800,39 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 #### 5.1.3 树的性质
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_2.png?raw=true" style="zoom:50%;" />
 
+总结点数 = n0+n1+n2...
+总分支数 = 1n1+2n2+3n3...
+总结点数 = 总分支数 + 1
+
+![D5_2](picture/D5_2.png)
+
 
 ## 5.2 二叉树的概念
 ### 5.2.1 二叉树的定义及其主要特性
 
 1. 二叉树的定义
-二叉树是N个结点的有限集合.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_3.png?raw=true" style="zoom:50%;" />
+  二叉树是N个结点的有限集合.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_3.png?raw=true" style="zoom:50%;" />
+  <img src="picture/D5_3.png" alt="D5_3" style="zoom: 50%;" />
 
 二叉树与度为2的有序树的区别:
 >1. 度为2的树至少有3个结点, 而二叉树可以为空.
 >2. 度为2的有序树的孩子的左右次序是相对于另一孩子而言的，若某个结点只有一个孩子,则这个孩子就无须区分其左右次序，而二叉树无论其孩子数是否为2,均需确定其左右次序。即二叉树的结点次序不是相对于另一结点而言，而是确定的。
 
 2. 几个特殊的二叉树
-(1)满二叉树
-高度为h, 有2^h-1个结点的二叉树, 即树中的每层都含有最多的结点
-满二叉树的叶子结点都集中在二叉树的最下一层,并且除叶子结点之外的每个结点度数都为2.
-**双亲 为 [i/2] ,  左孩子 2i , 右孩子 2i+1**
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_4.png?raw=true" style="zoom:50%;" />
+  (1)满二叉树
+  高度为h, 有2^h-1个结点的二叉树, 即树中的每层都含有最多的结点
+  满二叉树的叶子结点都集中在二叉树的最下一层,并且除叶子结点之外的每个结点度数都为2.
+  **双亲 为 [i/2] ,  左孩子 2i , 右孩子 2i+1**
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_4.png?raw=true" style="zoom:50%;" />
+  <img src="picture/D5_4.png" alt="D5_4" style="zoom:50%;" />
 
 (2)完全二叉树
 高为h、有n个结点的二叉树, 当且仅当其每个结点都与高度为h的满二叉树中编号为1~n的结点一一对应.
+特点: 若度为1的结点,则只可能有一个,且该结点只有左孩子而无右孩子(重要特征)
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_5.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_5.png" alt="D5_5" style="zoom:50%;" />
 
 >1. 若有度为1的结点，则只可能有一个，且该结点只有左孩子而无右孩子
 >2. 按层序编号后，一旦出现某结点(编号为i)为叶子结点或只有左孩子，则编号大于i
@@ -774,18 +848,27 @@ next[ j ]的含义是:在子串的第 j 个字符与主串发生失配时，则�
 树上任一结点的左子树和右子树的深度之差不超过1.
 
 3. 二叉树的性质
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_6.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_7.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_6.png?raw=true" style="zoom:50%;" />
+  ![D5_6](picture/D5_6.png)
+
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_7.png?raw=true" style="zoom:50%;" />
+  ![D5_7](picture/D5_7.png)
 
 #### 5.2.2 二叉树的存储结构
 1. 顺序存储结构
-二叉树的顺序存储是用一组地址连续的存储单元依次自上而下、自左至右存储完全二叉树上的结点元素, 即 将完全二叉树上编号为i 的结点元素存储在一位数组下标为i-1的分量中.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_8.png?raw=true" style="zoom:50%;" />
+  二叉树的顺序存储是用一组地址连续的存储单元依次自上而下、自左至右存储完全二叉树上的结点元素, 即 将完全二叉树上编号为i 的结点元素存储在一位数组下标为i-1的分量中.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_8.png?raw=true" style="zoom:50%;" />
+
+  ![D5_8](picture/D5_8.png)
 
 2. 链式存储结构
-用链表结点来存储二叉树中的每个结点. 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_9.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_10.png?raw=true" style="zoom:50%;" />
+  用链表结点来存储二叉树中的每个结点. 
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_9.png?raw=true" style="zoom:50%;" />
+
+  ![D5_9](picture/D5_9.png)
+
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_10.png?raw=true" style="zoom:50%;" />
+  ![D5_10](picture/D5_10.png)
 
 二叉树链式存储结构描述如下:
 ```c
@@ -851,14 +934,18 @@ void PerOrder(BiTree T){
 ```
 
 4. 递归算法和非递归算法的转换
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_11.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_12.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_11.png?raw=true" style="zoom:50%;" />
+
+  ![D5_11](picture/D5_11.png)
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_12.png?raw=true" style="zoom:50%;" />
+
+  ![D5_12](picture/D5_12.png)
 
 ```c
-//中序遍历 非递归算法
+//中序遍历 非递归算法 使用栈的思想
 void Inorder2(BiTree T){
-	InisStack(S);
-	BiTree p=T;
+	InitStack(S); //初始化栈S
+	BiTree p=T; //P是遍历指针
 	while(p||!IsEmpty(S)){
 		if(p){
 			Push(S,p);
@@ -875,8 +962,8 @@ void Inorder2(BiTree T){
 
 ```c
 //先序遍历 非递归算法
-void Inorder2(BiTree T){
-	InisStack(S);
+void Preorder2(BiTree T){
+	InitStack(S);
 	BiTree p=T;
 	while(p||!IsEmpty(S)){
 		if(p){
@@ -894,7 +981,9 @@ void Inorder2(BiTree T){
 ```
 
 5. 层次遍历
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_13.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_13.png?raw=true" style="zoom:50%;" />
+
+  ![D5_13](picture/D5_13.png)
 ```c
 void LevelOrder(BiTree T){
 	InitQueue(Q); 
@@ -917,15 +1006,20 @@ void LevelOrder(BiTree T){
 >在中序遍历中,根结点必然将中序遍历分割成两个字序列, 前一个字序列是根结点左子树的中序序列, 后一字序是根结点右子树的中序序列.
 
 2)后序序列和中序序列可以唯一确定一棵二叉树
+
 >后续序列的最后一个结点就如同先序序列的第一个结点, 可以将中序序列分割成两个序列
 
 #### 5.3.2 线索二叉树
 1. 线索二叉树的基本概念
-遍历二叉树是以一定的规则将二叉树中的结点排列成一个线性序列，从而得到几种遍历序列，使得该序列中的每个结点(第一个和最后一个结点除外)都有一个直接前驱和直接后继。
-在含N个结点的二叉树中, 有N+1个空指针. 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_14.png?raw=true" style="zoom:50%;" />
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_15.png?raw=true" style="zoom:50%;" />
-存储结构
+  遍历二叉树是以一定的规则将二叉树中的结点排列成一个线性序列，从而得到几种遍历序列，使得该序列中的每个结点(第一个和最后一个结点除外)都有一个直接前驱和直接后继。
+  在含N个结点的二叉树中, 有N+1个空指针. 
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_14.png?raw=true" style="zoom:50%;" />
+
+  <img src="picture/D5_14.png" alt="D5_14"  />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_15.png?raw=true" style="zoom:50%;" />
+
+  <img src="picture/D5_15.png" alt="D5_15" style="zoom:50%;" />f
+  存储结构
 ```c
 typedef struct ThreadNode{
 	ElemType data; //数据元素
@@ -936,10 +1030,12 @@ typedef struct ThreadNode{
 ```
 
 2. 中序线索二叉树的构造
-二叉树的线索化是将二叉链表中的空指针改为指向前驱或后继的线索. 而前驱或后继的信息只有在遍历时才能得到, 因此线索化的实质就是遍历一次二叉树.
-指针pre指向刚刚访问过的结点,指针p指向正在访问的结点,即pre指向p的前驱. 在中序遍历的过程中,检查p的左指针是否为空, 若为空就将它指向pre, 检查pre的右指针是否为空, 若为空就将它指向p
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_16.png?raw=true" style="zoom:50%;" />
-算法:
+  二叉树的线索化是将二叉链表中的空指针改为指向前驱或后继的线索. 而前驱或后继的信息只有在遍历时才能得到, 因此线索化的实质就是遍历一次二叉树.
+  指针pre指向刚刚访问过的结点,指针p指向正在访问的结点,即pre指向p的前驱. 在中序遍历的过程中,检查p的左指针是否为空, 若为空就将它指向pre, 检查pre的右指针是否为空, 若为空就将它指向p
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_16.png?raw=true" style="zoom:50%;" />
+
+  <img src="picture/D5_16.png" alt="D5_16" style="zoom:50%;" />
+  算法:
 ```c
 //通过中序遍历对二叉树线索化的递归算法如下:
 void InThread(ThreadTree &p,ThreadTree &pre){
@@ -969,6 +1065,8 @@ void CreateInThread(ThreadTree T){
 }
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_17.png?raw=true" style="zoom:50%;" />
+![D5_17](picture/D5_17.png)
+
 3. 中序线索二叉树的遍历
 中序线索二叉树的结点隐含了线索二叉树的前驱和后继的信息, 在对其进行遍历时, 只要先找到序列中的第一个结点,然后依次找结点的后继, 直至其后继为空.
 在中序线索二叉树中找结点后继的规律是: 若其有标志为1, 则右链为线索,指示其后继,否则遍历右子树中第一个访问的结点(右子树中最左下的结点)为其后继.
