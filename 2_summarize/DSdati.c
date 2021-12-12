@@ -96,5 +96,52 @@ LinkList Reverse_l(LinkList L){
         L->next=p;
         p=r;
     }
-    retrun L;zhengzhi
+    retrun L;
+}
+
+
+//编写后序遍历二叉树的非递归算法
+//LRN  , 用栈的思想
+void PostOrder(Bitree T){
+    InitStack(S);
+    p=T;
+    r=NULL;
+    while(p||!IsEmpty(S)){
+        if(p){ //走到最左边
+            Push(S,p);
+            p=p->lchild;
+        }
+        else{
+            GetTop(S,p); //读数据
+            if(p->lchild&&p->rchild!=r)
+                p=p->rchild;
+            else{
+                pop(S,p);
+                visit(p->data);//访问
+                r=p;
+                p=NULL;
+            }
+        }
+    }
+}
+
+//计算二叉树双分枝结点个数与叶子结点个数之差
+int func(BiTree T){
+    InitStrack S;
+    int num2 =0,num0=0;
+    BiTree p=T;
+    while(p||!IsEmpty(S)){
+        if(p){
+            Push(S,p);
+            p=p->lchild;
+        }
+        else{
+            pop(S,p);
+            if(p->lchild!=NULL&&p->rchild!=NULL)
+                num2++;
+            if(p->lchild==NULL&&p->rchild==NULL)
+                num0++;
+        }
+    }
+    return num2-num0;
 }

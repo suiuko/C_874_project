@@ -1068,7 +1068,7 @@ void CreateInThread(ThreadTree T){
 ![D5_17](picture/D5_17.png)
 
 3. 中序线索二叉树的遍历
-中序线索二叉树的结点隐含了线索二叉树的前驱和后继的信息, 在对其进行遍历时, 只要先找到序列中的第一个结点,然后依次找结点的后继, 直至其后继为空.
+<u>中序线索二叉树的结点隐含了线索二叉树的前驱和后继的信息</u>, 在对其进行遍历时, 只要先找到序列中的第一个结点,然后依次找结点的后继, 直至其后继为空.
 在中序线索二叉树中找结点后继的规律是: 若其有标志为1, 则右链为线索,指示其后继,否则遍历右子树中第一个访问的结点(右子树中最左下的结点)为其后继.
 1)求中序线索二叉树中中序序列下的第一个结点
 ```c
@@ -1103,10 +1103,16 @@ void Inorder(ThreadNOde *T){
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_18.png?raw=true" style="zoom:50%;" />
 
+![D5_18](picture/D5_18.png)
+
+N个结点的线索二叉树上含有的线索数为 N+1
+
 ### 5.4 树、森林
 #### 5.4.1 树的存储结构
 1. 双亲表示法
-<img src="picture/D5_19.png" style="zoom:50%;" />
+  <img src="picture/D5_19.png" style="zoom:50%;" />
+
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_19.png?raw=true" style="zoom:50%;" />
 
 ```c
 #define MAX_TREE_SIZE 100 //树中最多结点数
@@ -1131,32 +1137,126 @@ typedef struct CSNode{
 }CSNode,*CSTree;
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_20.png?raw=true" style="zoom:50%;" />
+![D5_20](picture/D5_20.png)
 
 #### 5.4.2 树、森林与二叉树的转换
 树转换为二叉树的规则:每个结点左指针指向它的第一个孩子， 右指针指向它在树中的相邻
 右兄弟,这个规则又称“左孩子右兄弟”。由于根结点没有兄弟，所以对应的二叉树没有右子树.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_21.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_21.png" alt="D5_21" style="zoom:50%;" />
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_22.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_22.png" alt="D5_22" style="zoom:50%;" />
 
 #### 5.4.3 树和森林的遍历
 先根遍历 ----二叉树的先序遍历
 后根遍历---二叉树的中序遍历
 
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_23.png?raw=true" style="zoom:50%;" />
+
+![D5_23](picture/D5_23.png)
+
 
 ### 5.5 树与二叉树的应用
 #### 5.5.1 二叉排序树(BST)
 1. 二叉排序树的定义
+   左子树的结点值<根结点值<右子树的结点值
 
 2. 二叉排序树的查找
 
+```c
+BSTNode *BST_Serach(BiTree T,ElemType key){
+	while(T!=NULL&&key!=T->data){
+		if(key<T->data)
+			T=T->lchild;
+			else
+				T=T->rchild;
+	}
+	return T;
+}
+```
 
 3. 二叉排序树的插入
+  插入结点的过程如下:若原二叉排序树为空，则直接插入结点;否则，若关键字k小于根结点值，则插入到左子树，若关键字k大于根结点值，则插入到右子树。插入的结点一定是一一个新添加的叶结点，且是查找失败时的查找路径上访问的最后一个结点的左孩子或右孩子。下图所示在一一个二叉排序树中依次插入结点28和结点58，虚线表示的边是其查找的路径。
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_24.png?raw=true" style="zoom:50%;" />
+
+  ![D5_24](picture/D5_24.png)
+
+
 4. 二叉排序树的构造
+  从一个空树出发,一次输入元素,将他们插入二叉树中合适的位置,遵循左下右大的原则
+  
 5. 二叉排序树的删除
+   二叉排序树删除一个结点时,不能把该结点为根的子树上的结点都删除,必须先把被删除结点从存储二叉树的链表上取下,将因删除结点而断开的二叉链表重新连接起来
+
+   1)如果被删除结点为叶子结点,直接删除,
+
+   2)如果结点Z只有左子树或右子树,则让Z的子树成为Z父结点的子树,代替Z的位置
+   3)若有左右子树,则用Z的直接后继(或直接前驱来替代)
+
+   <img src="picture/D5_25.png" alt="D5_25" style="zoom:50%;" />
+   <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_25.png?raw=true" style="zoom:50%;" />
+
 6. 二叉排序树的查找效率分析
+  要会计算平均查找长度ASL
+  
+  下图ASL为 (1+2 * 2+3 * 4+4 * 3)/10=2.9
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_26.png?raw=true" style="zoom:50%;" />
+  <img src="picture/D5_26.png" alt="D5_26" style="zoom:50%;" />
 
 #### 5.5.2 平衡二叉树
 
+1. 平衡二叉树的定义
+要保证任意结点的左右子树的高度绝对值不超过1.
+定义结点左子树与右子树的高度差为结点的平衡因子.
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_27.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_27.png" alt="D5_27" style="zoom:50%;" />
+
+2. 平衡二叉树的插入
+二叉排序树保证平衡的基本思想如下:每当在二叉排序树中插入(或删除) 一个结点时，首先检查其插入路径上的结点是否因为此次操作而导致了不平衡。若导致了不平衡，则先找到插入路径上离插入结点最近的平衡因子的绝对值大于1的结点A,再对以A为根的子树，在保持二叉
+排序树特性的前提下，调整各结点的位置关系，使之重新达到平衡。
+(1)LL(左孩子的左子树插入新结点)
+进行右旋
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_28.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_28.png" alt="D5_28" style="zoom:50%;" />
+
+(2)RR(右孩子的右子树插入新结点)
+进行左旋
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_29.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_29.png" alt="D5_29" style="zoom:50%;" />
+
+(3)LR(左孩子的右子树插入新结点)
+先左旋后右旋
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_30.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_30.png" alt="D5_30" style="zoom:50%;" />
+
+(4)RL(右孩子的左子树插入新结点)
+先右旋后左旋
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_31.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_31.png" alt="D5_31" style="zoom:50%;" />
+
+3. 平衡二叉树的查找
+查找与二叉排序树的查找相同
+
+#### 5.5.3 哈夫曼树和哈夫曼编码
+1. 哈夫曼树
+带全路径长度WPL最小的二叉树称为哈夫曼树
+
+2. 哈夫曼树的构造
+1)将这n个结点分别作为n棵仅含一个结点的二叉树，构成森林F。
+2)构造一个新结点，从F中选取两棵根结点权值最小的树作为新结点的左、右子树，并且
+将新结点的权值置为左、右子树上根结点的权值之和。
+3)从F中删除刚才选出的两棵树，同时将新得到的树加入F中。
+4)重复步骤2)和3)，直至F中只剩下一棵树为止。
+
+特点:
+1)每个初始结点最终都成为叶结点，且权值越小的结点到根结点的路径长度越大。
+2)构造过程中共新建了n-1个结点(双分支结点)，因此哈夫曼树的结点总数为2n- 1。
+3)每次构造都选择2棵树作为新结点的孩子，因此哈夫曼树中不存在度为1的结点。
+
+3. 哈夫曼编码
+<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D5_32.png?raw=true" style="zoom:50%;" />
+<img src="picture/D5_32.png" alt="D5_32" style="zoom:50%;" />
 
 ## 第六章 图
 ### 6.1 图的基本概念
