@@ -145,3 +145,55 @@ int func(BiTree T){
     }
     return num2-num0;
 }
+
+//求指定结点在二叉树中的层次
+/*
+设二叉树采用二叉链表存储结构,在二叉排序树中,查找一层就下降一层,
+因此,查找该结点的次数就是这个结点在二叉排序树中的层次,
+*/
+int lecel(BiTree bt,BSTNode *p){
+    int n=0;
+    BiTree t =bt;
+    if(bt!=NULL){
+        n++;
+        while(t->data!=p->data){
+            if(p->data<t->data) //在左子树中查找
+                t=t->lchild;
+            else   
+                t=t->rchild;
+            n++; //层加一
+        }
+    }
+    return n;
+}
+
+
+
+//求出二叉排序中的最小和最大的关键字
+//思路: 排序树中,最左边就是最小的, 最右边就是最大的
+kettype Minkey(BSTNode *bt){
+    //MIN
+    while(bt->lchild!=NULL)
+        bt=bt->lchild;
+    return bt->data;
+}
+kettype Maxkey(BSTNode *bt){
+    while(bt->rchild!=NULL)
+        bt=bt->rchild;
+    return bt->data;
+}
+
+
+//从大到小输出二叉排序树中所有值不小于K的关键字
+//由于性质可知,右子树中所有的结点值均大于根结点值,左子树中所有的结点值均小于根结点值, 
+//为了从大到小输出,先遍历右子树,再访问根结点,后便利左子树
+void Output(BSTNode *bt,Keytype k){
+    if(bt==NULL)
+        return;
+    if(bt->rchild!=NULL)
+        Output(bt->rchild,k); //递归输出右子树的结点
+    if(bt-<data>=k)
+        printf("%d",bt->data);
+    if(bt->lchild!=NULL)
+        Output(bt->lchild,k); //递归输出左子树的结点
+}
