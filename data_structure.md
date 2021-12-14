@@ -1262,7 +1262,7 @@ BSTNode *BST_Serach(BiTree T,ElemType key){
 ### 6.1 图的基本概念
 #### 6.1.1 图的定义
 
-图G由顶点集V和边集E组成，记为G=(V,E)，其中V(G)表示图G中顶点的有限非空集;E(G)表示图G中顶点之间的关系(边)集合。若V= {V1, v2,......., vn}, 则用|V|表示图G中顶点的个数,E={(u,v)|u∈V, v∈V }，用|E|表示图G中边的条数。
+图G由顶点集V和边集E组成，记为G=(V,E)，其中V(G)表示图G中顶点的有限非空集;E(G)表示图G中顶点之间的关系(边)集合。若V= {V1, v2,......., vn}, 则用|V|表示图G中顶点的个数,E={(u,v)|u∈V, v∈V }，<u>用|E|表示图G中边的条数。</u>
 
 1. 有向图
 
@@ -1292,6 +1292,7 @@ BSTNode *BST_Serach(BiTree T,ElemType key){
 非连通情况下边最多的情况, 由N-1个顶点构成一个完全图, 此时再任意加入一条边则变成连通图.
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_1.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_1.png" alt="D6_1" style="zoom:50%;" />
 
 7. 强连通图、强连通分量
 在有向图中，如果有一对顶点 v和w，从v到w和从w到v之间都有路径，则称这两个顶点
@@ -1305,6 +1306,7 @@ BSTNode *BST_Serach(BiTree T,ElemType key){
 注意: 区分极大连通子图和极小连通子图,极大连通子图是无向图的连通分量, 极大即要求该连通子图包含其所有的边; 极小连通子图是既要保持图连通又要使得边数最小的子图.  
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_2.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_2.png" alt="D6_2" style="zoom:50%;" />
 
 9. 顶点的度、入度和出度
 在无向图中，顶点v的度是指依附于顶点v的边的条数，记为TD(v).
@@ -1339,7 +1341,10 @@ v根本不存在路径，则记该距离为无穷(∞)。
 
 用一个一位数组存储图中顶点的信息,用一个二维数组存储图中边的信息(即各顶点之间的邻接关系),存储顶点之间邻接关系的二维数组称为邻接矩阵.
 
+每一行代表该结点的出度, 每一列表示该结点的入度
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_3.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_3.png" alt="D6_3" style="zoom:50%;" />
 
 ```c
 //定义
@@ -1353,21 +1358,25 @@ typedef struct{
 }MGraph;
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_4.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_4.png" alt="D6_4" style="zoom:50%;" />
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_5.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_5.png" alt="D6_5" style="zoom:50%;" />
 
 #### 6.2.2 领接表法
 
-当一个图为稀疏图时，使用邻接矩阵法显然要浪费大量的存储空间，而图的邻接表法结合了顺序存储和链式存储方法，大大减少了这种不必要的浪费。
+当一个图为<u>稀疏图时</u>，使用邻接矩阵法显然要浪费大量的存储空间，而图的邻接表法结合了顺序存储和链式存储方法，大大减少了这种不必要的浪费。
 所谓邻接表，是指对图G中的每个顶点vi建立一个 单链表，第i个单链表中的结点表示依附于顶点vi的边(对于有向图则是以顶点vi为尾的弧)，这个单链表就称为顶点vi的边表(对于有向图则称为出边表)。边表的头指针和顶点的数据信息采用顺序存储(称为顶点表),所以在邻接表中存在两种结点:顶点表结点和边表结点
 
 顶点表结点由顶点域(data)和指向第一条邻接边的指针(firstarc) 构成，边表(邻接表)结点由邻接点域(adjvex) 和指向下一条邻接边的指针域(nextarc) 构成。
 
 无向图邻接表
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_6.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_6.png" alt="D6_6" style="zoom:50%;" />
 
 有向图邻接表
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_7.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_7.png" alt="D6_7" style="zoom:50%;" />
 
 特点: 
 > 1. 若G为无向图，则所需的存储空间为O(|V|+ 2|E|);若G为有向图,则所需的存储空间为O(|V|+|E|)
@@ -1375,11 +1384,15 @@ typedef struct{
 #### 6.2.3 十字链表
 十字链表是有向图的一种链式存储结构. 对应于有向图中每条弧有一个结点,对应于每个顶点也有一个结点
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_8.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_8.png" alt="D6_8" style="zoom:50%;" />
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_9.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_9.png" alt="D6_9" style="zoom:50%;" />
 
 #### 6.2.4 邻接多重表
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_10.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_10.png" alt="D6_10" style="zoom:50%;" />
 
 
 #### 6.2.5 图的基本操作
@@ -1408,12 +1421,13 @@ set_edge_value(G,x,y,v):设置图G中边(x, y)或<x, y>对应的权值为v。
 ```
 
 ### 6.3 图的遍历
-#### 6.3.1 广度优先搜索
+#### 6.3.1 广度优先搜索BFS(二叉树层序遍历)
 广度优先搜索类似于二叉树的层序遍历算法. 基本思想是先访问起始顶点V, 接着由V出发,依次访问V的各个为访问过的邻接顶点W1,W2...然后依次访问W1,W2,....的所有未被访问的邻接顶点;再从这些访问过的顶点出发, 访问他们所有未被访问过的邻接顶点, 直至图中所有顶点都被访问过为止.若此时图中尚有顶点未被访问,则另选图中一个未曾被访问的顶点作为始点,重复上述过程.直到图中所有顶点都被访问到为止.
 换句话说，广度优先搜索遍历图的过程是以v为起始点，由近至远依次访问和v有路径相通且路径长度为1, 2, .的顶点。广度优先搜索是一种分层的查找过程，每向前走一步可能访问一批顶点，不像深度优先搜索那样有往回退的情况，因此它不是一一个递归的算法。为了实现逐层的访问，算法必须借助一个辅助队列，以记忆正在访问的顶点的下一层顶点。
 
 代码: 
 ```c
+//二叉树层序遍历用队列的思想
 bool visited[MAX_VERTEX_NUM]; //访问标记数组
 void BFSTraverse(Graph G){    //对图 G进行广度优先遍历
 for (i=0; i<G.vexnum; ++i)
@@ -1431,20 +1445,23 @@ void BFS (Graph G,int v){   //从顶点v出发，广度优先遍历图G
 		DeQueue(Q,v);   //顶点V出队列
    for(w=FirstNeighbor(G,v);w>=0;w=NextNeighbor(G,v,w))   //检测V所有邻接点
    if(!visited[w]){   //W为V的尚未访问邻接顶点
-   visit(w);    //访问顶点W
-   visited[w] = TRUE;    // 对W做已访问标记
-   EnQueue(Q,w)     //顶点W入队列   
+   		visit(w);    //访问顶点W
+   		visited[w] = TRUE;    // 对W做已访问标记
+   		EnQueue(Q,w)     //顶点W入队列   
   	}  //if
 	} //while
 }
 ```
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_11.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_11.png" alt="D6_11" style="zoom:50%;" />
 
 1. 性能分析
 需要一个辅助队列Q, N个顶点均入队一次,在最坏的情况下,空间复杂度为O(|V|)
 
-采用邻接表存储方式时，每个顶点均需搜索一次(或入队一次)，故时间复杂度0(|V|)，在搜索任顶点的邻接点时，每条边至少访问一次，故时间复杂度为0(|E|), 算法总的时间复杂度为0(|V|+ |E|)。采用邻接矩阵存储方式时，查找每个顶点的邻接点所需的时间为o(|V|),故算法总的时间复杂度为0(|V|^2)。
+**采用邻接表存储方式时**，每个顶点均需搜索一次(或入队一次)，故时间复杂度0(|V|)，在搜索任顶点的邻接点时，每条边至少访问一次，故时间复杂度为0(|E|), 算法总的时间复杂度为0(|V|+ |E|)。采用**邻接矩阵存储方式时**，查找每个顶点的邻接点所需的时间为o(|V|),故**算法总的时间复杂度为0(|V|^2)。**
+**邻接表—>V+E**
+**矩阵—>V^2**
 
 2. BFS算法求解单源最短路径问题
 
@@ -1475,10 +1492,11 @@ while(!isEmpty(Q)){
 
 
 3. 广度优先生成树
-给定图的邻接矩阵存储表示是唯一的,所以其广度优先生成树也是唯一的,但由于邻接表存储表示不唯一,所以广度优先生成树也不是唯一的.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_12.png?raw=true" style="zoom:50%;" />
+  给定图的邻接矩阵存储表示是唯一的,所以其广度优先生成树也是唯一的,但由于邻接表存储表示不唯一,所以广度优先生成树也不是唯一的.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_12.png?raw=true" style="zoom:50%;" />
+  <img src="picture/D6_12.png" alt="D6_12" style="zoom:50%;" />
 
-#### 6.3.2 深度优先搜索
+#### 6.3.2 深度优先搜索DFS(树的先序遍历)
 深度优先搜索类似于树的先序遍历
 
 它的基本思想如下:首先访问图中某一起始顶点V,.然后由v出发，访问与v邻接且未被访
@@ -1507,57 +1525,84 @@ void DFS(Graph G,int v){   //从顶点V出发,深度优先遍历图G
 
 ```
 1. 性能分析
-是个递归算法,空间复杂度为0(|V|)
-遍历图的过程实质上是对每个顶点查找其邻接点的过程，其耗费的时间取决于所用的存储结构。以邻接矩阵表示时,查找每个顶点的邻接点所需的时间为0(|V|), 故总的时间复杂度为0(|V^2|)。以邻接表表示时，查找所有顶点的邻接点所需的时间为0(|E|),访问顶点所需的时间为0(|V|), 此时，总的时间复杂度为O(|V| + |E|)。
+  是个递归算法,空间复杂度为0(|V|)
+  遍历图的过程实质上是对每个顶点查找其邻接点的过程，其耗费的时间取决于所用的存储结构。以邻接矩阵表示时,查找每个顶点的邻接点所需的时间为0(|V|), 故总的时间复杂度为0(|V^2|)。以邻接表表示时，查找所有顶点的邻接点所需的时间为0(|E|),访问顶点所需的时间为0(|V|), 此时，总的时间复杂度为O(|V| + |E|)。
+
+  **邻接表—>V+E**
+  **矩阵—>V^2**
 
 2. 深度优先的生成树和生成森林
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_13.png?raw=true" style="zoom:50%;" />
+![D6_13](picture/D6_13.png)
 
 #### 6.3.3 图的遍历与图的连通性
 图的遍历算法可以用来判断图的连通性
+判断有向图中是否存在回路,除了可以使用拓扑排序之外,还可以使用深度优先遍历算法
+使用DFS算法递归遍历一个无环有向图,并在退出递归时输出对应顶点,得到的是逆拓扑排序.
 
 
 ### 6.4 图的应用
 #### 6.4.1 最小生成树
 一个连通图的生成树包含图的所有顶点，并且只含尽可能少的边。对于生成树来说，若砍去它的一条边，则会使生成树变成非连通图;若给它增加一条边，则会形成图中的一条回路。
 1. 性质
-1) 最小生成树不是唯一的. 当图G中的各边权值户部巷等你时,G的最小生成树是唯一的;若无相连通图G的边数比顶点数少1, 即G本身是一棵树时, 则G的最小生成树就是他本身.
-2) 最小生成树的边的权值之和总是唯一的， 虽然最小生成树不唯一，但其对应的边的权值之和总是唯一的，而且是最小的。
-3) 最小生成树的边数为顶点数减1.
+
+   1)最小生成树不是唯一的. 当图G中的各边权值户部巷等你时,G的最小生成树是唯一的;若无相连通图G的边数比顶点数少1, 即G本身是一棵树时, 则G的最小生成树就是他本身.
+   2)最小生成树的边的权值之和总是唯一的， 虽然最小生成树不唯一，但其对应的边的权值之和总是唯一的，而且是最小的。
+   3)最小生成树的边数为顶点数减1.
 
 2. Prim算法
 
-Prim普里姆算法类似于寻找图的最短路径的Dijkstra算法
-初始时,从图中任取一顶点加入树T,此时树中只含有一个顶点, 之后选择一个与当前T中顶点集合距离最近的顶点, 并将该顶点和对应的边加入T, 每次操作后T中的顶点数和边数都增1. 得到T就是最小生成树, T中必然有N-1条边
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_14.png?raw=true" style="zoom:50%;" />
+   Prim普里姆算法类似于寻找图的最短路径的Dijkstra算法
+   初始时,从图中任取一顶点加入树T,此时树中只含有一个顶点, 之后选择一个与当前T中顶点集合距离最近的顶点, 并将该顶点和对应的边加入T, 每次操作后T中的顶点数和边数都增1. 得到T就是最小生成树, T中必然有N-1条边
+   算法时间复杂度V^2, 适用于边稠密图
 
+   <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_14.png?raw=true" style="zoom:50%;" />
+   <img src="picture/D6_14.png" alt="D6_14" style="zoom:50%;" />
 
 3. Kruskal算法
-是一种按权值的递增次序选择合适的边来构建最小生成树的方法.
-Kruskal算法构造最小生成树的过程. 初始时为只有n个顶点而尤边的非连通图T= {V, {}}, 每个顶点自成一个连通分量，然后按照边的权值由小到大的顺序，不断选取当前未被选取过且权值最小的边，若该边依附的顶点落在T中不同的连通分量上，则将此边加入T.否则舍弃此边而选择下一条权值最小的边。以此类推，直至T中所有顶点都在一个连通分量上。
+  是一种按权值的递增次序选择合适的边来构建最小生成树的方法.
+  Kruskal算法构造最小生成树的过程. 初始时为只有n个顶点而尤边的非连通图T= {V, {}}, 每个顶点自成一个连通分量，然后按照边的权值由小到大的顺序，不断选取当前未被选取过且权值最小的边，若该边依附的顶点落在T中不同的连通分量上，则将此边加入T.否则舍弃此边而选择下一条权值最小的边。以此类推，直至T中所有顶点都在一个连通分量上。
+  时间复杂度eloge ,适用于边稀疏图
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_15.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_15.png?raw=true" style="zoom:50%;" />
+  <img src="picture/D6_15.png" alt="D6_15" style="zoom:50%;" />
 
 #### 6.4.2 最短路径
 
 1. Dijkstra算法求单元最短路径问题
-设置一个集合S记录已求得的最短路径的顶点,初始时把源点V0放入S, 集合S每并入一个新顶点Vi , 都要修改源点V0到集合V-S中顶点当前的最短路径长度值
+  设置一个集合S记录已求得的最短路径的顶点,初始时把源点V0放入S, 集合S每并入一个新顶点Vi , 都要修改源点V0到集合V-S中顶点当前的最短路径长度值
+  设置两个辅助数组
+  dist[ ]:记录从源点Vo到其他各顶点当前的最短路径长度，它的初态为:若从vo到vi;有弧，则dist[i]为弧上的权值:否则置dist[i]为∞。
+  path[ ]: path[i]表示从源点到顶点i之间的最短路径的前驱结点。在算法结束时可根据其值追溯得到源点vo到顶点vi的最短路径。
 
-设置两个辅助数组
-dist[ ]:记录从源点Vo到其他各顶点当前的最短路径长度，它的初态为:若从vo到vi;有弧，则dist[i]为弧上的权值:否则置dist[i]为∞。
-path[ ]: path[i]表示从源点到顶点i之间的最短路径的前驱结点。在算法结束时可根据其值追溯得到源点vo到顶点vi的最短路径。
+  时间复杂度 V^2
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_16.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_16.png" alt="D6_16" style="zoom:50%;" />
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/dj.png?raw=true" style="zoom:50%;" />
+![dj](picture/dj.png)
+
+2. Floyd算法
+   算法思想: 递推产生一个N阶方阵, `A[i][j]`表示从顶点vi到顶点vk的路径长度,
+   **时间复杂度 V^3**
+
+   <img src="https://github.com/poshoi/C_874_project/blob/main/picture/Floyd.png?raw=true" style="zoom:50%;" />
+   <img src="picture/Floyd.png" alt="Floyd" style="zoom:50%;" />
 
 #### 6.4.3 有向无环图表述表达式
+
+`((a+b)*(b*(c+d))+(c+d)*e)*((c+d)*e)`
+有相同的表达式`(c+d)和(c+d)*e`
+
+<img src="picture/D6_19.png" alt="Floyd" style="zoom:50%;" />
 
 #### 6.4.4 拓扑排序
 AOV网:若用DAG图表示一个工程,其顶点表示活动, 用有向边<vi,vj>表示vi必须先于活动vj进行的这样的一种关系.
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_17.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_17.png" alt="D6_17" style="zoom:50%;" />
 
 ```c
 bool Topotogica1sort(Graph G){
@@ -1630,6 +1675,7 @@ vl(k) = Min{vl(j) - Weight(vk, vj)}, ve为vj 的任意前驱
 它是指该活动完成的时间余量，即在不增加完成整个工程所需总时间的情况下，活动ai可以拖延的时间,若一个活动的时间余量为零,则说明该活动必须要如期完成,否则会拖延整个工程进度.所以称l(i)- e(i)= 0即l(i) = e(i)的活动ai 是关键活动。
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D6_18.png?raw=true" style="zoom:50%;" />
+<img src="picture/D6_18.png" alt="D6_18" style="zoom:50%;" />
 
 ## 第七章 查找
 ### 7.1 查找的基本概念
