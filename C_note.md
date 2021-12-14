@@ -294,13 +294,14 @@ strlen("\x234"); //报错
 >&只能作用于变量，不能作用于表达式，因为表达式不对应具体的内存单元，没有地址，只有值
 
 1. 控制符
- \* ：为抑制符，输入的数据不会复制给相应的变量
+ **\* ：为抑制符，输入的数据不会复制给相应的变量(舍去)**
 2. 注意：
 	>使用格式控制符%c输入耽搁字符时候，空格和转义字符均作为有效字符被输入
 	>scanf("%2d%*2d%3d",&num1,&num2);  // 输入123456789
 	>printf("num1=%d,num2=%d\n",num1,num2); //读取12赋值给num1；读取34舍掉；读取567赋值给num2. 输出结果：num1=12 , num2=567
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_2.png?raw=true" style="zoom:50%;" />
+![4_2](picture/4_2.png)
 
 ### 4.3 字符数据的非格式化输入和输出
 1. 字符数据的非格式化输入
@@ -318,6 +319,7 @@ strlen("\x234"); //报错
 		和getche功能相同，唯一差别为：getche回显输入的字符，但是getch不回显输入的字符。
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_3.png?raw=true" style="zoom:50%;" />
+![4_3](picture/4_3.png)
 
 2. 字符数据的非格式化输出
 	- 1. putchar(int c)
@@ -335,6 +337,7 @@ strlen("\x234"); //报错
 2. 算法的描述方法：自然语言描述、伪代码、流程图、N-S图
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/4_4.png?raw=true" style="zoom:50%;" />
+![4_4](picture/4_4.png)
 
 
 ## 第五章选择结构程序设计
@@ -346,7 +349,10 @@ strlen("\x234"); //报错
 	>[> , >= , < , <= 的优先级大于== ,  !=]
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/5_2.png?raw=true" style="zoom:50%;" />
+![5_2](picture/5_2.png)
+
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/5_3.png?raw=true" style="zoom:50%;" />
+![5_3](picture/5_3.png)
 
 2. 逻辑运算符，逻辑表达式
 
@@ -361,10 +367,11 @@ strlen("\x234"); //报错
 
    >**逻辑与，左边为0，则右边的不进行计算！！**
    >例子:
+   	
    	```c
-   	int a = 1, b = 2, c = 3, d = 4, m = 2, n = 2; 
-    	//执行 (m=a>b)&&(n=c>d)后的N的值为：
-   	  //左边的M 为0；则后面的 n=c>d 不进行计算，n的值为2.
+   int a = 1, b = 2, c = 3, d = 4, m = 2, n = 2; 
+   	   	//执行 (m=a>b)&&(n=c>d)后的N的值为：
+   	//左边的M 为0；则后面的 n=c>d 不进行计算，n的值为2.
    	```
 
    ！：单目运算符，当右边的式子为真，整个为假；否则为真。
@@ -380,12 +387,12 @@ strlen("\x234"); //报错
 	
 	>1.条件运算符可嵌套，例如：x > 0? 1:(x < 0 ? -1 : 0) 表达式的值是：如果X是正数，则是1，如果是负数，则为-1，如果为0，则为0.
 	>2.条件运算符 ? 和 : 是一堆运算符，不能分开单独使用。
-	>![](picture/5_1.png)
+	>![](picture/5_4_1.png)
 	> [> , >= , < , <= 的优先级大于== ,  !=]
 	>位运算符： & > ^ > |  (第一章 0，1那个)
 	>逻辑运算符：&& > ||
 
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/5_4.png?raw=true" style="zoom:50%;" />
+
 
 ### 5.2 选择结构的程序设计
 #### 5.2.1 IF语句
@@ -398,8 +405,6 @@ if(表达式)
 ```c
 if(a = 5); //表达式永远是非0
 if(b); //等价于if(b!=0)
-
-
 ```
 
 2. if-else 语句
