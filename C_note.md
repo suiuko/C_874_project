@@ -500,7 +500,7 @@ default: 语句组;
 
 ```c
   while (表达式) //表达式中可以是任意类型的表达式
-  语句;	 //循环体
+  	语句;	 //循环体
   //while后面的表达式可以是任意类型的表达式,但一般是条件表达式或逻辑表达式. 表达式的值是循环的控制条件.
 ```
 
@@ -509,10 +509,10 @@ default: 语句组;
 
 注意：
 >1. 如果while后面的表达式一开始就是假，循环体讲一次也不执行
->2. 退出循环：1）：表达式为假（0） 
->						2）：循环体中遇到break，return，goto 语句
+>2. 退出循环：1）：**表达式为假（0）** 
+>						2）：**循环体中遇到break，return，goto 语句**
 >3. 要注意循环变量的增值，如果不增，很容易变成死循环
->4. 通常情况下, 程序中会利用一个变量来控制while语句的表达式的值, 这个变量成为循环控制变量.  循环控制变量必须初始化
+>4. 通常情况下, 程序中会利用一个变量来控制while语句的表达式的值, 这个变量成为循环控制变量.  **循环控制变量必须初始化**
 >5. 
 
 
@@ -548,7 +548,7 @@ while(表达式); //循环条件
 
 注意：
 >1. do-while语句和while语句的区别的在于do-while是先执行后判断，因此<u>do-while至少要执行一次循环体</u>。而while是先判断后执行，如果条件不满足，则循环体语句一次也不执行。
->2. 如果 do-while 后的表达式的值一开始就是假，循环体还是要执行一次
+>2. **如果 do-while 后的表达式的值一开始就是假，循环体还是要执行一次**
 >3. <u>do-while语句的表达式后面必须加分号。</u>
 
 
@@ -579,6 +579,7 @@ for(表达式1;表达式2;表达式3)  //循环条件
 	>3. 在嵌套循环的情况下，如果想让break语句跳出最外层的循环体，需要设置标志变量tag，然后在每层循环后加上一条语句: if(tag) break; 其值为1表示跳出循环体，为0则不跳出。
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/6_1.png?raw=true" style="zoom:50%;" />
+![6_1](picture/6_1.png)
 
 2. continue语句
 **continue语句和break语句不同，当在循环体中遇到continue语句时，程序将跳过continue语句后面尚未执行的语句，开始下一次循环，即只结束本次循环的执行，并不终止整个循环的执行。**
@@ -588,6 +589,7 @@ for(表达式1;表达式2;表达式3)  //循环条件
 >2. 在嵌套循环中，continue语句只对包含它的最内存的循环体语句起作用。
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/6_2.png?raw=true" style="zoom:50%;" />
+![6_2](picture/6_2.png)
 
 #### 6.1.5 go to 语句
 goto语句也称为无条件转移语句。
@@ -787,7 +789,76 @@ void main(){
 }
 
 ```
+5. 计算 `1*2*3+4*5*6+....+99*100*101`
+```c
+//思想: 用累加和来算, 通项公式term = i*(i+1)*(i+2), i=1,3,..99
+#include<stdio.h>
+void mian(){
+	int i;
+	long term,sum=0;
+	for(i=1;i<=99;i+=2){
+		term=i*(i+1)*(i+2);
+		sum+=term;
+	}
+	printf("sum = %ld\n",sum);
+}
+```
 
+6. 计算1!+2!+3!...+10!
+```c
+//思想,累加项为term=term*i
+void mian(){
+	long term =1;sum=0;
+	int i;
+	for(i=1;i<10;i++){
+		term *=i;
+		sum+=term;
+	}
+	printf("%ld\n",sum);
+}
+```
+7. `pi/2 = (2/1)*(2/3)*(4/3)*(4/5)....`前一百项之积.
+```c
+//累乘项: term = n*n/((n-1)*(n+1))  , n为2,4,..100
+#include<stdio.h>
+void main(){
+	float term,result =1;
+	int n;
+	for(n=2;n<=100;n+=2)
+	{
+		term = (float)(n*n)/((n-1)(n+1));
+		result *=term;
+	}
+	printf("%f\n",2*result);
+}
+
+```
+
+8. 利用级数`sin(x)=x-x^3/3!+x^5/5!....`,要求最后一项的绝对值小于10^-5,并统计出累加了多少项
+```c
+/*思想用累加和算法: sum=sum+term, 
+sum最开始为x, term= -term*x*x/((n+1)*(n+2));
+term 最开始为x, n初值为1,n=n+2
+*/
+#include<stdio.h>
+#include<math.h>
+void main(){
+	int n=1, count =0;
+	float x;
+	double sum,term;
+	scanf("%f",&x);
+	sum=x;
+	term=x;
+	while(fabs(term)>=1e-5)
+	{
+		term = -term*x*x/((n+1)*(n+2));
+		sum+=term;
+		n+=2;
+		count++;
+	}
+	printf("sin(x) = %f,count=%d\n",sum,count);
+}
+```
 
 ### 6.4  注意事项
 1. 需要在do-while循环语句的后面一定要加分号

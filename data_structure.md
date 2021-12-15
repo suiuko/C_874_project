@@ -1774,7 +1774,8 @@ B树中的删除操作与插入操作类似，但要稍微复杂-一些， 即�
 
 #### 7.4.3 处理冲突的方法
 1. 开放定址法
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_10.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/D7_10.png?raw=true" style="zoom:50%;" />
+  ![D7_10](picture/D7_10.png)
 
 1) 线性探测法
 线性探测法。当d=0,1,2,. * ,m-1时，称为线性探测法。这种方法的特点是:冲突发生
