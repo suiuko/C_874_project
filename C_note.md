@@ -2849,7 +2849,7 @@ void main()
 	struct score m;
 	printf("input the grade of five course:\n");
 	for(i=0;i<5;i++)
-		scanf("%f",m.grade[i])
+		scanf("%f",&m.grade[i]); //输入五门课的成绩
 	
 	m.avegrade = 0;
 	m.maxgrade = m.grade[0];
@@ -2868,7 +2868,7 @@ void main()
 
 #### 11.1.4 简化结构体类型名
 可以使用`typedef`来为结构体类型起别名
-格式: `typedef 类型名 类型名的别名;`
+格式: **`typedef 类型名 类型名的别名;`**
 
 其中:
 >类型名必须是已经定义的数据类型名或C语言提供的基本类型名
@@ -2912,7 +2912,7 @@ struct [结构体类型名]
 }结构体数组[size] = {{初值表1},{初值表2}....};
 ```
 3. 结构体数组的引用
-`结构体数组名[下标].成员名;`
+**`结构体数组名[下标].成员名;`**
 ```c
 struct Student_Info stu[3];
 strcpy(stu[0].name,"Wangfei"); //对数组元素stu[0]中的成员name赋值
@@ -3316,7 +3316,7 @@ enum weekday(sun =7;mon=1,tue,wed,thu,fri,sat);
 ```c
 struct Date
 {
-	int year,month,day ;
+	int year,month,day;
 };
 Date.year=2004;
 Date.month=10;
@@ -3505,13 +3505,13 @@ fclose(ouput);//关闭目标文件
   字符串读写函数`fgets` 和`fputs` 是以字符串的形式对文件进行读写的函数, 每次可以从文件读出(指定长度)或向文件写入一个字符串.
   
   (1)fgets函数
-  `char *fgets(char *s, int n, FILE *filepointer);`
+  **`char *fgets(char *s, int n, FILE *filepointer);`**
   功能: 从文件指针 filepointer 所指向的文件中, **读取长度最大为n-1的字符串,并在字符串的末尾加上结束符号'\0',然后将字符串存放到S中.**
   同时将读写位置指针向前移动实际读取的字符串长度(≤n-1 )个字节。<u>当从文件中读取第n- 1个字符后或读取数据过程中遇到换行符‘\n’后,函数返回。因此, s中存放的字符串的长度不一定正好是n- 1。</u>
   返回值: 如果操作成功,返回 字符串指针, 失败返回NULL.
   
   (2) fputs函数
-  `int fputs(char *s, FILE *filepointer);`
+  **`int fputs(char *s, FILE *filepointer);`**
   功能:**将存放在s中的字符串写到文件指针filepointer 所指向的文件中去，同时将读写位置指针向前移动字符串长度个字节。**注意, <u>fputs函数不会将字符串结尾符'\0'写入文件,</u><u>也不会自动向文件写入换行符,</u>如果需要写入一行文本,s字符串中必须包含^n’。
   返回值:如果操作成功,函数返回值就是最后写入文件的字符值;否则,返回EOF。
 
@@ -3549,6 +3549,7 @@ fscanf(fp,"&d,&f",&i,&t);// 若文件中有3,4.5,则将3送入i,4.5送入t
 
 #### 12.5.3 文件读写函数选用原则
 `fread()``fwrite()`函数可以完成文件的任意数据读/写操作.
+
 >读/写1个字符(或字节)数据时:选用fgetc( )和fputc( )函数。
 >读/写1个字符串时:选用fgets( )和fputs( )函数。
 >读/写1个(或多个)不含格式的数据时:选用fread( )和fwrite( )函数。
