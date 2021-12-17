@@ -1816,18 +1816,23 @@ p1<p2 表示P1处于低地址位置
 1. 数组的指针
 数组的指针其实就是数组在<u>内存中的起始地址</u>. 而数组在内存中的起始地址就是数组变量名, 也就是数组第一个元素在内存中的地址.
 2. 指向数组的指针变量
-如果将数组的起始地址赋给某个指针变量,那么该指针变量就是指向数组的指针变量.
-`int a[10], *p=a;(或*p=&a[0];)`
-或者:`int a[10], *p; p=a;(或p=&a[0];)`
-a[k]的地址与a的运算关系:
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_4.png?raw=true" style="zoom:50%;" />
-注意:
+  如果将数组的起始地址赋给某个指针变量,那么该指针变量就是指向数组的指针变量.
+  `int a[10], *p=a;(或*p=&a[0];)`
+  或者:`int a[10], *p; p=a;(或p=&a[0];)`
+  a[k]的地址与a的运算关系:
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_4.png?raw=true" style="zoom:50%;" />
+  <img src="picture/9_4.png" alt="9_4" style="zoom:50%;" />
+
+  注意:
 >p+i和 a+i 都是数组元素a[i]的地址
 >* (p+i) 和  * (a+i)就是数组元素a[i]
 >指向数组的指针变量,也可将其看作是数组名,因而可按下标法来使用. 例如: p[i] 等价于*(p+i),也等价于a[i]
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_5.png?raw=true" style="zoom:50%;" />
+<img src="picture/9_5.png" alt="9_5" style="zoom:50%;" />
+
 注意:
+
 ><u> **P+1 指向数组的下一个元素,而不是简单的使指针变量的值+1.**</u> 
 >其变化为; p+1*size  (size为一个元素占用的字节数)
 
@@ -1882,10 +1887,11 @@ void main(){
 //运行结果: a[0][0] =1  a[0][1] =2 a[0][2] =3 a[1][0] =4 a[1][1] =5 a[1][2] =6
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_6.png?raw=true" style="zoom:50%;" />
+<img src="picture/9_6.png" alt="9_6" style="zoom: 67%;" />
 
 注意:假设有一个M行N列的二维数组a:
 >a[i] 为第 i+1行的首地址, 是一个地址常量. a[0]是整个二维数组元素所占内存单元的首地址
->当二维数组的首地址赋给指针变量p 以后, 则访问某个元素 a[ i ][ j ]可以用这几种方式来代替:`* ( p + i * n + j )、p [ i * n ] + j 、* ( a [ 0 ] + i * n + j )`
+>当二维数组的首地址赋给指针变量p 以后, 则访问某个元素 `a[ i ][ j ]`可以用这几种方式来代替:`* (p+i*n+j)、 p[i*n]+j、 *(a[0]+i*n+j)`
 >二维数组名a不可赋值给一般指针变量p,只能赋值给指向二维数组的指针变量
 
 指向二维数组的指针变量其定义格式为:`数据类型符 (*指针变量名) [常量表达式];`
@@ -1895,7 +1901,7 @@ void main(){
 ```c
 //利用指向二维数组的指针变量对二位数组的引用
 #include<stdio.h>
-void main(){
+void main(){   
 	short int a[2][3] ={{1,2,3},{4,5,6}};
 	short int (*p)[3];
 	short int i, j;
@@ -1906,6 +1912,7 @@ void main(){
 		for(j=0;j<3;j++)
 		{
 			printf("a[%d][%d] = %d", i, j,p[i][j]); //显示每个数组元素的值
+      														//可以写成*(*p+i*3+j)或(*p+i*3)[j]
 			printf("\n);
 		}
 	}
@@ -1919,6 +1926,7 @@ void main(){
 ```
 指向二维数组的指针与二维数组元素的关系
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_7.png?raw=true" style="zoom:50%;" />
+![9_7](picture/9_7.png)
 
 注意:
 >1. 对指向二维数组的变量进行赋值一般为: 
@@ -1927,21 +1935,24 @@ void main(){
 >  ** &二维数组名[整型常量]  如:p = &a[1]**
 >
 >2. 不可用数组单元地址对其赋值
->  如: p=a [ 0 ] ; 或  p = & a [0] [0]都是做错误的
+>  如: `p=a[0]; 或 p=&a[0][0]`都是做错误的
 >
->3. a + i = &a[i]   这是第i 行的元素,是整行的元素
-> * ( a + i )=a [ i ] = &a [ i ][ 0 ]  这是第 i 行中的第一个元素,  如果想表示第2行第3个元素: a[2]+3 =  * ( a + 2 ) + 3
-> * ( * ( a + i ) + j )   :a 是a的首地址, a+i 代表第i行的一行指针 , * ( a + i ) + j 代表第i行第j列元素的地址, * ( * ( a + i ) + j )相当于 a [ i ] [ j ],是 i , j 的值.
+>3. `a+i=&a[i]`  这是第i 行的元素,是整行的元素
+> `* (a+i)=a[i] = &a[i][0] ` 这是第 i 行中的第一个元素,  如果想表示第2行第3个元素: `a[2]+3 =  * ( a + 2 ) + 3`
+> `*(*(a+i)+j)`  :a 是a的首地址, a+i 代表第i行的一行指针 ,`*(a+i)+j `代表第i行第j列元素的地址, `* ( * ( a + i ) + j )`相当于 `a [ i ] [ j ]`,是 i , j 的值.
 
 #### 9.4.3元素为指针的数组----指针数组
 一般格式: `数据类型符 *变量名[常量表达式];`
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_8.png?raw=true" style="zoom:50%;" />
+![9_8](picture/9_8.png)
 
 指针数组与数组指针定义的结合顺序
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_9.png?raw=true" style="zoom:50%;" />
+![9_9](picture/9_9.png)
 
 指针数组与二维数组指针的区别
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_10.png?raw=true" style="zoom:50%;" />
+![9_10](picture/9_10.png)
 
 ```c
 //利用指针数组对键盘输入的5个整数进行从小到大排序
@@ -1967,13 +1978,14 @@ void main()
 //输出 3,4,6,7,8
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_11.png?raw=true" style="zoom:50%;" />
+![9_11](picture/9_11.png)
 
 ### 9.5 指针与字符串
 字符串的本质其实是以'\0'结尾的字符型数组.字符串在内存中的起始地址(第一个字符的地址)称为字符串的指针
 1. 字符串的表示
 可以用字符数组表示字符串, 也可以用字符指针变量来表示字符串.
 如: `char srt[] = "I love china";`
-(1)便定义边赋值
+(1)边定义边赋值
 定义字符指针变量时对其赋初始值,其一般格式为:
 `char *字符指针变量名 = 字符串常量;`
 例如: `char *pstr = "i love china"`
@@ -1986,6 +1998,7 @@ char *字符指针变量名;
 pstr = "I love china"
 ````
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_12.png?raw=true" style="zoom:50%;" />
+![9_12](picture/9_12.png)
 
 2. 引用字符串
 (1)逐个字符引用
@@ -2057,6 +2070,7 @@ void main()
 }
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_13.png?raw=true" style="zoom:50%;" />
+![9_13](picture/9_13.png)
 
 ### 9.6 指针与动态内存分配
 1. 静态内存分配
@@ -2082,7 +2096,10 @@ if(pscore == NULL) //分配内存失败
 }
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_14.png?raw=true" style="zoom:50%;" />
+![9_14](picture/9_14.png)
+
 注意:
+
 >malloc前面必须要加上一个指针类型转换符, 因为malloc的返回值是空类型的指针,一般应与右边的指针变量类型一致
 >malloc所待的一个参数是指需分配的内存单元字节数,一般写成`分配数量 * sizeof(内存单元类型符)`
 >malloc 可能返回NULL,表示分配内存失败, 如果有空指针会造成系统崩溃
@@ -2105,6 +2122,7 @@ p2=&p1;
 //A的值从3变成了5
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_15.png?raw=true" style="zoom:50%;" />
+![9_15](picture/9_15.png)
 
 2. 二级指针的应用
 ```c
@@ -2123,21 +2141,28 @@ void main()
 }
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_16.png?raw=true" style="zoom:50%;" />
+![9_16](picture/9_16.png)
 
 注意:
-> 二级指针与指针数组的关系: int **p 与 int *q[10]
+> 二级指针与指针数组的关系: `int **p 与 int *q[10]`
 > 指针数组名是二级指针常量
-> p = q; p+i是q[i]的地址
-> 指针数组作形参时, int *q[ ]与 int **q 完全等价; 
+> `p = q; p+i是q[i]的地址`
+> 指针数组作形参时, `int *q[ ]与 int **q` 完全等价; 
 > 系统只给p 分配能保存一个指针值的内存区; 而给q分配10块内存区,每块可保存一个指针值. 
 
 ### 9.8 指针作为函数的参数
 想通过一个函数来改变调用函数中的变量的值.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_17.png?raw=true" style="zoom:50%;" />
+![9_17](picture/9_17.png)
+
 方法一: 因为 B和A分别对应不同的内存单元, 调用的函数的时,只是吧A对应的内存单元的值改变为5,并没有改变B对应的内存单元的值.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_18.png?raw=true" style="zoom:50%;" />
+<img src="picture/9_18.png" alt="9_18" style="zoom:50%;" />
+
 方法二: 是把变量B的地址(&b)传送给指针型参数P,这样指针P就指向了对应的内存单元赋值,所以B的值就发生了改变.
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_19.png?raw=true" style="zoom:50%;" />
+
+![9_19](picture/9_19.png)
 从上面的程序我们知道,定义函数时,形参前面有一个 * 号,就表明形参时指针型参数,如果有两个 * 号,就表明形参是指针的指针(二级指针).
 
 ```c
@@ -2249,8 +2274,9 @@ int *getdata(int num)
 
 ### 9.10 指向函数的指针----函数指针
 1. 函数指针的概念
-一个函数在编译时,被分配了一个入口地址,用函数名来表示,这个地址就称为该函数的指针. 可以用一个指针变量指向一个函数,然后通过该指针变量调用此函数.
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_20.png?raw=true" style="zoom:50%;" />
+  一个函数在编译时,被分配了一个入口地址,用函数名来表示,这个地址就称为该函数的指针. 可以用一个指针变量指向一个函数,然后通过该指针变量调用此函数.
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_20.png?raw=true" style="zoom:50%;" />
+  <img src="picture/9_20.png" alt="9_20" style="zoom: 67%;" />
 
 2. 函数指针变量
 (1)定义格式
@@ -2263,6 +2289,7 @@ int *getdata(int num)
 `函数指针 =[&]函数名;`
 其中,函数名后不能带括号和参数,函数名前的 & 符号是可选的
 例如:
+
 ```c
 int max(int a,int b)
 {
@@ -2332,6 +2359,7 @@ void main(int argc, char *argv[])
 }
 ```
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_21.png?raw=true" style="zoom:50%;" />
+![9_21](picture/9_21.png)
 
 例如: 显示命令行参数
 ```c
@@ -2352,12 +2380,150 @@ world
 
 ### 9.12 小结
 1. 常见的于指针相关的变量定义
-<img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_22.png?raw=true" style="zoom:50%;" />
+  <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_22.png?raw=true" style="zoom:50%;" />
+  ![9_22](picture/9_22.png)
 
 <img src="https://github.com/poshoi/C_874_project/blob/main/picture/9_23.png?raw=true" style="zoom:50%;" />
+![9_23](picture/9_23.png)
 
 2. 两个指针所指向的字符串是否相等,应该调用strcmp函数.
 3. 函数返回值的类型由在定义该函数时所指定的函数
+
+
+
+```c
+//mystrlen函数是计算str字符串的长度,
+int mystrlen(char *str)
+{
+	int i;
+	for(i=0;*(str+i)!='\0';i++);
+	return (i);
+}
+
+//sstrcmp()功能是两个字符串比较,S和T相等返回0;S大于T返回值大于0;反之小于0
+
+#include<stdio.h>
+int sstrcmp(char *s,char *t)
+{
+	while(*s && *t &&*s==*t)
+	{
+		s++;
+		t++;
+	}
+	return (*s=*t)?0:(*s>*t?1:-1);
+}
+
+
+//将B字符串连接到A字符串后面,并返回A中新字符串的长度
+int Strcen(char a[],char b[]){
+	int num=0,n=0;
+	while(*(a+num)!='\0') num++;
+	while(b[n]){
+		*(a+num)=b[n];
+		num++;
+		n++;
+	}
+	*(a+num)='\0';
+	return (num);
+}
+```
+
+```c
+/*
+1. 编写一个交换变量值的函数,利用该函数交换数组A和数组B中的对应元素值
+*/
+//思想: 用指针变量作为函数参数实现两树交换.
+#include<stdio.h>
+#define SIZE 10
+void swap(int *x, int *y);
+void mian(){
+	int a[SIZE],b[SIZE],i,n;
+	printf("input array lengeh n<=%d",SIZE);
+	scanf("%d",&n);
+	printf("input array:a");
+	for(i=0;i<n;i++)
+		scanf("%d",&a[i]);
+	printf("input array:b");
+	for(i=0;i<n;i++)
+		scanf("%d",&b[i]);
+	
+	for(i=0;i<n;i++) //调用交换函数,实现两数组元素交换
+		swap(&a[i],&b[i]);
+	printf("Atfer swap:\n");
+	printf("Array a:");
+	for(i=0;i<n;i++)
+		printf("%d",a[i]);
+	printf("\n");
+	for(i=0;i<n;i++)
+		printf("%d",b[i]);
+	printf("\n");
+}
+
+	void swap(int *x,int *y){
+		int temp;
+		temp = *x;
+		*x = *y;
+		*y = temp;
+	}
+```
+
+```c
+//编写实现字符串连接的功能
+//1. 字符数组
+void fun(char dstStr[],char srcStr[]){
+	int i=0;j=0;
+	while(dstStr[i]!='\0')
+		i++;
+	while(srcStr[j]!='\0')
+	{
+		dstStr[i]=srcStr[j];
+		i++;
+		j++;
+	}
+	sdtStr[i]='\0';
+}
+
+//2. 字符指针
+void MyStrcat(cahr *dstStr, char *srcStr){
+	while(*dsStr!='\0') //若srcStr所指向字符不是字符串结束的标志
+		dstStr++;
+	while(*srcStr!='\0')
+	{
+		*dstStr=*srcStr; //将srcStr所指字符串复制到dstStr所指的存储单元中
+		dstStr++;
+		srcStr++;
+	}
+	*dstStr='\0';
+}
+
+```
+
+```c
+//判断是否是回文
+#include<stdio.h>
+#include<string.h>
+
+void main(){
+	char str[80],*pStart,*pEnd;
+	int len;
+	
+	gets(str);
+	len = strlen(str);
+	pStart=str;
+	pEnd = str+len-1;
+	while(*pStart == *pEnd && pStart <=pEnd)
+	{
+		pStart++;
+		pEnd--;
+	}
+	if(pStrat<pEnd)
+		printf("No!\n");
+	else 
+		printf("Yes!\n");
+}
+
+```
+善用 strcpy(s,s+1) , strncpy(s,s+1,n-1) ; 可以用于删除, 左移右移类似的题目.
 
 
 ## 第10章 预处理命令
@@ -2502,6 +2668,21 @@ int NUM =10;
 要用: `#define HELLO "how are you"`
 4. 文件包含中指明包含文件的路径时使用单 \ , 应该使用双\
 
+注意定义函数后的括号如:
+
+```c
+#define MIN(x,y) (x)<(y)?(x):(y)
+void main(){
+  int i=10,j=15,k;
+  k=10*MIN(i,j);
+  printf("%d\n",k);
+}
+// k=  10*10<15?10:15
+//答案15
+```
+
+
+
 ## 第11章 复杂数据类型
 ### 11.1 结构体
 #### 11.1.1结构体类型的定义
@@ -2574,11 +2755,11 @@ struct //无名结构体定义变量只能一次
 
 2. 结构体变量的引用
 **对于非指针型结构体变量,要通过成员运算符" ." , 逐一访问其成员.**
-`结构体变量名.成员名`
+**`结构体变量名.成员名`**
 **而对于指针型结构体变量来说, 需要用“-->” 来访问**
 **`结构体指针-->成员名 或(*结构体指针).成员名`**
 如果某结构体成员本身又是一个结构体类型, 则只能通过多级的分量运算,对最低一级的成员进行引用.
-`结构体变量名.成员名.子成员名...... 最低级子成员名`
+3. 如果某结构体成员本身又是一个结构体类型,则只能通过多级的分量运算,对最低一级的成员进行引用. **`结构体变量名.成员名.子成员名...... 最低级子成员名`**
 
 ```c
 struct Student_ Info stu;
