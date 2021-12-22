@@ -172,7 +172,7 @@ strlen("\x234"); //报错
 	- 2. 强制转换
 	long double 
 	⬆️
-	double  < ----    float 	（只要有float就会转乘double）
+	double  < ----    float 	（只要有float就会转成double）
 	⬆️
 	long
 	⬆️
