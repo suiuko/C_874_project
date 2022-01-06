@@ -82,7 +82,7 @@
 	<img src="picture/C3_1.png" alt="C3_1" style="zoom:50%;" />
 	<img src="https://github.com/poshoi/C_874_project/blob/main/picture/C3_1.png?raw=true" style="zoom:50%;" />
 
-### 2. 常量、变量和标识符
+### 3.2 常量、变量和标识符
 1. 标识符
 	- 1. 命名规则：
 		>由<b>字母、数字、下划线</b>组成
@@ -368,11 +368,11 @@ strlen("\x234"); //报错
    >**逻辑与，左边为0，则右边的不进行计算！！**
    >例子:
    
-   	```c
+```c
    int a = 1, b = 2, c = 3, d = 4, m = 2, n = 2; 
    	   	//执行 (m=a>b)&&(n=c>d)后的N的值为：
    	//左边的M 为0；则后面的 n=c>d 不进行计算，n的值为2.
-   	```
+```
 
    ！：单目运算符，当右边的式子为真，整个为假；否则为真。
 
@@ -667,7 +667,7 @@ exit( )作用时：终止整个程序的执行，强制返回操作系统
 			//Determine whether p is prime
 			flagp = 1;
 			for(i=2;i<=(int) sqrt(p);i++){
-			if(p % 1 ==0){
+			if(p % i ==0){
 				flagp=0;
 				break;
 			}
@@ -680,7 +680,7 @@ exit( )作用时：终止整个程序的执行，强制返回操作系统
 					break;
 				}
 			}
-		}while(flagq * flagq ==0); //p q 中有一个不为素数时，继续循环
+		}while(flagp * flagq ==0); //p q 中有一个不为素数时，继续循环
 		printf("%d = %d + %d\n",n,q,p);
 	}
 ```
